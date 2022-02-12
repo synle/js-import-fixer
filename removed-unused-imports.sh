@@ -168,14 +168,24 @@ find src | grep -E "\.ts|\.js" | grep -v "d\.ts" | node -e """
 
         newImportedContent = newImportedContent.sort(
           (a,b) => {
+            // first compare by the order in packages.json
             var ca = getLibrarySortOrder(a);
-
             var cb = getLibrarySortOrder(b);
 
             let res = ca - cb;
 
             if(res === 0){
-              return a.localeCompare(b);
+              // then compare by the order of the library
+              ca = a.substr(a.indexOf(' from '));
+              cb = b.substr(b.indexOf(' from '));
+
+              res = ca.localeCompare(cb);
+
+              // if from the same library, then compare against the order of the
+              // imported modules
+              if(res === 0){
+                return a.localeCompare(b);
+              }
             }
 
 
