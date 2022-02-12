@@ -191,7 +191,10 @@ find src | grep -E "\.ts|\.js" | grep -v "d\.ts" | node -e """
           finalContent = '// @ts-nocheck\n' + finalContent.replace(/\/\/[ ]+@ts-nocheck/, '');
         }
 
-        finalContent = finalContent.replace(';\ninterface', ';\n\ninterface').replace(';\nconst', ';\n\nconst').replace(';\nexport', ';\n\nexport');;
+        finalContent = finalContent.replace(';\ninterface', ';\n\ninterface')
+          .replace(';\nconst', ';\n\nconst')
+          .replace(';\ntype', ';\n\ntype')
+          .replace(';\nexport', ';\n\nexport');;
 
         fs.writeFileSync(file, finalContent);
       } catch(err){
