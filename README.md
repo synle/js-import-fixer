@@ -15,48 +15,14 @@ A shell command tool that cleaned up unused imports in a Typescript / Javascript
 ## How to use?
 Run this script in your project root.
 
-### Pure Commands
-#### Separate Import
-Each import is treated as a separate line
+### Run it directly
+
 ```
 curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node -
 ```
 
-When no flag is provided, imports will be separated into each individual line. So the following imports 
-```
-import {
-  databaseActionScripts as RmdbDatabaseActionScripts,
-  tableActionScripts as RmdbTableActionScripts,
-} from 'src/scripts/rmdb';
-```
 
-will become
-```
-import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
-import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
-```
-
-#### Import grouping
-With import grouping so the output will consolidate all imports from the same library as one import line
-```
-curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --groupImport
-```
-
-When this flag is set, the following import lines
-```
-import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
-import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
-```
-
-Will become
-```
-import {
-  databaseActionScripts as RmdbDatabaseActionScripts,
-  tableActionScripts as RmdbTableActionScripts,
-} from 'src/scripts/rmdb';
-```
-
-### Part of preformat (prettier)
+### Run it as part of preformat in package.json
 It's best to use this script as part of your preformat script in node / frontend project
 
 Say you if you have a format script like this
@@ -75,6 +41,48 @@ Then it will become
 ...
 ```
 
+### Flags
+#### --groupImport
+- `--groupImport` : to group imports from the same library into a single line.
+
+When this flag is turned on, the following import lines
+```
+import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
+import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
+```
+
+Will become
+```
+import {
+  databaseActionScripts as RmdbDatabaseActionScripts,
+  tableActionScripts as RmdbTableActionScripts,
+} from 'src/scripts/rmdb';
+```
+
+
+When this flag is turned off (by default), imports will be separated into each individual line. So the following imports
+```
+import {
+  databaseActionScripts as RmdbDatabaseActionScripts,
+  tableActionScripts as RmdbTableActionScripts,
+} from 'src/scripts/rmdb';
+```
+
+will become
+```
+import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
+import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
+```
+
+
+#### --filter
+- `--filter` : to perform the import changes on a set of files with matching filter (aka `--filter=App.tsx`). This param is a CSV, so if you have multiple files, you can add `,` in between them, for example something like this `--filter=App.tsx,Header.tsx`
+
+The full command will look something like this
+```
+curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --filter=App.tsx,Header.tsx
+```
+
 ## Limitations
 - At the moment the script will treat individual imports from the same library as a separate import line. In the future, we can have an optional parameter that will group these imports.
 - The script currently only supports `import` syntax, so if you have `require` syntax in your code base, it will skip those. In the future, I plan to combine the two and give users an option to consolidate the import as `import` or require syntax.
@@ -82,7 +90,7 @@ Then it will become
 
 ## Future TODO's
 - [X] Potentially provides option to group imports (Using `--groupImport`)
-- [] Run the script on a files with matching patterns.
+- [X] Run the script on a files with matching patterns (Using `--filter`).
 - [] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
 
 ## Examples Run
