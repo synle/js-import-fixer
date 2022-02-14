@@ -4,10 +4,10 @@ const path = require("path");
 const package = require(path.join(process.cwd(), "package.json"));
 
 const configs = {
- groupImport: false,
- filteredFiles: [],
- agressiveCheck: false,
-}
+  groupImport: false,
+  filteredFiles: [],
+  agressiveCheck: false,
+};
 
 for (const argv of process.argv) {
   if (argv.includes("--groupImport")) {
@@ -21,9 +21,9 @@ for (const argv of process.argv) {
   }
 }
 
-console.log('===========================');
+console.log("===========================");
 console.log(JSON.stringify(configs, null, 2));
-console.log('===========================');
+console.log("===========================");
 
 // get all relevant files
 let files = [];
@@ -212,20 +212,22 @@ for (const file of files) {
     for (const aModule of allImportedModules) {
       let isModuleUsed = false;
 
-      if(configs.agressiveCheck === true){
+      if (configs.agressiveCheck === true) {
         if (rawContentWithoutImport.match(`<${aModule}`)) {
           // used as a react component
           isModuleUsed = true;
         }
         if (
-          rawContentWithoutImport.match(new RegExp("[ ]+" + aModule + "[. ]*")) ||
+          rawContentWithoutImport.match(
+            new RegExp("[ ]+" + aModule + "[. ]*")
+          ) ||
           rawContentWithoutImport.match(new RegExp("[ ]*" + aModule + "[ ]+"))
         ) {
           // used as a method or an expression
           isModuleUsed = true;
         }
       } else {
-        if(rawContentWithoutImport.includes(aModule)){
+        if (rawContentWithoutImport.includes(aModule)) {
           isModuleUsed = true;
         }
       }
