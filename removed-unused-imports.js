@@ -6,7 +6,7 @@ const package = require(path.join(process.cwd(), "package.json"));
 const configs = {
   groupImport: false,
   filteredFiles: [],
-  agressiveCheck: false,
+  aggressiveCheck: false,
 };
 
 for (const argv of process.argv) {
@@ -14,10 +14,10 @@ for (const argv of process.argv) {
     configs.groupImport = true;
   }
   if (argv.includes("--filter=")) {
-    config.filteredFiles = argv.substr(argv.indexOf("=") + 1).split(",");
+    configs.filteredFiles = argv.substr(argv.indexOf("=") + 1).split(",");
   }
-  if (argv.includes("--agressive")) {
-    config.agressiveCheck = true;
+  if (argv.includes("--aggressive")) {
+    configs.aggressiveCheck = true;
   }
 }
 
@@ -64,7 +64,7 @@ while (stack.length > 0) {
 // filter out the file
 if (configs.filteredFiles.length > 0) {
   files = files.filter((file) =>
-    config.filteredFiles.some((filteredFile) => file.includes(filteredFile))
+    configs.filteredFiles.some((filteredFile) => file.includes(filteredFile))
   );
 }
 
@@ -212,7 +212,7 @@ for (const file of files) {
     for (const aModule of allImportedModules) {
       let isModuleUsed = false;
 
-      if (configs.agressiveCheck === true) {
+      if (configs.aggressiveCheck === true) {
         if (rawContentWithoutImport.match(`<${aModule}`)) {
           // used as a react component
           isModuleUsed = true;
