@@ -199,10 +199,21 @@ for (const file of files) {
 
     // here we figure out if an import is actually used in the code
     for (const aModule of allImportedModules) {
-      if (rawContentWithoutImport.includes(aModule) === false) {
-        notUsedModules.add(aModule);
-      } else {
+      let isModuleUsed = false;
+
+      if(rawContentWithoutImport.match(`<${aModule}`)){
+        // used as a react component
+        isModuleUsed = true;
+      }
+      if(rawContentWithoutImport.match(new RegExp('[ ]+' + aModule + '[ ]*')) || rawContentWithoutImport.match(new RegExp('[ ]*' + aModule + '[ ]+'))){
+        // used as a method
+        isModuleUsed = true;
+      }
+
+      if (isModuleUsed) {
         usedModules.add(aModule);
+      } else {
+        notUsedModules.add(aModule);
       }
     }
 
