@@ -124,4 +124,4 @@ curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused
 
 I used this on my other project `sqlui-native`. You can refer to this pull request to see the detailed changes in action (https://github.com/synle/sqlui-native/pull/103/files)
 
-![image](https://user-images.githubusercontent.com/3792401/153304896-1793b072-05f5-439a-930e-d6c7ec9a7161.png)
+![demo-import](https://user-images.githubusercontent.com/3792401/153922650-2cd4b471-505f-418d-922f-9f5e421720d0.gif)
