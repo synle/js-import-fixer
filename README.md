@@ -10,7 +10,12 @@ A shell command tool that cleaned up unused imports in a Typescript / Javascript
 ## How to use?
 Run this script in your project root.
 ```
-curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.sh | bash -
+## Each import is treated as a separate line
+npx run-url https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js
+
+
+## with import grouping so the output will consolidate all imports from the same library as one import line
+npx run-url https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js --groupImport
 ```
 
 ## Limitations
@@ -19,8 +24,9 @@ curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused
 - The code that checks for usage of library uses contains, if your module contains a common name like Box / Button, there might be a false negative, so you might need to remove those manually.
 
 ## Future TODO's
-- Potentially provides option to group imports, or run the script on a files with matching patterns.
-- Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
+- [X] Potentially provides option to group imports (Using `--groupImport`)
+- [] Run the script on a files with matching patterns.
+- [] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
 
 ## Examples Run
 I used this on my other project `sqlui-native`. You can refer to this pull request to see the detailed changes in action (https://github.com/synle/sqlui-native/pull/103/files)
