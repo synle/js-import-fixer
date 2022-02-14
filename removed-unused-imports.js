@@ -10,7 +10,7 @@ for (const argv of process.argv) {
     groupImport = true;
   }
   if (argv.includes("--filter=")) {
-    filteredFiles = argv.substr(argv.indexOf('=') + 1).split(',');
+    filteredFiles = argv.substr(argv.indexOf("=") + 1).split(",");
   }
 }
 
@@ -51,8 +51,10 @@ while (stack.length > 0) {
 }
 
 // filter out the file
-if(filteredFiles.length > 0){
-  files = files.filter(file => filteredFiles.some(filteredFile => file.includes(filteredFile)))
+if (filteredFiles.length > 0) {
+  files = files.filter((file) =>
+    filteredFiles.some((filteredFile) => file.includes(filteredFile))
+  );
 }
 
 const fileMap = {};
@@ -224,10 +226,12 @@ for (const file of files) {
         } else {
           // default
 
-          if(alias === name){
+          if (alias === name) {
             newImportedContent.push("import " + name + " from '" + lib + "';");
           } else {
-            newImportedContent.push("import " + name + " as " + alias + " from '" + lib + "';");
+            newImportedContent.push(
+              "import " + name + " as " + alias + " from '" + lib + "';"
+            );
           }
         }
       }
@@ -249,7 +253,7 @@ for (const file of files) {
           }
         } else {
           // default
-          if(alias === name){
+          if (alias === name) {
             importGroups[lib]["default"] = [aModule];
           } else {
             // import * as ... , then treat it as a separate import line

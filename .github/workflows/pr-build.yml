@@ -1,0 +1,28 @@
+name: pr-build
+
+on:
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+      - run: npx prettier --write **/*.{js,md}
+      - uses: EndBug/add-and-commit@v8
+        with:
+          message: 'CI / CD - Prettier Automatic Commit'
+        continue-on-error: true
