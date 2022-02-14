@@ -3,16 +3,27 @@ const fs = require("fs");
 const path = require("path");
 const package = require(path.join(process.cwd(), "package.json"));
 
-let groupImport = false;
-let filteredFiles = [];
+const configs = {
+  groupImport: false,
+  filteredFiles: [],
+  agressiveCheck: false,
+};
+
 for (const argv of process.argv) {
   if (argv.includes("--groupImport")) {
-    groupImport = true;
+    configs.groupImport = true;
   }
   if (argv.includes("--filter=")) {
-    filteredFiles = argv.substr(argv.indexOf("=") + 1).split(",");
+    config.filteredFiles = argv.substr(argv.indexOf("=") + 1).split(",");
+  }
+  if (argv.includes("--agressive")) {
+    config.agressiveCheck = true;
   }
 }
+
+console.log("===========================");
+console.log(JSON.stringify(configs, null, 2));
+console.log("===========================");
 
 // get all relevant files
 let files = [];
@@ -51,9 +62,9 @@ while (stack.length > 0) {
 }
 
 // filter out the file
-if (filteredFiles.length > 0) {
+if (configs.filteredFiles.length > 0) {
   files = files.filter((file) =>
-    filteredFiles.some((filteredFile) => file.includes(filteredFile))
+    config.filteredFiles.some((filteredFile) => file.includes(filteredFile))
   );
 }
 
@@ -201,16 +212,24 @@ for (const file of files) {
     for (const aModule of allImportedModules) {
       let isModuleUsed = false;
 
-      if (rawContentWithoutImport.match(`<${aModule}`)) {
-        // used as a react component
-        isModuleUsed = true;
-      }
-      if (
-        rawContentWithoutImport.match(new RegExp("[ ]+" + aModule + "[ ]*")) ||
-        rawContentWithoutImport.match(new RegExp("[ ]*" + aModule + "[ ]+"))
-      ) {
-        // used as a method or an expression
-        isModuleUsed = true;
+      if (configs.agressiveCheck === true) {
+        if (rawContentWithoutImport.match(`<${aModule}`)) {
+          // used as a react component
+          isModuleUsed = true;
+        }
+        if (
+          rawContentWithoutImport.match(
+            new RegExp("[ ]+" + aModule + "[. ]*")
+          ) ||
+          rawContentWithoutImport.match(new RegExp("[ ]*" + aModule + "[ ]+"))
+        ) {
+          // used as a method or an expression
+          isModuleUsed = true;
+        }
+      } else {
+        if (rawContentWithoutImport.includes(aModule)) {
+          isModuleUsed = true;
+        }
       }
 
       if (isModuleUsed) {
@@ -223,8 +242,8 @@ for (const file of files) {
     // generate the new import
     var newImportedContent = [];
 
-    if (groupImport === false) {
-      // here we don't group
+    if (configs.groupImport === false) {
+      // here we don't group, each import is treated as a separate line
       for (const aModule of usedModules) {
         const { type, lib, alias, name } = moduleToLibs[aModule];
         if (type === "module") {
