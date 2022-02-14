@@ -11,7 +11,7 @@ for (const argv of process.argv) {
 }
 
 // get all relevant files
-const files = [];
+let files = [];
 let startPath = process.cwd();
 
 let stack = [startPath];
@@ -103,12 +103,12 @@ for (const file of files) {
   var rawContentWithoutImport;
   try {
     rawContentWithoutImport = content.replace(
-      /import[ ]+[{a-zA-Z0-9 ,}\n]+'[@/a-zA-Z0-9-]+'[;]*/g,
+      /import[ ]+[\*{a-zA-Z0-9 ,}\n]+'[@/a-zA-Z0-9-]+'[;]*/g,
       ""
     );
 
     const importCodeLines = content.match(
-      /import[ ]+[{a-zA-Z0-9 ,}\n]+'[@/a-zA-Z0-9-]+'[;]*/g
+      /import[ ]+[\*{a-zA-Z0-9 ,}\n]+'[@/a-zA-Z0-9-]+'[;]*/g
     );
     if (!importCodeLines || importCodeLines.length === 0) {
       console.log("> Skipped File:", file);
@@ -200,7 +200,7 @@ for (const file of files) {
 
     if (groupImport === false) {
       // here we don't group
-      for (const aModule of [...usedModules]) {
+      for (const aModule of usedModules) {
         const { type, lib, alias, name } = moduleToLibs[aModule];
         if (type === "module") {
           if (alias !== name) {
@@ -214,13 +214,18 @@ for (const file of files) {
           }
         } else {
           // default
-          newImportedContent.push("import " + aModule + " from '" + lib + "';");
+
+          if(alias === name){
+            newImportedContent.push("import " + name + " from '" + lib + "';");
+          } else {
+            newImportedContent.push("import " + name + " as " + alias + " from '" + lib + "';");
+          }
         }
       }
     } else {
       let importGroups = {}; // libName => default , module
 
-      for (const aModule of [...usedModules]) {
+      for (const aModule of usedModules) {
         const { type, lib, alias, name } = moduleToLibs[aModule];
 
         importGroups[lib] = importGroups[lib] || {};
@@ -235,8 +240,14 @@ for (const file of files) {
           }
         } else {
           // default
-          // fixed the bug with alias here
-          importGroups[lib]["default"] = [aModule];
+          if(alias === name){
+            importGroups[lib]["default"] = [aModule];
+          } else {
+            // import * as ... , then treat it as a separate import line
+            newImportedContent.push(
+              `import ${name} as ${alias} from '${lib}';`
+            );
+          }
         }
       }
 
