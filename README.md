@@ -104,7 +104,7 @@ curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused
 ## Future TODO's
 
 - [x] Potentially provides option to group imports (Using [`--groupImport`](https://github.com/synle/js-import-fixer#--groupimport))
-- [x] Run the script on a files with matching patterns (Using `--filter`).
+- [x] Run the script on a files with matching patterns (Using [`--filter`](https://github.com/synle/js-import-fixer#--filter)).
 - [] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
 
 ## Examples Run
