@@ -95,16 +95,27 @@ The full command will look something like this
 curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --filter=App.tsx,Header.tsx
 ```
 
+#### --aggressive
+
+- `--aggressive` : when turned on, the script will be more aggressive when checking for usages of the imports. By default this flag is turned off.
+
+The full command will look something like this
+
+```
+curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --aggressive
+```
+
 ## Limitations
 
 - At the moment the script will treat individual imports from the same library as a separate import line. In the future, we can have an optional parameter that will group these imports.
 - The script currently only supports `import` syntax, so if you have `require` syntax in your code base, it will skip those. In the future, I plan to combine the two and give users an option to consolidate the import as `import` or require syntax.
 - The code that checks for usage of library uses contains, if your module contains a common name like Box / Button, there might be a false negative, so you might need to remove those manually.
 
-## Future TODO's
+## TODO's
 
 - [x] Potentially provides option to group imports (Using [`--groupImport`](https://github.com/synle/js-import-fixer#--groupimport))
 - [x] Run the script on a files with matching patterns (Using [`--filter`](https://github.com/synle/js-import-fixer#--filter)).
+- [x] Added an option to do aggressive checks for import usages. This is an opt-in feature using [`--agressive`](https://github.com/synle/js-import-fixer#--aggressive)
 - [ ] Publish this package to npm registry
 - [ ] Make this package executable with `npx`
 - [ ] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
