@@ -206,7 +206,7 @@ for (const file of files) {
         isModuleUsed = true;
       }
       if(rawContentWithoutImport.match(new RegExp('[ ]+' + aModule + '[ ]*')) || rawContentWithoutImport.match(new RegExp('[ ]*' + aModule + '[ ]+'))){
-        // used as a method
+        // used as a method or an expression
         isModuleUsed = true;
       }
 
@@ -293,9 +293,11 @@ for (const file of files) {
           );
         }
 
-        newImportedContent.push(
-          `import ${libImportedModules.join(", ")} from '${lib}';`
-        );
+        if (libImportedModules.length > 0) {
+          newImportedContent.push(
+            `import ${libImportedModules.join(", ")} from '${lib}';`
+          );
+        }
       }
     }
 
