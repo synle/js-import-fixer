@@ -22,10 +22,38 @@ Each import is treated as a separate line
 curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node -
 ```
 
+When no flag is provided, imports will be separated into each individual line. So the following imports 
+```
+import {
+  databaseActionScripts as RmdbDatabaseActionScripts,
+  tableActionScripts as RmdbTableActionScripts,
+} from 'src/scripts/rmdb';
+```
+
+will become
+```
+import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
+import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
+```
+
 #### Import grouping
 With import grouping so the output will consolidate all imports from the same library as one import line
 ```
 curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --groupImport
+```
+
+When this flag is set, the following import lines
+```
+import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
+import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
+```
+
+Will become
+```
+import {
+  databaseActionScripts as RmdbDatabaseActionScripts,
+  tableActionScripts as RmdbTableActionScripts,
+} from 'src/scripts/rmdb';
 ```
 
 ### Part of preformat (prettier)
