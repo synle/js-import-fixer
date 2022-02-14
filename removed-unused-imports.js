@@ -201,11 +201,14 @@ for (const file of files) {
     for (const aModule of allImportedModules) {
       let isModuleUsed = false;
 
-      if(rawContentWithoutImport.match(`<${aModule}`)){
+      if (rawContentWithoutImport.match(`<${aModule}`)) {
         // used as a react component
         isModuleUsed = true;
       }
-      if(rawContentWithoutImport.match(new RegExp('[ ]+' + aModule + '[ ]*')) || rawContentWithoutImport.match(new RegExp('[ ]*' + aModule + '[ ]+'))){
+      if (
+        rawContentWithoutImport.match(new RegExp("[ ]+" + aModule + "[ ]*")) ||
+        rawContentWithoutImport.match(new RegExp("[ ]*" + aModule + "[ ]+"))
+      ) {
         // used as a method or an expression
         isModuleUsed = true;
       }
