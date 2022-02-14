@@ -4,22 +4,47 @@ A shell command tool that cleaned up unused imports in a Typescript / Javascript
 ## Why / Background Information?
 - There are times where you worked on an existing Typescript / Javascript code base with a lot of unused imports. It causes eslint error to show a lot of warning. Removing the unused imports by hands is just not feasible. That's why I came up with this tool to clean up unused imports.
 
+## Features
+- Will look at the Javascript / Typescript code for import usages. And remove unused imports.
+- Will also fix duplicate imports issue. Say if you have multiple lines of `import react from 'react';`. So it will consolidate that into a single import and will allow your script to compile and run.
+- There is an option `--groupImport` that will consolidate multiple lines of imports from the same library into a single one.
+
 ## Requirement
-- Node 12+
+- Node 12+ (tested with Node 14.18.3)
 
 ## How to use?
 Run this script in your project root.
 
-## Separate Import
+### Pure Commands
+#### Separate Import
 Each import is treated as a separate line
 ```
 curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node -
 ```
 
-### Import grouping
+#### Import grouping
 With import grouping so the output will consolidate all imports from the same library as one import line
 ```
 curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --groupImport
+```
+
+### Part of preformat (prettier)
+It's best to use this script as part of your preformat script in node / frontend project
+
+Say you if you have a format script like this
+
+```
+...
+"format": "npx prettier --config ./.prettierrc --write **/*.{ts,tsx,js,jsx,scss,yml,html} *.{json,MD}",
+...
+```
+
+Then it will become
+```
+...
+"preformat": "curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --groupImport",
+"format": "npx prettier --config ./.prettierrc --write **/*.{ts,tsx,js,jsx,scss,yml,html} *.{json,MD}",
+...
 ```
 
 ## Limitations
