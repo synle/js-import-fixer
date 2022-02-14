@@ -282,9 +282,11 @@ for (const file of files) {
           );
         }
 
-        newImportedContent.push(
-          `import ${libImportedModules.join(", ")} from '${lib}';`
-        );
+        if(libImportedModules.length > 0){
+
+                newImportedContent.push(
+                  `import ${libImportedModules.join(", ")} from '${lib}';`
+                );}
       }
     }
 
