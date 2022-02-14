@@ -4,9 +4,13 @@ const path = require("path");
 const package = require(path.join(process.cwd(), "package.json"));
 
 let groupImport = false;
+let filteredFiles = [];
 for (const argv of process.argv) {
   if (argv.includes("--groupImport")) {
     groupImport = true;
+  }
+  if (argv.includes("--filter=")) {
+    filteredFiles = argv.substr(argv.indexOf('=') + 1).split(',');
   }
 }
 
@@ -44,6 +48,11 @@ while (stack.length > 0) {
       }
     }
   }
+}
+
+// filter out the file
+if(filteredFiles.length > 0){
+  files = files.filter(file => filteredFiles.some(filteredFile => file.includes(filteredFile)))
 }
 
 const fileMap = {};
