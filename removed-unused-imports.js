@@ -219,9 +219,11 @@ for (const file of files) {
         }
         if (
           rawContentWithoutImport.match(
-            new RegExp("[ ]+" + aModule + "[. ]*")
+            new RegExp("[ ]+" + aModule + "[ ]*")
           ) ||
           rawContentWithoutImport.match(new RegExp("[ ]*" + aModule + "[ ]+"))
+           ||
+          rawContentWithoutImport.match(new RegExp(aModule + "[.}(-+]+"))
         ) {
           // used as a method or an expression
           isModuleUsed = true;
