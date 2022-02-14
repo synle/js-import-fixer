@@ -9,13 +9,17 @@ A shell command tool that cleaned up unused imports in a Typescript / Javascript
 
 ## How to use?
 Run this script in your project root.
+
+## Separate Import
+Each import is treated as a separate line
 ```
-## Each import is treated as a separate line
-npx run-url https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js
+curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node -
+```
 
-
-## with import grouping so the output will consolidate all imports from the same library as one import line
-npx run-url https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js --groupImport
+### Import grouping
+With import grouping so the output will consolidate all imports from the same library as one import line
+```
+curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --groupImport
 ```
 
 ## Limitations
