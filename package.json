@@ -1,10 +1,10 @@
 {
-  "name": "js-import-fixer",
+  "name": "import-fixer",
   "version": "0.0.0",
   "description": "A shell command tool that cleaned up unused imports in a Typescript / Javascript codebase.",
   "main": "main.js",
   "bin": {
-      "js-import-fixer": "main.js"
+      "import-fixer": "main.js"
   },
   "scripts": {
 

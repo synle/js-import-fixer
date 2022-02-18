@@ -25,7 +25,7 @@ Run this script in your project root.
 ### Run it directly
 
 ```
-npx js-import-fixer
+npx import-fixer
 ```
 
 ### Run it as part of preformat in package.json
@@ -44,7 +44,7 @@ Then it will become
 
 ```
 ...
-"preformat": "npx js-import-fixer --groupImport",
+"preformat": "npx import-fixer --groupImport",
 "format": "npx prettier --config ./.prettierrc --write **/*.{ts,tsx,js,jsx,scss,yml,html} *.{json,MD}",
 ...
 ```
@@ -94,7 +94,7 @@ import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
 The full command will look something like this
 
 ```
-npx js-import-fixer --filter=App.tsx,Header.tsx
+npx import-fixer --filter=App.tsx,Header.tsx
 ```
 
 #### `--aggressive`
@@ -104,7 +104,7 @@ npx js-import-fixer --filter=App.tsx,Header.tsx
 The full command will look something like this
 
 ```
-npx js-import-fixer --aggressive
+npx import-fixer --aggressive
 ```
 
 ## Limitations
