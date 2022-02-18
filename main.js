@@ -94,7 +94,7 @@ while (stack.length > 0) {
 // filter out all the files in gitignore
 if(gitiginorePatterns.length > 0){
   files = files.filter((file) =>
-    gitiginorePatterns.some((gitiginorePattern) => !file.includes(gitiginorePattern))
+    gitiginorePatterns.every((gitiginorePattern) => !file.includes(gitiginorePattern))
   );
 }
 
@@ -105,6 +105,9 @@ if (configs.filteredFiles.length > 0) {
   );
 }
 
+
+// doing a quick sort to make file easier to follow
+files = files.sort();
 
 
 const fileMap = {};
@@ -169,7 +172,7 @@ for (const file of files) {
       /import[ ]+[\*{a-zA-Z0-9 ,}\n]+'[@/a-zA-Z0-9-]+'[;]*/g
     );
     if (!importCodeLines || importCodeLines.length === 0) {
-      console.log("> Skipped File:".yellow(), file);
+      console.log("> Skipped File:".padStart(17, ' ').yellow(), file);
       countSkipped++;
       continue;
     }
@@ -398,9 +401,9 @@ for (const file of files) {
     });
 
     console.log(
-      "> Repaired File:".green(),
-      notUsedModules.size + " Removed",
-      file
+      "> Repaired File:".padStart(17, ' ').green(),
+      file,
+      notUsedModules.size + " Removed"
     );
     countProcessed++;
 
