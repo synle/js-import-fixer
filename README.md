@@ -6,7 +6,10 @@ A shell command tool that cleaned up unused imports in a Typescript / Javascript
 
 ## Why / Background Information?
 
-- There are times where you worked on an existing Typescript / Javascript code base with a lot of unused imports. It causes eslint error to show a lot of warning. Removing the unused imports by hands is just not feasible. That's why I came up with this tool to clean up unused imports.
+- There are times where you worked on an existing Typescript / Javascript code base with a lot of unused imports. It causes eslint error to show a lot of warning. Removing the unused imports by hands is just not feasible.
+- Another area is that people tend to have no convention when it comes to importing library. Sometimes we imported external libraries first, then we imported local modules.
+
+That's why I came up with this tool to clean up unused imports and organize imports in a way that are more deterministic.
 
 ## Features
 
@@ -118,8 +121,8 @@ npx import-fixer --aggressive
 - [x] Potentially provides option to group imports (Using [`--groupImport`](https://synle.github.io/js-import-fixer/#--groupimport))
 - [x] Run the script on a files with matching patterns (Using [`--filter`](https://synle.github.io/js-import-fixer/#--filter)).
 - [x] Added an option to do aggressive checks for import usages. This is an opt-in feature using [`--aggressive`](https://synle.github.io/js-import-fixer/#--aggressive)
-- [ ] Publish this package to npm registry
-- [ ] Make this package executable with `npx`
+- [X] Publish this package to npm registry
+- [X] Make this package executable with `npx` (Using `npx import-fixer`)
 - [ ] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
 
 ## Examples Run
