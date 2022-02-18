@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 let data = "";
 const fs = require("fs");
 const path = require("path");
@@ -221,8 +222,9 @@ for (const file of files) {
           rawContentWithoutImport.match(
             new RegExp("[ ]+" + aModule + "[ ]*")
           ) ||
-          rawContentWithoutImport.match(new RegExp("[ ]*" + aModule + "[ ]+"))
-           ||
+          rawContentWithoutImport.match(
+            new RegExp("[ ]*" + aModule + "[ ]+")
+          ) ||
           rawContentWithoutImport.match(new RegExp(aModule + "[.}(-+]+"))
         ) {
           // used as a method or an expression

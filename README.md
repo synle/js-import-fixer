@@ -25,7 +25,7 @@ Run this script in your project root.
 ### Run it directly
 
 ```
-curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node -
+npx js-import-fixer
 ```
 
 ### Run it as part of preformat in package.json
@@ -44,7 +44,7 @@ Then it will become
 
 ```
 ...
-"preformat": "curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --groupImport",
+"preformat": "npx js-import-fixer --groupImport",
 "format": "npx prettier --config ./.prettierrc --write **/*.{ts,tsx,js,jsx,scss,yml,html} *.{json,MD}",
 ...
 ```
@@ -94,7 +94,7 @@ import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
 The full command will look something like this
 
 ```
-curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --filter=App.tsx,Header.tsx
+npx js-import-fixer --filter=App.tsx,Header.tsx
 ```
 
 #### `--aggressive`
@@ -104,7 +104,7 @@ curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused
 The full command will look something like this
 
 ```
-curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --aggressive
+npx js-import-fixer --aggressive
 ```
 
 ## Limitations
