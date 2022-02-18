@@ -1,19 +1,19 @@
 #! /usr/bin/env node
-String.prototype.blue = function (){
+String.prototype.blue = function () {
   return `\x1b[36m${this}\x1b[0m`;
-}
+};
 
-String.prototype.yellow = function (){
+String.prototype.yellow = function () {
   return `\x1b[33m${this}\x1b[0m`;
-}
+};
 
-String.prototype.green = function (){
+String.prototype.green = function () {
   return `\x1b[32m${this}\x1b[0m`;
-}
+};
 
-String.prototype.red = function (){
+String.prototype.red = function () {
   return `\x1b[31m${this}\x1b[0m`;
-}
+};
 
 let data = "";
 const fs = require("fs");
@@ -38,11 +38,11 @@ for (const argv of process.argv) {
   }
 }
 
-console.log("Inputs / Configs ".padEnd(100, '=').blue());
+console.log("Inputs / Configs ".padEnd(100, "=").blue());
 console.log("PWD:", process.cwd());
-console.log("".padEnd(100, '=').blue());
+console.log("".padEnd(100, "=").blue());
 console.log(JSON.stringify(configs, null, 2));
-console.log("".padEnd(100, '=').blue());
+console.log("".padEnd(100, "=").blue());
 
 // get all relevant files
 let files = [];
@@ -269,7 +269,7 @@ for (const file of files) {
     // generate the new import
     var newImportedContent = [];
 
-    const librariesUsedByThisFile = new Set();// note here, we don't count duplicate lib imports in the same file...
+    const librariesUsedByThisFile = new Set(); // note here, we don't count duplicate lib imports in the same file...
 
     if (configs.groupImport === false) {
       // here we don't group, each import is treated as a separate line
@@ -355,7 +355,7 @@ for (const file of files) {
       }
     }
 
-    for(const lib of librariesUsedByThisFile){
+    for (const lib of librariesUsedByThisFile) {
       countLibUsedByFile[lib] = countLibUsedByFile[lib] || 0;
       countLibUsedByFile[lib]++;
     }
@@ -384,7 +384,11 @@ for (const file of files) {
       return res;
     });
 
-    console.log("> Repaired File:".green(), notUsedModules.size + " Removed", file);
+    console.log(
+      "> Repaired File:".green(),
+      notUsedModules.size + " Removed",
+      file
+    );
     countProcessed++;
 
     let finalContent =
@@ -408,31 +412,29 @@ for (const file of files) {
 
     fs.writeFileSync(file, finalContent);
   } catch (err) {
-    console.log('> Error'.red(), file);
+    console.log("> Error".red(), file);
   }
 }
 
 let countLibUsedByFileList = [];
-for(const lib of Object.keys(countLibUsedByFile)){
-  countLibUsedByFileList.push([lib, countLibUsedByFile[lib]])
+for (const lib of Object.keys(countLibUsedByFile)) {
+  countLibUsedByFileList.push([lib, countLibUsedByFile[lib]]);
 }
-countLibUsedByFileList = countLibUsedByFileList.sort((a,b) => {
+countLibUsedByFileList = countLibUsedByFileList.sort((a, b) => {
   let res = b[1] - a[1];
-  if(res !== 0){
+  if (res !== 0) {
     return res;
   }
   return a[0].localeCompare(b[0]);
-})
+});
 
-console.log("Import Stats ".padEnd(100, '=').blue());
-console.log(countLibUsedByFileList.map(list => list.join(': ')).join('\n'))
-console.log("".padEnd(100, '=').blue());
+console.log("Import Stats ".padEnd(100, "=").blue());
+console.log(countLibUsedByFileList.map((list) => list.join(": ")).join("\n"));
+console.log("".padEnd(100, "=").blue());
 
-
-console.log("Total Skipped / Processed ".padEnd(100, '=').blue());
+console.log("Total Skipped / Processed ".padEnd(100, "=").blue());
 console.log("countSkipped:", countSkipped);
 console.log("countProcessed:", countProcessed);
-console.log("".padEnd(100, '=').blue());
-
+console.log("".padEnd(100, "=").blue());
 
 process.exit();
