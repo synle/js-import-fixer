@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 let data = "";
 const fs = require("fs");
 const path = require("path");

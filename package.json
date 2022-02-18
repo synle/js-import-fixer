@@ -1,0 +1,25 @@
+{
+  "name": "js-import-fixer",
+  "version": "0.0.0",
+  "description": "A shell command tool that cleaned up unused imports in a Typescript / Javascript codebase.",
+  "main": "main.js",
+  "bin": {
+      "js-import-fixer": "main.js"
+  },
+  "scripts": {
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/synle/js-import-fixer.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Sy Le",
+    "email": "le.nguyen.sy@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/synle/js-import-fixer/issues"
+  },
+  "homepage": "https://github.com/synle/js-import-fixer#readme"
+}
