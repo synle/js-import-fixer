@@ -2,6 +2,8 @@
 
 A shell command tool that cleaned up unused imports in a Typescript / Javascript codebase.
 
+[JS Import Fixer - Official Home Page](https://synle.github.io/js-import-fixer/)
+
 ## Why / Background Information?
 
 - There are times where you worked on an existing Typescript / Javascript code base with a lot of unused imports. It causes eslint error to show a lot of warning. Removing the unused imports by hands is just not feasible. That's why I came up with this tool to clean up unused imports.
@@ -49,7 +51,7 @@ Then it will become
 
 ### Flags
 
-#### --groupImport
+#### `--groupImport`
 
 - `--groupImport` : to group imports from the same library into a single line.
 
@@ -85,7 +87,7 @@ import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/
 import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
 ```
 
-#### --filter
+#### `--filter`
 
 - `--filter` : to perform the import changes on a set of files with matching filter (aka `--filter=App.tsx`). This param is a CSV, so if you have multiple files, you can add `,` in between them, for example something like this `--filter=App.tsx,Header.tsx`
 
@@ -95,7 +97,7 @@ The full command will look something like this
 curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused-imports.js | node - --filter=App.tsx,Header.tsx
 ```
 
-#### --aggressive
+#### `--aggressive`
 
 - `--aggressive` : when turned on, the script will be more aggressive when checking for usages of the imports. By default this flag is turned off.
 
@@ -113,9 +115,9 @@ curl https://raw.githubusercontent.com/synle/js-import-fixer/main/removed-unused
 
 ## TODO's
 
-- [x] Potentially provides option to group imports (Using [`--groupImport`](https://github.com/synle/js-import-fixer#--groupimport))
-- [x] Run the script on a files with matching patterns (Using [`--filter`](https://github.com/synle/js-import-fixer#--filter)).
-- [x] Added an option to do aggressive checks for import usages. This is an opt-in feature using [`--aggressive`](https://github.com/synle/js-import-fixer#--aggressive)
+- [x] Potentially provides option to group imports (Using [`--groupImport`](https://synle.github.io/js-import-fixer/#--groupimport))
+- [x] Run the script on a files with matching patterns (Using [`--filter`](https://synle.github.io/js-import-fixer/#--filter)).
+- [x] Added an option to do aggressive checks for import usages. This is an opt-in feature using [`--aggressive`](https://synle.github.io/js-import-fixer/#--aggressive)
 - [ ] Publish this package to npm registry
 - [ ] Make this package executable with `npx`
 - [ ] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
