@@ -22,15 +22,19 @@ for (const argv of process.argv) {
   }
 }
 
-console.log("===========================");
+console.log("======================================================");
+console.log("PWD:", process.cwd());
+console.log("======================================================");
 console.log(JSON.stringify(configs, null, 2));
-console.log("===========================");
+console.log("======================================================");
 
 // get all relevant files
 let files = [];
 let startPath = process.cwd();
-
+let countSkipped = 0;
+let countProcessed = 0;
 let stack = [startPath];
+
 while (stack.length > 0) {
   const item = stack.pop();
 
@@ -135,6 +139,7 @@ for (const file of files) {
     );
     if (!importCodeLines || importCodeLines.length === 0) {
       console.log("> Skipped File:", file);
+      countSkipped++;
       continue;
     }
 
@@ -352,6 +357,7 @@ for (const file of files) {
     });
 
     console.log("> Repaired File:", notUsedModules.size + " Removed", file);
+    countProcessed++;
 
     let finalContent =
       newImportedContent.join("\n").trim() +
@@ -377,5 +383,10 @@ for (const file of files) {
     console.log(file, err);
   }
 }
+
+console.log("======================================================");
+console.log("countSkipped:", countSkipped);
+console.log("countProcessed:", countProcessed);
+console.log("======================================================");
 
 process.exit();
