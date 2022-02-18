@@ -1,3 +1,6 @@
+[![main-build](https://github.com/synle/js-import-fixer/actions/workflows/main-build.yml/badge.svg)](https://github.com/synle/js-import-fixer/actions/workflows/main-build.yml)
+[![npm version](https://badge.fury.io/js/import-fixer.svg)](https://badge.fury.io/js/import-fixer)
+
 # js-import-fixer
 
 A shell command tool that cleaned up unused imports in a Typescript / Javascript codebase.
