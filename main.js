@@ -20,6 +20,13 @@ const fs = require("fs");
 const path = require("path");
 const package = require(path.join(process.cwd(), "package.json"));
 
+// figuring out what files in gitignore to skip
+let gitiginorePatterns = []
+try{
+  const gitignoreContent = fs.readFileSync(path.join(process.cwd(), ".gitignore"), {encoding: 'utf-8'});
+  gitiginorePatterns = gitignoreContent.split('\n').filter(s => !s.includes('#') && !s.includes('*') && s)
+} catch(err){}
+
 const configs = {
   groupImport: false,
   filteredFiles: [],
@@ -84,12 +91,21 @@ while (stack.length > 0) {
   }
 }
 
-// filter out the file
+// filter out all the files in gitignore
+if(gitiginorePatterns.length > 0){
+  files = files.filter((file) =>
+    gitiginorePatterns.some((gitiginorePattern) => !file.includes(gitiginorePattern))
+  );
+}
+
+// filter out the file if there is a filter
 if (configs.filteredFiles.length > 0) {
   files = files.filter((file) =>
     configs.filteredFiles.some((filteredFile) => file.includes(filteredFile))
   );
 }
+
+
 
 const fileMap = {};
 const libraryMap = {};
@@ -130,10 +146,7 @@ function getLibrarySortOrder(a) {
 }
 
 for (const file of files) {
-  const content = fs.readFileSync(file, {
-    encoding: "utf8",
-    flag: "r",
-  });
+  const content = fs.readFileSync(file, {encoding: 'utf-8'});
 
   // lib_name => [array of modules]
   // '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]

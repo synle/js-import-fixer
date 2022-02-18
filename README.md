@@ -121,11 +121,12 @@ npx import-fixer --aggressive
 
 ## TODO's
 
-- [x] Potentially provides option to group imports (Using [`--groupImport`](https://synle.github.io/js-import-fixer/#--groupimport))
+- [x] Potentially provides option to group imports (Using [`--groupImport`](https://synle.github.io/js-import-fixer/#--groupimport)).
 - [x] Run the script on a files with matching patterns (Using [`--filter`](https://synle.github.io/js-import-fixer/#--filter)).
-- [x] Added an option to do aggressive checks for import usages. This is an opt-in feature using [`--aggressive`](https://synle.github.io/js-import-fixer/#--aggressive)
-- [x] Publish this package to npm registry
-- [x] Make this package executable with `npx` (Using `npx import-fixer`)
+- [x] Added an option to do aggressive checks for import usages. This is an opt-in feature using [`--aggressive`](https://synle.github.io/js-import-fixer/#--aggressive).
+- [x] Publish this package to npm registry.
+- [x] Make this package executable with `npx` (Using `npx import-fixer`).
+- [x] Respect the files in `.gitignore` and skip those files when running the script.
 - [ ] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
 
 ## Examples Run
