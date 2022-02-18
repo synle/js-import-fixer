@@ -1,4 +1,20 @@
 #! /usr/bin/env node
+String.prototype.blue = function () {
+  return `\x1b[36m${this}\x1b[0m`;
+};
+
+String.prototype.yellow = function () {
+  return `\x1b[33m${this}\x1b[0m`;
+};
+
+String.prototype.green = function () {
+  return `\x1b[32m${this}\x1b[0m`;
+};
+
+String.prototype.red = function () {
+  return `\x1b[31m${this}\x1b[0m`;
+};
+
 let data = "";
 const fs = require("fs");
 const path = require("path");
@@ -22,11 +38,11 @@ for (const argv of process.argv) {
   }
 }
 
-console.log("======================================================");
+console.log("Inputs / Configs ".padEnd(100, "=").blue());
 console.log("PWD:", process.cwd());
-console.log("======================================================");
+console.log("".padEnd(100, "=").blue());
 console.log(JSON.stringify(configs, null, 2));
-console.log("======================================================");
+console.log("".padEnd(100, "=").blue());
 
 // get all relevant files
 let files = [];
@@ -34,6 +50,8 @@ let startPath = process.cwd();
 let countSkipped = 0;
 let countProcessed = 0;
 let stack = [startPath];
+
+const countLibUsedByFile = {};
 
 while (stack.length > 0) {
   const item = stack.pop();
@@ -138,7 +156,7 @@ for (const file of files) {
       /import[ ]+[\*{a-zA-Z0-9 ,}\n]+'[@/a-zA-Z0-9-]+'[;]*/g
     );
     if (!importCodeLines || importCodeLines.length === 0) {
-      console.log("> Skipped File:", file);
+      console.log("> Skipped File:".yellow(), file);
       countSkipped++;
       continue;
     }
@@ -251,10 +269,14 @@ for (const file of files) {
     // generate the new import
     var newImportedContent = [];
 
+    const librariesUsedByThisFile = new Set(); // note here, we don't count duplicate lib imports in the same file...
+
     if (configs.groupImport === false) {
       // here we don't group, each import is treated as a separate line
       for (const aModule of usedModules) {
         const { type, lib, alias, name } = moduleToLibs[aModule];
+        librariesUsedByThisFile.add(lib);
+
         if (type === "module") {
           if (alias !== name) {
             newImportedContent.push(
@@ -282,6 +304,7 @@ for (const file of files) {
 
       for (const aModule of usedModules) {
         const { type, lib, alias, name } = moduleToLibs[aModule];
+        librariesUsedByThisFile.add(lib);
 
         importGroups[lib] = importGroups[lib] || {};
 
@@ -332,6 +355,11 @@ for (const file of files) {
       }
     }
 
+    for (const lib of librariesUsedByThisFile) {
+      countLibUsedByFile[lib] = countLibUsedByFile[lib] || 0;
+      countLibUsedByFile[lib]++;
+    }
+
     newImportedContent = newImportedContent.sort((a, b) => {
       // first compare by the order in packages.json
       var ca = getLibrarySortOrder(a);
@@ -356,7 +384,11 @@ for (const file of files) {
       return res;
     });
 
-    console.log("> Repaired File:", notUsedModules.size + " Removed", file);
+    console.log(
+      "> Repaired File:".green(),
+      notUsedModules.size + " Removed",
+      file
+    );
     countProcessed++;
 
     let finalContent =
@@ -380,13 +412,29 @@ for (const file of files) {
 
     fs.writeFileSync(file, finalContent);
   } catch (err) {
-    console.log(file, err);
+    console.log("> Error".red(), file);
   }
 }
 
-console.log("======================================================");
+let countLibUsedByFileList = [];
+for (const lib of Object.keys(countLibUsedByFile)) {
+  countLibUsedByFileList.push([lib, countLibUsedByFile[lib]]);
+}
+countLibUsedByFileList = countLibUsedByFileList.sort((a, b) => {
+  let res = b[1] - a[1];
+  if (res !== 0) {
+    return res;
+  }
+  return a[0].localeCompare(b[0]);
+});
+
+console.log("Import Stats ".padEnd(100, "=").blue());
+console.log(countLibUsedByFileList.map((list) => list.join(": ")).join("\n"));
+console.log("".padEnd(100, "=").blue());
+
+console.log("Total Skipped / Processed ".padEnd(100, "=").blue());
 console.log("countSkipped:", countSkipped);
 console.log("countProcessed:", countProcessed);
-console.log("======================================================");
+console.log("".padEnd(100, "=").blue());
 
 process.exit();
