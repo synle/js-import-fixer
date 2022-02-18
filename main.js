@@ -21,11 +21,16 @@ const path = require("path");
 const package = require(path.join(process.cwd(), "package.json"));
 
 // figuring out what files in gitignore to skip
-let gitiginorePatterns = []
-try{
-  const gitignoreContent = fs.readFileSync(path.join(process.cwd(), ".gitignore"), {encoding: 'utf-8'});
-  gitiginorePatterns = gitignoreContent.split('\n').filter(s => !s.includes('#') && !s.includes('*') && s)
-} catch(err){}
+let gitiginorePatterns = [];
+try {
+  const gitignoreContent = fs.readFileSync(
+    path.join(process.cwd(), ".gitignore"),
+    { encoding: "utf-8" }
+  );
+  gitiginorePatterns = gitignoreContent
+    .split("\n")
+    .filter((s) => !s.includes("#") && !s.includes("*") && s);
+} catch (err) {}
 
 const configs = {
   groupImport: false,
@@ -92,9 +97,11 @@ while (stack.length > 0) {
 }
 
 // filter out all the files in gitignore
-if(gitiginorePatterns.length > 0){
+if (gitiginorePatterns.length > 0) {
   files = files.filter((file) =>
-    gitiginorePatterns.every((gitiginorePattern) => !file.includes(gitiginorePattern))
+    gitiginorePatterns.every(
+      (gitiginorePattern) => !file.includes(gitiginorePattern)
+    )
   );
 }
 
@@ -105,10 +112,8 @@ if (configs.filteredFiles.length > 0) {
   );
 }
 
-
 // doing a quick sort to make file easier to follow
 files = files.sort();
-
 
 const fileMap = {};
 const libraryMap = {};
@@ -149,7 +154,7 @@ function getLibrarySortOrder(a) {
 }
 
 for (const file of files) {
-  const content = fs.readFileSync(file, {encoding: 'utf-8'});
+  const content = fs.readFileSync(file, { encoding: "utf-8" });
 
   // lib_name => [array of modules]
   // '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]
@@ -172,7 +177,7 @@ for (const file of files) {
       /import[ ]+[\*{a-zA-Z0-9 ,}\n]+'[@/a-zA-Z0-9-]+'[;]*/g
     );
     if (!importCodeLines || importCodeLines.length === 0) {
-      console.log("> Skipped File:".padStart(17, ' ').yellow(), file);
+      console.log("> Skipped File:".padStart(17, " ").yellow(), file);
       countSkipped++;
       continue;
     }
@@ -401,7 +406,7 @@ for (const file of files) {
     });
 
     console.log(
-      "> Repaired File:".padStart(17, ' ').green(),
+      "> Repaired File:".padStart(17, " ").green(),
       file,
       notUsedModules.size + " Removed"
     );
