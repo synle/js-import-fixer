@@ -131,6 +131,6 @@ npx import-fixer --aggressive
 
 ## Examples Run
 
-I used this on my other project `sqlui-native`. You can refer to this pull request to see the detailed changes in action (https://github.com/synle/sqlui-native/pull/103/files)
+I used this on my other project `sqlui-native`. You can refer to [this Sample Pull Request with import-fix script run](https://github.com/synle/sqlui-native/pull/103/files) to see the detailed changes in action
 
-![demo-import](https://user-images.githubusercontent.com/3792401/153922650-2cd4b471-505f-418d-922f-9f5e421720d0.gif)
+![demo](https://user-images.githubusercontent.com/3792401/154776692-15db9288-5192-46aa-bef6-f7105349dd7d.gif)
