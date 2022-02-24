@@ -7,7 +7,7 @@
       "import-fixer": "main.js"
   },
   "scripts": {
-
+    "format": "npx prettier --write **/*.{js,md}"
   },
   "repository": {
     "type": "git",
