@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
-      - run: npx prettier --write **/*.{js,md}
+      - run: npm run format
       - uses: EndBug/add-and-commit@v8
         with:
           message: 'CI / CD - Prettier Automatic Commit'

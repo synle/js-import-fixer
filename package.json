@@ -4,10 +4,10 @@
   "description": "A shell command tool that cleaned up unused imports in a Typescript / Javascript codebase.",
   "main": "main.js",
   "bin": {
-      "import-fixer": "main.js"
+    "import-fixer": "main.js"
   },
   "scripts": {
-
+    "format": "npx prettier --write **/*.{js,json,md}"
   },
   "repository": {
     "type": "git",
