@@ -64,6 +64,35 @@ const coreUtils = {
 
     return 99999;
   },
+  getSortedImports:(unsortedImports) => {
+    console.log(unsortedImports)
+
+    return unsortedImports.sort((a, b) => {
+      // first compare by the order in packages.json
+      var ca = coreUtils.getLibrarySortOrder(a);
+      var cb = coreUtils.getLibrarySortOrder(b);
+
+      let res = ca - cb;
+
+      if (res === 0) {
+        // then compare by the order of the library
+        ca = a.substr(a.indexOf(" from "));
+        cb = b.substr(b.indexOf(" from "));
+
+        res = ca.localeCompare(cb);
+
+        // if from the same library, then compare against the order of the
+        // imported modules
+        if (res === 0) {
+          return a.localeCompare(b);
+        }
+      }
+
+      return res;
+    });
+
+
+  }
 };
 
 module.exports = coreUtils;
