@@ -1,9 +1,8 @@
-#! /usr/bin/env node
-let data = "";
 const path = require("path");
 const fileUtils = require("./fileUtils");
 const configs = require("./configs");
 const coreUtils = require("./coreUtils");
+const packageJson = require("./packageJson");
 require("./color");
 
 console.log("Inputs / Configs ".padEnd(100, "=").blue());
@@ -11,6 +10,13 @@ console.log("PWD:", process.cwd());
 console.log("".padEnd(100, "=").blue());
 console.log(JSON.stringify(configs, null, 2));
 console.log("".padEnd(100, "=").blue());
+
+// external packages from json
+let externalPackagesFromJson = new Set([
+  ...Object.keys(packageJson.devDependencies || {}),
+  ...Object.keys(packageJson.dependencies || {}),
+]);
+externalPackagesFromJson = [...externalPackagesFromJson].sort();
 
 // get all relevant files
 let startPath = process.cwd();
@@ -27,15 +33,15 @@ for (const file of files) {
 
   // lib_name => [array of modules]
   // '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]
-  var libToModules = {};
-  var moduleToLibs = {};
+  let libToModules = {};
+  let moduleToLibs = {};
 
   // set of used modules
-  var allImportedModules = new Set();
-  var notUsedModules = new Set();
-  var usedModules = new Set();
+  let allImportedModules = new Set();
+  let notUsedModules = new Set();
+  let usedModules = new Set();
 
-  var rawContentWithoutImport;
+  let rawContentWithoutImport;
   try {
     rawContentWithoutImport = content.replace(
       /import[ ]+[\*{a-zA-Z0-9 ,}\n]+'[@/a-zA-Z0-9-]+'[;]*/g,
@@ -157,7 +163,7 @@ for (const file of files) {
     }
 
     // generate the new import
-    var newImportedContent = [];
+    let newImportedContent = [];
 
     const librariesUsedByThisFile = new Set(); // note here, we don't count duplicate lib imports in the same file...
 
@@ -250,7 +256,7 @@ for (const file of files) {
       countLibUsedByFile[lib]++;
     }
 
-    newImportedContent = coreUtils.getSortedImports(newImportedContent);
+    newImportedContent = coreUtils.getSortedImports(newImportedContent, externalPackagesFromJson);
 
     console.log(
       "> Repaired File:".padStart(17, " ").green(),
@@ -280,7 +286,7 @@ for (const file of files) {
 
     fileUtils.write(file, finalContent);
   } catch (err) {
-    console.log("> Error".red(), file);
+    console.log('[Error] process failed for file: '.red, file)
   }
 }
 
