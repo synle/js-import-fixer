@@ -7,7 +7,8 @@
     "import-fixer": "main.js"
   },
   "scripts": {
-    "format": "npx prettier --write **/*.{js,json,md}"
+    "format": "npx prettier --write **/*.{js,json,md}",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/synle/js-import-fixer/issues"
   },
-  "homepage": "https://github.com/synle/js-import-fixer#readme"
+  "homepage": "https://github.com/synle/js-import-fixer#readme",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
 }

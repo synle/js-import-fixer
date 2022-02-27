@@ -1,24 +1,9 @@
 #! /usr/bin/env node
-String.prototype.blue = function () {
-  return `\x1b[36m${this}\x1b[0m`;
-};
-
-String.prototype.yellow = function () {
-  return `\x1b[33m${this}\x1b[0m`;
-};
-
-String.prototype.green = function () {
-  return `\x1b[32m${this}\x1b[0m`;
-};
-
-String.prototype.red = function () {
-  return `\x1b[31m${this}\x1b[0m`;
-};
-
 let data = "";
 const fs = require("fs");
 const path = require("path");
 const package = require(path.join(process.cwd(), "package.json"));
+require('./src/color.js');
 
 // figuring out what files in gitignore to skip
 let gitiginorePatterns = [];
