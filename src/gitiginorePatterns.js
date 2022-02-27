@@ -1,10 +1,11 @@
 const file = require("./file");
+const path = require("path");
 
 // figuring out what files in gitignore to skip
 let gitiginorePatterns = [];
 
 try {
-  const gitignoreContent = fs.read(path.join(process.cwd(), ".gitignore"));
+  const gitignoreContent = file.read(path.join(process.cwd(), ".gitignore"));
   gitiginorePatterns = gitignoreContent
     .split("\n")
     .filter((s) => !s.includes("#") && !s.includes("*") && s);
