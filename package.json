@@ -1,6 +1,6 @@
 {
   "name": "import-fixer",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A shell command tool that cleaned up unused imports in a Typescript / Javascript code base.",
   "main": "main.js",
   "bin": {
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/synle/js-import-fixer#readme",
   "devDependencies": {
+    "jest": "^27.5.1",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2"
   }
