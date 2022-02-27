@@ -1,15 +1,16 @@
 const fs = require("fs");
 const path = require("path");
 
-const file = {
-  read: (dir) => fs.readFileSync(dir, { encoding: "utf-8" }),
-  readJson: (dir) => {
+const fileUtils = {
+  read: (file) => fs.readFileSync(file, { encoding: "utf-8" }),
+  readJson: (file) => {
     try {
-      return JSON.parse(file.read(dir));
+      return JSON.parse(fileUtils.read(file));
     } catch (err) {
       return undefined;
     }
   },
+  write: (file, content) => fs.writeFileSync(file, content),
   listDirNested: (startPath) => {
     let files = [];
     let stack = [startPath];
@@ -49,4 +50,4 @@ const file = {
   },
 };
 
-module.exports = file;
+module.exports = fileUtils;

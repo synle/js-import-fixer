@@ -1,7 +1,7 @@
 const path = require("path");
-const file = require("./file");
+const fileUtils = require("./fileUtils");
 
 const packageJson =
-  file.readJson(path.join(process.cwd(), "package.json")) || {};
+  fileUtils.readJson(path.join(process.cwd(), "package.json")) || {};
 
 module.exports = packageJson;

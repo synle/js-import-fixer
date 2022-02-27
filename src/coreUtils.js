@@ -1,5 +1,5 @@
 const fs = require("fs");
-const file = require("./file");
+const fileUtils = require("./fileUtils");
 const path = require("path");
 const configs = require("./configs");
 const gitiginorePatterns = require("./gitiginorePatterns");
@@ -13,7 +13,7 @@ externalPackages = [...externalPackages].sort();
 
 const coreUtils = {
   getFilesToProcess: (startPath) => {
-    let files = file.listDirNested(startPath);
+    let files = fileUtils.listDirNested(startPath);
 
     // filter out all the files in gitignore
     if (gitiginorePatterns.length > 0) {

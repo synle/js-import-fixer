@@ -1,8 +1,7 @@
 #! /usr/bin/env node
 let data = "";
-const fs = require("fs");
-const file = require("./file");
 const path = require("path");
+const fileUtils = require("./fileUtils");
 const configs = require("./configs");
 const coreUtils = require("./coreUtils");
 require("./color");
@@ -24,7 +23,7 @@ const fileMap = {};
 const libraryMap = {};
 
 for (const file of files) {
-  const content = fs.readFileSync(file, { encoding: "utf-8" });
+  const content = fileUtils.read(file);
 
   // lib_name => [array of modules]
   // '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]
@@ -301,7 +300,7 @@ for (const file of files) {
       .replace(";\ntest", ";\n\ntest")
       .replace(";\nexport", ";\n\nexport");
 
-    fs.writeFileSync(file, finalContent);
+    fileUtils.write(file, finalContent);
   } catch (err) {
     console.log("> Error".red(), file);
   }
