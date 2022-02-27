@@ -1,4 +1,4 @@
-puname: main-build
+name: beta-build
 
 on:
   workflow_dispatch:

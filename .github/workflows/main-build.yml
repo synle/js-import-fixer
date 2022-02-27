@@ -1,4 +1,4 @@
-puname: main-build
+name: main-build
 
 on:
   push:
