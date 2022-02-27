@@ -5,7 +5,7 @@ const file = {
   read: (dir) => fs.readFileSync(dir, { encoding: "utf-8" }),
   readJson: (dir) => {
     try {
-      return JSON.parse(file.readJson(dir));
+      return JSON.parse(file.read(dir));
     } catch (err) {
       return undefined;
     }

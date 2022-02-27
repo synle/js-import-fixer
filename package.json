@@ -8,7 +8,8 @@
   },
   "scripts": {
     "format": "npx prettier --write **/*.{js,json,md}",
-    "build": "npx webpack --config webpack.config.js --stats-error-details"
+    "build": "npx webpack --config webpack.config.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
