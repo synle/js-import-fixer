@@ -5,7 +5,9 @@ const path = require("path");
 let gitiginorePatterns = [];
 
 try {
-  const gitignoreContent = fileUtils.read(path.join(process.cwd(), ".gitignore"));
+  const gitignoreContent = fileUtils.read(
+    path.join(process.cwd(), ".gitignore")
+  );
   gitiginorePatterns = gitignoreContent
     .split("\n")
     .filter((s) => !s.includes("#") && !s.includes("*") && s);
