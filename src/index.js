@@ -256,7 +256,10 @@ for (const file of files) {
       countLibUsedByFile[lib]++;
     }
 
-    newImportedContent = coreUtils.getSortedImports(newImportedContent, externalPackagesFromJson);
+    newImportedContent = coreUtils.getSortedImports(
+      newImportedContent,
+      externalPackagesFromJson
+    );
 
     console.log(
       "> Repaired File:".padStart(17, " ").green(),
@@ -286,7 +289,7 @@ for (const file of files) {
 
     fileUtils.write(file, finalContent);
   } catch (err) {
-    console.log('[Error] process failed for file: '.red, file)
+    console.log("[Error] process failed for file: ".red, file);
   }
 }
 

@@ -4,7 +4,6 @@ const path = require("path");
 const configs = require("./configs");
 const gitiginorePatterns = require("./gitiginorePatterns");
 
-
 const coreUtils = {
   getFilesToProcess: (startPath) => {
     let files = fileUtils.listDirNested(startPath);
@@ -58,7 +57,7 @@ const coreUtils = {
 
     return 99999;
   },
-  getSortedImports:(unsortedImports, externalPackages = []) => {
+  getSortedImports: (unsortedImports, externalPackages = []) => {
     return unsortedImports.sort((a, b) => {
       // first compare by the order in packages.json
       let ca = coreUtils.getLibrarySortOrder(a, externalPackages);
@@ -82,9 +81,7 @@ const coreUtils = {
 
       return res;
     });
-
-
-  }
+  },
 };
 
 module.exports = coreUtils;
