@@ -1,5 +1,7 @@
 *.pem
+.gitignore
 _config.yml
 publishBetaTags.js
 src
 webpack.config.js
+.prettierignore
