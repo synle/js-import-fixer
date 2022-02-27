@@ -1,0 +1,8 @@
+*.pem
+.github
+.gitignore
+.prettierignore
+_config.yml
+publishBetaTags.js
+src
+webpack.config.js

@@ -1,54 +1,11 @@
 #! /usr/bin/env node
-String.prototype.blue = function () {
-  return `\x1b[36m${this}\x1b[0m`;
-};
-
-String.prototype.yellow = function () {
-  return `\x1b[33m${this}\x1b[0m`;
-};
-
-String.prototype.green = function () {
-  return `\x1b[32m${this}\x1b[0m`;
-};
-
-String.prototype.red = function () {
-  return `\x1b[31m${this}\x1b[0m`;
-};
-
 let data = "";
 const fs = require("fs");
+const file = require("./file");
 const path = require("path");
-const package = require(path.join(process.cwd(), "package.json"));
-
-// figuring out what files in gitignore to skip
-let gitiginorePatterns = [];
-try {
-  const gitignoreContent = fs.readFileSync(
-    path.join(process.cwd(), ".gitignore"),
-    { encoding: "utf-8" }
-  );
-  gitiginorePatterns = gitignoreContent
-    .split("\n")
-    .filter((s) => !s.includes("#") && !s.includes("*") && s);
-} catch (err) {}
-
-const configs = {
-  groupImport: false,
-  filteredFiles: [],
-  aggressiveCheck: false,
-};
-
-for (const argv of process.argv) {
-  if (argv.includes("--groupImport")) {
-    configs.groupImport = true;
-  }
-  if (argv.includes("--filter=")) {
-    configs.filteredFiles = argv.substr(argv.indexOf("=") + 1).split(",");
-  }
-  if (argv.includes("--aggressive")) {
-    configs.aggressiveCheck = true;
-  }
-}
+const configs = require("./configs");
+const coreUtils = require("./coreUtils");
+require("./color");
 
 console.log("Inputs / Configs ".padEnd(100, "=").blue());
 console.log("PWD:", process.cwd());
@@ -57,101 +14,14 @@ console.log(JSON.stringify(configs, null, 2));
 console.log("".padEnd(100, "=").blue());
 
 // get all relevant files
-let files = [];
 let startPath = process.cwd();
 let countSkipped = 0;
 let countProcessed = 0;
-let stack = [startPath];
-
-const countLibUsedByFile = {};
-
-while (stack.length > 0) {
-  const item = stack.pop();
-
-  if (fs.lstatSync(item).isDirectory()) {
-    // is a dir
-    const items = fs
-      .readdirSync(item)
-      .map((newItem) => path.join(item, newItem));
-    stack = [...stack, ...items].filter(
-      (newItem) =>
-        !newItem.includes("/node_modules/") && !newItem.includes("/coverage/")
-    );
-  } else {
-    // is a file
-    if (
-      !item.includes(".json") &&
-      !item.includes(".snap") &&
-      !item.includes(".eslint")
-    ) {
-      if (
-        item.includes(".ts") ||
-        item.includes(".tsx") ||
-        item.includes(".js") ||
-        item.includes(".tsx")
-      ) {
-        files.push(item);
-      }
-    }
-  }
-}
-
-// filter out all the files in gitignore
-if (gitiginorePatterns.length > 0) {
-  files = files.filter((file) =>
-    gitiginorePatterns.every(
-      (gitiginorePattern) => !file.includes(gitiginorePattern)
-    )
-  );
-}
-
-// filter out the file if there is a filter
-if (configs.filteredFiles.length > 0) {
-  files = files.filter((file) =>
-    configs.filteredFiles.some((filteredFile) => file.includes(filteredFile))
-  );
-}
-
-// doing a quick sort to make file easier to follow
-files = files.sort();
+let countLibUsedByFile = {};
+let files = coreUtils.getFilesToProcess(startPath);
 
 const fileMap = {};
 const libraryMap = {};
-
-let externalPackages = new Set([
-  ...Object.keys(package.devDependencies || {}),
-  ...Object.keys(package.dependencies || {}),
-]);
-externalPackages = [...externalPackages].sort();
-
-function getAliasName(moduleName) {
-  if (moduleName.includes(" as ")) {
-    return moduleName.substr(moduleName.indexOf(" as ") + 4).trim();
-  } else {
-    return moduleName;
-  }
-}
-
-function getModuleName(moduleName) {
-  if (moduleName.includes(" as ")) {
-    return moduleName.substr(0, moduleName.indexOf(" as ")).trim();
-  } else {
-    return moduleName;
-  }
-}
-
-function getLibrarySortOrder(a) {
-  var ca = a.substr(a.indexOf(" from ") + 7);
-  ca = ca.replace(/[ '\";]+/, "");
-
-  for (let i = 0; i < externalPackages.length; i++) {
-    if (ca.includes(externalPackages[i])) {
-      return i;
-    }
-  }
-
-  return 99999;
-}
 
 for (const file of files) {
   const content = fs.readFileSync(file, { encoding: "utf-8" });
@@ -209,8 +79,8 @@ for (const file of files) {
             .filter((s) => s);
           for (let moduleName of childModuleSplits) {
             // is a child module import
-            const aliasName = getAliasName(moduleName);
-            moduleName = getModuleName(moduleName);
+            const aliasName = coreUtils.getAliasName(moduleName);
+            moduleName = coreUtils.getModuleName(moduleName);
             allImportedModules.add(aliasName);
             libToModules[foundImportedModules].push({
               name: moduleName,
@@ -233,8 +103,8 @@ for (const file of files) {
             .filter((s) => s);
           for (let moduleName of defaultModuleSplits) {
             // is default import
-            const aliasName = getAliasName(moduleName);
-            moduleName = getModuleName(moduleName);
+            const aliasName = coreUtils.getAliasName(moduleName);
+            moduleName = coreUtils.getModuleName(moduleName);
             allImportedModules.add(aliasName);
             libToModules[foundImportedModules].push({
               name: moduleName,
@@ -383,8 +253,8 @@ for (const file of files) {
 
     newImportedContent = newImportedContent.sort((a, b) => {
       // first compare by the order in packages.json
-      var ca = getLibrarySortOrder(a);
-      var cb = getLibrarySortOrder(b);
+      var ca = coreUtils.getLibrarySortOrder(a);
+      var cb = coreUtils.getLibrarySortOrder(b);
 
       let res = ca - cb;
 
