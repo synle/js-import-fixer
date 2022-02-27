@@ -38,7 +38,6 @@ const coreUtils = {
 
     return files;
   },
-
   getAliasName: (moduleName) => {
     if (moduleName.includes(" as ")) {
       return moduleName.substr(moduleName.indexOf(" as ") + 4).trim();
