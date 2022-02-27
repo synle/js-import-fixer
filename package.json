@@ -1,14 +1,15 @@
 {
   "name": "import-fixer",
   "version": "0.0.0",
-  "description": "A shell command tool that cleaned up unused imports in a Typescript / Javascript codebase.",
+  "description": "A shell command tool that cleaned up unused imports in a Typescript / Javascript code base.",
   "main": "main.js",
   "bin": {
     "import-fixer": "main.js"
   },
   "scripts": {
+    "prebuild": "npm run format",
     "format": "npx prettier --write **/*.{js,json,md}",
-    "test": "jest"
+    "build": "npx webpack --config webpack.config.js --stats-error-details"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/synle/js-import-fixer#readme",
   "devDependencies": {
-    "jest": "^27.5.1"
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2"
   }
 }
