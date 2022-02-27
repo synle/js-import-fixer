@@ -7,6 +7,7 @@ const fileUtils = {
     try {
       return JSON.parse(fileUtils.read(file));
     } catch (err) {
+      console.log("[Warning] readJson failed".yellow, err);
       return undefined;
     }
   },
