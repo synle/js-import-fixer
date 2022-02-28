@@ -3,6 +3,7 @@ const fileUtils = require("./fileUtils");
 const path = require("path");
 const configs = require("./configs");
 const gitiginorePatterns = require("./gitiginorePatterns");
+require("./color");
 
 const coreUtils = {
   getFilesToProcess: (startPath) => {
@@ -47,7 +48,7 @@ const coreUtils = {
   },
   getLibrarySortOrder: (a, externalPackages) => {
     let ca = a.substr(a.indexOf(" from ") + 7);
-    ca = ca.replace(/[ '\";]+/, "");
+    ca = ca.replace(/[ '";]+/g, "");
 
     for (let i = 0; i < externalPackages.length; i++) {
       if (ca.includes(externalPackages[i])) {
@@ -82,40 +83,44 @@ const coreUtils = {
       return res;
     });
   },
-  process: (file, externalPackagesFromJson) => {
-    const content = fileUtils.read(file).trim();
-
-    if (!content) {
-      console.log(
-        "> Skipped File (Empty Content):".padStart(17, " ").yellow(),
-        file
-      );
-      countSkipped++;
-      return;
-    }
-
-    // lib_name => [array of modules]
-    // '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]
-    let libToModules = {};
-    let moduleToLibs = {};
-
-    // set of used modules
-    let allImportedModules = new Set();
-    let notUsedModules = new Set();
-    let usedModules = new Set();
-
-    let rawContentWithoutImport;
+  process: (file, externalPackagesFromJson, dontWriteToOutputFile = false) => {
     try {
+      const content = fileUtils.read(file).trim();
+
+      if (!content) {
+        console.log(
+          "> Skipped File (Empty Content):".padStart(17, " ").yellow(),
+          file
+        );
+        countSkipped++;
+        return;
+      }
+
+      // lib_name => [array of modules]
+      // '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]
+      let libToModules = {};
+      let moduleToLibs = {};
+
+      // set of used modules
+      let allImportedModules = new Set();
+      let notUsedModules = new Set();
+      let usedModules = new Set();
+
+      let rawContentWithoutImport;
       rawContentWithoutImport = content.replace(
-        /import[ ]+[\*{a-zA-Z0-9 ,}\n]+'[@/a-zA-Z0-9-]+'[;]*/g,
+        /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][@/a-zA-Z0-9-]+['"][;]*/g,
         ""
       );
 
       const importCodeLines = content.match(
-        /import[ ]+[\*{a-zA-Z0-9 ,}\n]+'[@/a-zA-Z0-9-]+'[;]*/g
+        /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][@/a-zA-Z0-9-]+['"][;]*/g
       );
       if (!importCodeLines || importCodeLines.length === 0) {
-        console.log("> Skipped File:".padStart(17, " ").yellow(), file);
+        console.log(
+          "> Skipped File (No Import):".padStart(17, " ").yellow(),
+          file,
+          importCodeLines
+        );
         countSkipped++;
         return;
       }
@@ -124,14 +129,14 @@ const coreUtils = {
       // and if it has an alias and if it's a module / default imported
       importCodeLines.forEach((s) => {
         const foundImportedModules = s
-          .match(/from[ ]+'[@/a-zA-Z0-9-]+'[;]*/, "")[0]
-          .replace(/from[ ]+'/, "")
-          .replace(/'/, "")
+          .match(/from[ ]+['"][@/a-zA-Z0-9-]+['"][;]*/, "")[0]
+          .replace(/from[ ]+['"]/, "")
+          .replace(/['"]/, "")
           .replace(/;/, "");
         libToModules[foundImportedModules] =
           libToModules[foundImportedModules] || [];
         let parsed = s
-          .replace(/from[ ]+'[@/a-zA-Z0-9-]+'[;]*/, "")
+          .replace(/from[ ]+['"][@/a-zA-Z0-9-]+['"][;]*/, "")
           .replace("import ", "")
           .replace(/[ \n]+/g, " ");
 
@@ -352,9 +357,13 @@ const coreUtils = {
         .replace(";\ntest", ";\n\ntest")
         .replace(";\nexport", ";\n\nexport");
 
-      fileUtils.write(file, finalContent);
+      if (dontWriteToOutputFile !== true) {
+        fileUtils.write(file, finalContent);
+      }
+
+      return finalContent;
     } catch (err) {
-      console.log("[Error] process failed for file: ".red, file);
+      console.log("[Error] process failed for file: ".red(), file, err);
     }
   },
 };

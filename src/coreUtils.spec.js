@@ -1,4 +1,6 @@
+const path = require("path");
 const coreUtils = require("./coreUtils");
+const configs = require("./configs");
 
 describe("coreUtils.js", () => {
   describe("getAliasName", () => {
@@ -24,10 +26,6 @@ describe("coreUtils.js", () => {
       expect(actual).toBe("MySimpleLibrary");
     });
   });
-
-  // test("getLibrarySortOrder", async () => {
-  //   // TODO
-  // });
 
   describe("getSortedImports", () => {
     test("should work", async () => {
@@ -74,6 +72,73 @@ describe("coreUtils.js", () => {
         "import MainPage from 'src/views/MainPage';",
         "import NewConnectionPage from 'src/views/NewConnectionPage';",
       ]);
+    });
+  });
+
+  describe("process", () => {
+    const mockedExternalPackage = ["externalLib1", "externalLib2"];
+
+    const fileSample1 = path.join("__mocks__/", "sample_1.js");
+    const fileSample2 = path.join("__mocks__/", "sample_2.js");
+
+    test("sample_1.js simple", async () => {
+      global.countSkipped = 0;
+      global.countProcessed = 0;
+      global.countLibUsedByFile = {};
+
+      const actual = coreUtils.process(
+        fileSample1,
+        mockedExternalPackage,
+        true
+      );
+
+      expect(actual).toMatchSnapshot();
+    });
+
+    test("sample_1.js withGroupImport", async () => {
+      global.countSkipped = 0;
+      global.countProcessed = 0;
+      global.countLibUsedByFile = {};
+
+      configs.groupImport = true;
+
+      const actual = coreUtils.process(
+        fileSample1,
+        mockedExternalPackage,
+        true
+      );
+
+      expect(actual).toMatchSnapshot();
+    });
+
+    test("sample_2.js simple", async () => {
+      global.countSkipped = 0;
+      global.countProcessed = 0;
+      global.countLibUsedByFile = {};
+
+      const actual = coreUtils.process(
+        fileSample2,
+        mockedExternalPackage,
+        true
+      );
+
+      expect(actual).toMatchSnapshot();
+    });
+
+    test("sample_2.js withGroupImport", async () => {
+      global.countSkipped = 0;
+      global.countProcessed = 0;
+      global.countLibUsedByFile = {};
+
+      configs.groupImport = true;
+
+      const actual = coreUtils.process(
+        fileSample2,
+        mockedExternalPackage,
+        true
+      );
+
+      expect(actual).toMatchSnapshot();
     });
   });
 });
