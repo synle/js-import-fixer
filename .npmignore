@@ -6,3 +6,4 @@ _config.yml
 publishBetaTags.js
 src
 webpack.config.js
+__mocks__

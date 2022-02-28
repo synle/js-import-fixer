@@ -25,10 +25,6 @@ describe("coreUtils.js", () => {
     });
   });
 
-  // test("getLibrarySortOrder", async () => {
-  //   // TODO
-  // });
-
   describe("getSortedImports", () => {
     test("should work", async () => {
       const actual = coreUtils.getSortedImports([
@@ -74,6 +70,17 @@ describe("coreUtils.js", () => {
         "import MainPage from 'src/views/MainPage';",
         "import NewConnectionPage from 'src/views/NewConnectionPage';",
       ]);
+    });
+  });
+
+  describe("process", () => {
+    const mockedExternalPackage = [
+      'externalLib1',
+      'externalLib2',
+    ];
+    test("sample_1.js file", async () => {
+      const actual = coreUtils.process(path.join('__mocks__/', 'sample_1.js'), mockedExternalPackage);
+      expect(actual).toBe("");
     });
   });
 });
