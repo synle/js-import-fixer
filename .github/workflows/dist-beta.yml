@@ -1,4 +1,4 @@
-name: beta-build
+name: dist-beta
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
-      - run: node .github/publishMain.js
+      - run: node .github/publishBeta.js
       - run: npm install
       - run: npm test
       - run: npm run build

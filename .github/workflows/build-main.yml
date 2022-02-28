@@ -1,7 +1,7 @@
-name: pr-build
+name: build-main
 
 on:
-  pull_request:
+  push:
     branches: [master, main]
 
 jobs:
@@ -24,8 +24,3 @@ jobs:
       - run: npm install
       - run: npm test
       - run: npm run build
-      - run: npm run format
-      - uses: EndBug/add-and-commit@v8
-        with:
-          message: 'CI / CD - Prettier Automatic Commit'
-        continue-on-error: true
