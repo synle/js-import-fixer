@@ -48,7 +48,7 @@ const coreUtils = {
   },
   getLibrarySortOrder: (a, externalPackages) => {
     let ca = a.substr(a.indexOf(" from ") + 7);
-    ca = ca.replace(/[ '\";]+/, "");
+    ca = ca.replace(/[ '";]+/g, "");
 
     for (let i = 0; i < externalPackages.length; i++) {
       if (ca.includes(externalPackages[i])) {
@@ -129,14 +129,14 @@ const coreUtils = {
       // and if it has an alias and if it's a module / default imported
       importCodeLines.forEach((s) => {
         const foundImportedModules = s
-          .match(/from[ ]+'[@/a-zA-Z0-9-]+'[;]*/, "")[0]
-          .replace(/from[ ]+'/, "")
-          .replace(/'/, "")
+          .match(/from[ ]+['"][@/a-zA-Z0-9-]+['"][;]*/, "")[0]
+          .replace(/from[ ]+['"]/, "")
+          .replace(/['"]/, "")
           .replace(/;/, "");
         libToModules[foundImportedModules] =
           libToModules[foundImportedModules] || [];
         let parsed = s
-          .replace(/from[ ]+'[@/a-zA-Z0-9-]+'[;]*/, "")
+          .replace(/from[ ]+['"][@/a-zA-Z0-9-]+['"][;]*/, "")
           .replace("import ", "")
           .replace(/[ \n]+/g, " ");
 
@@ -357,13 +357,13 @@ const coreUtils = {
         .replace(";\ntest", ";\n\ntest")
         .replace(";\nexport", ";\n\nexport");
 
-      if (dontWriteToOutputFile !== false) {
+      if (dontWriteToOutputFile !== true) {
         fileUtils.write(file, finalContent);
       }
 
       return finalContent;
     } catch (err) {
-      console.log("[Error] process failed for file: ".red, file);
+      console.log("[Error] process failed for file: ".red(), file, err);
     }
   },
 };
