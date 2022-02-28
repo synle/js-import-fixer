@@ -1,3 +1,4 @@
+const path = require("path");
 const coreUtils = require("./coreUtils");
 
 describe("coreUtils.js", () => {
@@ -74,12 +75,18 @@ describe("coreUtils.js", () => {
   });
 
   describe("process", () => {
-    const mockedExternalPackage = [
-      'externalLib1',
-      'externalLib2',
-    ];
+    const mockedExternalPackage = ["externalLib1", "externalLib2"];
+
     test("sample_1.js file", async () => {
-      const actual = coreUtils.process(path.join('__mocks__/', 'sample_1.js'), mockedExternalPackage);
+      global.countSkipped = 0;
+      global.countProcessed = 0;
+      global.countLibUsedByFile = {};
+
+      const actual = coreUtils.process(
+        path.join("__mocks__/", "sample_1.js"),
+        mockedExternalPackage,
+        true
+      );
       expect(actual).toBe("");
     });
   });
