@@ -92,7 +92,21 @@ describe("coreUtils.js", () => {
         true
       );
 
-      expect(actual).toMatchSnapshot();
+      expect(actual).toMatchInlineSnapshot(`
+"import {aliasMethodLib1 as myAliasMethod1} from 'externalLib1';
+import {constant1} from 'externalLib1';
+import {methodLib1} from 'externalLib1';
+import externalLib1 from 'externalLib1';
+import {constant2} from 'externalLib2';
+import externalLib2 from 'externalLib2';
+var a1 = constant1;
+methodLib1();
+externalLib1();
+myAliasMethod1();
+
+var a2 = constant2;
+var temp2 = externalLib2();"
+`);
     });
 
     test("sample_1.js withGroupImport", async () => {
@@ -108,7 +122,17 @@ describe("coreUtils.js", () => {
         true
       );
 
-      expect(actual).toMatchSnapshot();
+      expect(actual).toMatchInlineSnapshot(`
+"import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+import externalLib2, { constant2 } from 'externalLib2';
+var a1 = constant1;
+methodLib1();
+externalLib1();
+myAliasMethod1();
+
+var a2 = constant2;
+var temp2 = externalLib2();"
+`);
     });
 
     test("sample_2.js simple", async () => {
@@ -122,7 +146,17 @@ describe("coreUtils.js", () => {
         true
       );
 
-      expect(actual).toMatchSnapshot();
+      expect(actual).toMatchInlineSnapshot(`
+"import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+import externalLib2, { constant2 } from 'externalLib2';
+var a1 = constant1;
+methodLib1();
+externalLib1();
+myAliasMethod1();
+
+var a2 = constant2;
+var temp2 = externalLib2();"
+`);
     });
 
     test("sample_2.js withGroupImport", async () => {
@@ -138,7 +172,17 @@ describe("coreUtils.js", () => {
         true
       );
 
-      expect(actual).toMatchSnapshot();
+      expect(actual).toMatchInlineSnapshot(`
+"import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+import externalLib2, { constant2 } from 'externalLib2';
+var a1 = constant1;
+methodLib1();
+externalLib1();
+myAliasMethod1();
+
+var a2 = constant2;
+var temp2 = externalLib2();"
+`);
     });
   });
 });
