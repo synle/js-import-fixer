@@ -6,6 +6,7 @@ const packageJson = require("./packageJson");
 
 console.log("Inputs / Configs ".padEnd(100, "=").blue());
 console.log("PWD:", process.cwd());
+console.log("Version:", packageJson.version);
 console.log("".padEnd(100, "=").blue());
 console.log(JSON.stringify(configs, null, 2));
 console.log("".padEnd(100, "=").blue());
