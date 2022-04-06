@@ -3,10 +3,11 @@ const fileUtils = require("./fileUtils");
 const configs = require("./configs");
 const coreUtils = require("./coreUtils");
 const packageJson = require("./packageJson");
+const libraryJson = require("../package.json")
 
 console.log("Inputs / Configs ".padEnd(100, "=").blue());
 console.log("PWD:", process.cwd());
-console.log("Version:", packageJson.version);
+console.log("Version:", libraryJson.version);
 console.log("".padEnd(100, "=").blue());
 console.log(JSON.stringify(configs, null, 2));
 console.log("".padEnd(100, "=").blue());
