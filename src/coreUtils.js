@@ -13,7 +13,7 @@ const coreUtils = {
     if (gitiginorePatterns.length > 0) {
       files = files.filter((file) =>
         gitiginorePatterns.every(
-          (gitiginorePattern) => !file.includes(gitiginorePattern)
+          (gitiginorePattern) => !file.replace(process.cwd(), '').includes(gitiginorePattern)
         )
       );
     }

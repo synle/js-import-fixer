@@ -20,6 +20,8 @@ externalPackagesFromJson = [...externalPackagesFromJson].sort();
 // get all relevant files
 let startPath = process.cwd();
 let files = coreUtils.getFilesToProcess(startPath);
+console.log("Total Files Count:", files.length);
+console.log("".padEnd(100, "=").blue());
 
 global.countSkipped = 0;
 global.countProcessed = 0;
