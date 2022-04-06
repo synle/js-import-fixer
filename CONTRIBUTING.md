@@ -1,6 +1,7 @@
 # Contributing
 
 ## How to test locally?
+
 Assuming the path to your js-import-fixer is `~/git/js-import-fixer`. Below is the command to compile and run it.
 
 ```
