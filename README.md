@@ -135,3 +135,9 @@ I used this on my other project `sqlui-native`. You can refer to [this Sample Pu
 
 ![demo](https://user-images.githubusercontent.com/3792401/154776692-15db9288-5192-46aa-bef6-f7105349dd7d.gif)
 ![image](https://user-images.githubusercontent.com/3792401/154777798-0cdb9b5c-aa1c-455c-afbd-41a00e6c8166.png)
+
+## Contributing?
+
+If you are interested in contributing, you can refer to this doc to get started
+
+- [CONTRIBUTING.md](https://github.com/synle/js-import-fixer/blob/main/CONTRIBUTING.md)
