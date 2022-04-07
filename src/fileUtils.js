@@ -31,28 +31,35 @@ const fileUtils = {
         );
       } else {
         // is a file
-        if (
-          !item.includes(".json") &&
-          !item.includes(".snap") &&
-          !item.includes(".eslint") &&
-          !item.includes("/typings/") &&
-          !item.includes("typings.ts") &&
-          !item.includes(".d.ts") &&
-          true
-        ) {
-          if (
-            item.includes(".ts") ||
-            item.includes(".tsx") ||
-            item.includes(".js") ||
-            item.includes(".tsx")
-          ) {
-            files.push(item);
-          }
+        if (fileUtils.shouldIncludeFile(item)) {
+          files.push(item);
         }
       }
     }
     return files;
   },
+  shouldIncludeFile:(item) => {
+    if (
+      !item.includes(".json") &&
+      !item.includes(".snap") &&
+      !item.includes(".eslint") &&
+      !item.includes("/typings/") &&
+      !item.includes("typings.ts") &&
+      !item.includes(".d.ts") &&
+      true
+    ) {
+      if (
+        item.includes(".ts") ||
+        item.includes(".tsx") ||
+        item.includes(".js") ||
+        item.includes(".tsx")
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 };
 
 module.exports = fileUtils;

@@ -21,4 +21,26 @@ describe("fileUtils.js", () => {
     expect(actual.some((f) => f.includes("/src/index.js"))).toBe(true);
     expect(actual.some((f) => f.includes("/src/coreUtils.js"))).toBe(true);
   });
+
+
+  test("shouldIncludeFile - False Use Cases", async () => {
+    expect(fileUtils.shouldIncludeFile(`./commons/adapters/RedisDataAdapter.spec.ts`)).toBe(true);
+    expect(fileUtils.shouldIncludeFile(`./commons/adapters/RedisDataAdapter.ts`)).toBe(true);
+    expect(fileUtils.shouldIncludeFile(`./src/components/ConnectionDescription/index.tsx`)).toBe(true);
+    expect(fileUtils.shouldIncludeFile(`./src/index.tsx`)).toBe(true);
+    expect(fileUtils.shouldIncludeFile(`./src/App.tsx`)).toBe(true);
+  });
+
+  test("shouldIncludeFile - False Use Cases", async () => {
+    expect(fileUtils.shouldIncludeFile(`./public/manifest.json`)).toBe(false);
+    expect(fileUtils.shouldIncludeFile(`./tsconfig-electron.json`)).toBe(false);
+    expect(fileUtils.shouldIncludeFile(`./.eslint`)).toBe(false);
+    expect(fileUtils.shouldIncludeFile(`./typings.ts`)).toBe(false);
+    expect(fileUtils.shouldIncludeFile(`./typings/index.ts`)).toBe(false);
+    expect(fileUtils.shouldIncludeFile(`./typings/global.d.ts`)).toBe(false);
+    expect(fileUtils.shouldIncludeFile(`./global.d.ts`)).toBe(false);
+    expect(fileUtils.shouldIncludeFile(`./src/components/ActionDialogs`)).toBe(false);
+    expect(fileUtils.shouldIncludeFile(`./src/components/ActionDialogs/index.scss`)).toBe(false);
+    expect(fileUtils.shouldIncludeFile(`./src/components/ActionDialogs/index.css`)).toBe(false);
+  });
 });
