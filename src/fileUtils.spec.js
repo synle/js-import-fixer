@@ -22,11 +22,18 @@ describe("fileUtils.js", () => {
     expect(actual.some((f) => f.includes("/src/coreUtils.js"))).toBe(true);
   });
 
-
   test("shouldIncludeFile - False Use Cases", async () => {
-    expect(fileUtils.shouldIncludeFile(`./commons/adapters/RedisDataAdapter.spec.ts`)).toBe(true);
-    expect(fileUtils.shouldIncludeFile(`./commons/adapters/RedisDataAdapter.ts`)).toBe(true);
-    expect(fileUtils.shouldIncludeFile(`./src/components/ConnectionDescription/index.tsx`)).toBe(true);
+    expect(
+      fileUtils.shouldIncludeFile(`./commons/adapters/RedisDataAdapter.spec.ts`)
+    ).toBe(true);
+    expect(
+      fileUtils.shouldIncludeFile(`./commons/adapters/RedisDataAdapter.ts`)
+    ).toBe(true);
+    expect(
+      fileUtils.shouldIncludeFile(
+        `./src/components/ConnectionDescription/index.tsx`
+      )
+    ).toBe(true);
     expect(fileUtils.shouldIncludeFile(`./src/index.tsx`)).toBe(true);
     expect(fileUtils.shouldIncludeFile(`./src/App.tsx`)).toBe(true);
   });
@@ -39,8 +46,14 @@ describe("fileUtils.js", () => {
     expect(fileUtils.shouldIncludeFile(`./typings/index.ts`)).toBe(false);
     expect(fileUtils.shouldIncludeFile(`./typings/global.d.ts`)).toBe(false);
     expect(fileUtils.shouldIncludeFile(`./global.d.ts`)).toBe(false);
-    expect(fileUtils.shouldIncludeFile(`./src/components/ActionDialogs`)).toBe(false);
-    expect(fileUtils.shouldIncludeFile(`./src/components/ActionDialogs/index.scss`)).toBe(false);
-    expect(fileUtils.shouldIncludeFile(`./src/components/ActionDialogs/index.css`)).toBe(false);
+    expect(fileUtils.shouldIncludeFile(`./src/components/ActionDialogs`)).toBe(
+      false
+    );
+    expect(
+      fileUtils.shouldIncludeFile(`./src/components/ActionDialogs/index.scss`)
+    ).toBe(false);
+    expect(
+      fileUtils.shouldIncludeFile(`./src/components/ActionDialogs/index.css`)
+    ).toBe(false);
   });
 });

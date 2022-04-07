@@ -38,7 +38,7 @@ const fileUtils = {
     }
     return files;
   },
-  shouldIncludeFile:(item) => {
+  shouldIncludeFile: (item) => {
     if (
       !item.includes(".json") &&
       !item.includes(".snap") &&
@@ -59,7 +59,7 @@ const fileUtils = {
     }
 
     return false;
-  }
+  },
 };
 
 module.exports = fileUtils;
