@@ -107,17 +107,13 @@ const coreUtils = {
       let notUsedModules = new Set();
       let usedModules = new Set();
 
-      const REGEX_ABSOLUTE_IMPORTS = /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][@/a-zA-Z0-9-]+['"][;]*/g
+      const REGEX_ABSOLUTE_IMPORTS =
+        /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][@/a-zA-Z0-9-]+['"][;]*/g;
 
       let rawContentWithoutImport;
-      rawContentWithoutImport = content.replace(
-        REGEX_ABSOLUTE_IMPORTS,
-        ""
-      );
+      rawContentWithoutImport = content.replace(REGEX_ABSOLUTE_IMPORTS, "");
 
-      const importCodeLines = content.match(
-        REGEX_ABSOLUTE_IMPORTS
-      );
+      const importCodeLines = content.match(REGEX_ABSOLUTE_IMPORTS);
       if (!importCodeLines || importCodeLines.length === 0) {
         console.log(
           "> Skipped File (No Import):".padStart(17, " ").yellow(),
@@ -312,7 +308,9 @@ const coreUtils = {
             importGroups[lib]["module"].length > 0
           ) {
             libImportedModules.push(
-              `{ ${importGroups[lib]["module"].sort((a,b) => a.toLowerCase().localeCompare(b.toLowerCase())).join(", ")} }`
+              `{ ${importGroups[lib]["module"]
+                .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+                .join(", ")} }`
             );
           }
 
