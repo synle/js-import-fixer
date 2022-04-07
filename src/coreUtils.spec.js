@@ -30,10 +30,11 @@ describe("coreUtils.js", () => {
   describe("getSortedImports", () => {
     test("should work", async () => {
       const actual = coreUtils.getSortedImports([
-        "import Alert from '@mui/material/Alert';",
+        "import useToaster, { ToasterHandler } from 'src/hooks/useToaster';",
         "import Box from '@mui/material/Box';",
-        "import CircularProgress from '@mui/material/CircularProgress';",
+        "import Alert from '@mui/material/Alert';",
         "import ActionDialogs from 'src/components/ActionDialogs';",
+        "import CircularProgress from '@mui/material/CircularProgress';",
         "import AppHeader from 'src/components/AppHeader';",
         "import ElectronEventListener from 'src/components/ElectronEventListener';",
         "import MissionControl, { useCommands } from 'src/components/MissionControl';",
@@ -46,7 +47,6 @@ describe("coreUtils.js", () => {
         "import { useDarkModeSetting } from 'src/hooks/useSetting';",
         "import dataApi from 'src/data/api';",
         "import MainPage from 'src/views/MainPage';",
-        "import useToaster, { ToasterHandler } from 'src/hooks/useToaster';",
         "import EditConnectionPage from 'src/views/EditConnectionPage';",
         "import NewConnectionPage from 'src/views/NewConnectionPage';",
       ]);
