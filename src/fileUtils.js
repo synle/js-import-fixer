@@ -34,7 +34,11 @@ const fileUtils = {
         if (
           !item.includes(".json") &&
           !item.includes(".snap") &&
-          !item.includes(".eslint")
+          !item.includes(".eslint") &&
+          !item.includes("/typings/") &&
+          !item.includes("typings.ts") &&
+          !item.includes(".d.ts") &&
+          true
         ) {
           if (
             item.includes(".ts") ||
