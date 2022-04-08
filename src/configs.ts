@@ -45,3 +45,4 @@ if (configs.isTest) {
 }
 
 module.exports = configs;
+export default configs;

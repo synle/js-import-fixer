@@ -63,3 +63,4 @@ const fileUtils = {
 };
 
 module.exports = fileUtils;
+export default fileUtils;
