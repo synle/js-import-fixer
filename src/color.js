@@ -13,3 +13,6 @@ String.prototype.green = function () {
 String.prototype.red = function () {
   return `\x1b[31m${this}\x1b[0m`;
 };
+
+console.warn = (...rest) => console.log.apply(null, ['[Warning]'.yellow, ...rest]);
+console.error = (...rest) => console.log.apply(null, ['[Error]'.red, ...rest]);
