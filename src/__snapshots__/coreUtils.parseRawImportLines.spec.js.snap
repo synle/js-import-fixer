@@ -1,0 +1,1160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`coreUtils.parseRawImportLines importSample1 example with no transformation 1`] = `
+Object {
+  "../../typings": Array [
+    Object {
+      "alias": "SqluiCore",
+      "lib": "../../typings",
+      "libFullPath": "../../typings",
+      "name": "SqluiCore",
+      "type": "module",
+    },
+  ],
+  "./BaseDataAdapter": Array [
+    Object {
+      "alias": "BaseDataAdapter",
+      "lib": "./BaseDataAdapter",
+      "libFullPath": "./BaseDataAdapter",
+      "name": "BaseDataAdapter",
+      "type": "default",
+    },
+  ],
+  "./IDataAdapter": Array [
+    Object {
+      "alias": "IDataAdapter",
+      "lib": "./IDataAdapter",
+      "libFullPath": "./IDataAdapter",
+      "name": "IDataAdapter",
+      "type": "default",
+    },
+  ],
+  "express": Array [
+    Object {
+      "alias": "Express",
+      "lib": "express",
+      "libFullPath": "express",
+      "name": "Express",
+      "type": "module",
+    },
+  ],
+  "redis": Array [
+    Object {
+      "alias": "createClient",
+      "lib": "redis",
+      "libFullPath": "redis",
+      "name": "createClient",
+      "type": "module",
+    },
+    Object {
+      "alias": "RedisClientType",
+      "lib": "redis",
+      "libFullPath": "redis",
+      "name": "RedisClientType",
+      "type": "module",
+    },
+  ],
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample1 example with no transformation 2`] = `
+Object {
+  "BaseDataAdapter": Object {
+    "alias": "BaseDataAdapter",
+    "lib": "./BaseDataAdapter",
+    "libFullPath": "./BaseDataAdapter",
+    "name": "BaseDataAdapter",
+    "type": "default",
+  },
+  "Express": Object {
+    "alias": "Express",
+    "lib": "express",
+    "libFullPath": "express",
+    "name": "Express",
+    "type": "module",
+  },
+  "IDataAdapter": Object {
+    "alias": "IDataAdapter",
+    "lib": "./IDataAdapter",
+    "libFullPath": "./IDataAdapter",
+    "name": "IDataAdapter",
+    "type": "default",
+  },
+  "RedisClientType": Object {
+    "alias": "RedisClientType",
+    "lib": "redis",
+    "libFullPath": "redis",
+    "name": "RedisClientType",
+    "type": "module",
+  },
+  "SqluiCore": Object {
+    "alias": "SqluiCore",
+    "lib": "../../typings",
+    "libFullPath": "../../typings",
+    "name": "SqluiCore",
+    "type": "module",
+  },
+  "createClient": Object {
+    "alias": "createClient",
+    "lib": "redis",
+    "libFullPath": "redis",
+    "name": "createClient",
+    "type": "module",
+  },
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample1 example with no transformation 3`] = `
+Set {
+  "createClient",
+  "RedisClientType",
+  "SqluiCore",
+  "IDataAdapter",
+  "BaseDataAdapter",
+  "Express",
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 'src' 1`] = `
+Object {
+  "../../typings": Array [
+    Object {
+      "alias": "SqluiCore",
+      "lib": "../../typings",
+      "libFullPath": "src//git/sqlui-native/typings",
+      "name": "SqluiCore",
+      "type": "module",
+    },
+  ],
+  "./BaseDataAdapter": Array [
+    Object {
+      "alias": "BaseDataAdapter",
+      "lib": "./BaseDataAdapter",
+      "libFullPath": "src//git/sqlui-native/commons/adapters/BaseDataAdapter",
+      "name": "BaseDataAdapter",
+      "type": "default",
+    },
+  ],
+  "./IDataAdapter": Array [
+    Object {
+      "alias": "IDataAdapter",
+      "lib": "./IDataAdapter",
+      "libFullPath": "src//git/sqlui-native/commons/adapters/IDataAdapter",
+      "name": "IDataAdapter",
+      "type": "default",
+    },
+  ],
+  "express": Array [
+    Object {
+      "alias": "Express",
+      "lib": "express",
+      "libFullPath": "express",
+      "name": "Express",
+      "type": "module",
+    },
+  ],
+  "redis": Array [
+    Object {
+      "alias": "createClient",
+      "lib": "redis",
+      "libFullPath": "redis",
+      "name": "createClient",
+      "type": "module",
+    },
+    Object {
+      "alias": "RedisClientType",
+      "lib": "redis",
+      "libFullPath": "redis",
+      "name": "RedisClientType",
+      "type": "module",
+    },
+  ],
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 'src' 2`] = `
+Object {
+  "BaseDataAdapter": Object {
+    "alias": "BaseDataAdapter",
+    "lib": "./BaseDataAdapter",
+    "libFullPath": "src//git/sqlui-native/commons/adapters/BaseDataAdapter",
+    "name": "BaseDataAdapter",
+    "type": "default",
+  },
+  "Express": Object {
+    "alias": "Express",
+    "lib": "express",
+    "libFullPath": "express",
+    "name": "Express",
+    "type": "module",
+  },
+  "IDataAdapter": Object {
+    "alias": "IDataAdapter",
+    "lib": "./IDataAdapter",
+    "libFullPath": "src//git/sqlui-native/commons/adapters/IDataAdapter",
+    "name": "IDataAdapter",
+    "type": "default",
+  },
+  "RedisClientType": Object {
+    "alias": "RedisClientType",
+    "lib": "redis",
+    "libFullPath": "redis",
+    "name": "RedisClientType",
+    "type": "module",
+  },
+  "SqluiCore": Object {
+    "alias": "SqluiCore",
+    "lib": "../../typings",
+    "libFullPath": "src//git/sqlui-native/typings",
+    "name": "SqluiCore",
+    "type": "module",
+  },
+  "createClient": Object {
+    "alias": "createClient",
+    "lib": "redis",
+    "libFullPath": "redis",
+    "name": "createClient",
+    "type": "module",
+  },
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 'src' 3`] = `
+Set {
+  "createClient",
+  "RedisClientType",
+  "SqluiCore",
+  "IDataAdapter",
+  "BaseDataAdapter",
+  "Express",
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 1`] = `
+Object {
+  "../../typings": Array [
+    Object {
+      "alias": "SqluiCore",
+      "lib": "../../typings",
+      "libFullPath": "/git/sqlui-native/typings",
+      "name": "SqluiCore",
+      "type": "module",
+    },
+  ],
+  "./BaseDataAdapter": Array [
+    Object {
+      "alias": "BaseDataAdapter",
+      "lib": "./BaseDataAdapter",
+      "libFullPath": "/git/sqlui-native/commons/adapters/BaseDataAdapter",
+      "name": "BaseDataAdapter",
+      "type": "default",
+    },
+  ],
+  "./IDataAdapter": Array [
+    Object {
+      "alias": "IDataAdapter",
+      "lib": "./IDataAdapter",
+      "libFullPath": "/git/sqlui-native/commons/adapters/IDataAdapter",
+      "name": "IDataAdapter",
+      "type": "default",
+    },
+  ],
+  "express": Array [
+    Object {
+      "alias": "Express",
+      "lib": "express",
+      "libFullPath": "express",
+      "name": "Express",
+      "type": "module",
+    },
+  ],
+  "redis": Array [
+    Object {
+      "alias": "createClient",
+      "lib": "redis",
+      "libFullPath": "redis",
+      "name": "createClient",
+      "type": "module",
+    },
+    Object {
+      "alias": "RedisClientType",
+      "lib": "redis",
+      "libFullPath": "redis",
+      "name": "RedisClientType",
+      "type": "module",
+    },
+  ],
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 2`] = `
+Object {
+  "BaseDataAdapter": Object {
+    "alias": "BaseDataAdapter",
+    "lib": "./BaseDataAdapter",
+    "libFullPath": "/git/sqlui-native/commons/adapters/BaseDataAdapter",
+    "name": "BaseDataAdapter",
+    "type": "default",
+  },
+  "Express": Object {
+    "alias": "Express",
+    "lib": "express",
+    "libFullPath": "express",
+    "name": "Express",
+    "type": "module",
+  },
+  "IDataAdapter": Object {
+    "alias": "IDataAdapter",
+    "lib": "./IDataAdapter",
+    "libFullPath": "/git/sqlui-native/commons/adapters/IDataAdapter",
+    "name": "IDataAdapter",
+    "type": "default",
+  },
+  "RedisClientType": Object {
+    "alias": "RedisClientType",
+    "lib": "redis",
+    "libFullPath": "redis",
+    "name": "RedisClientType",
+    "type": "module",
+  },
+  "SqluiCore": Object {
+    "alias": "SqluiCore",
+    "lib": "../../typings",
+    "libFullPath": "/git/sqlui-native/typings",
+    "name": "SqluiCore",
+    "type": "module",
+  },
+  "createClient": Object {
+    "alias": "createClient",
+    "lib": "redis",
+    "libFullPath": "redis",
+    "name": "createClient",
+    "type": "module",
+  },
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 3`] = `
+Set {
+  "createClient",
+  "RedisClientType",
+  "SqluiCore",
+  "IDataAdapter",
+  "BaseDataAdapter",
+  "Express",
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample2 example with no transformation 1`] = `
+Object {
+  "@mui/material/Alert": Array [
+    Object {
+      "alias": "Alert",
+      "lib": "@mui/material/Alert",
+      "libFullPath": "@mui/material/Alert",
+      "name": "Alert",
+      "type": "default",
+    },
+  ],
+  "@mui/material/Box": Array [
+    Object {
+      "alias": "Box",
+      "lib": "@mui/material/Box",
+      "libFullPath": "@mui/material/Box",
+      "name": "Box",
+      "type": "default",
+    },
+  ],
+  "@mui/material/CircularProgress": Array [
+    Object {
+      "alias": "CircularProgress",
+      "lib": "@mui/material/CircularProgress",
+      "libFullPath": "@mui/material/CircularProgress",
+      "name": "CircularProgress",
+      "type": "default",
+    },
+  ],
+  "@mui/material/styles": Array [
+    Object {
+      "alias": "createTheme",
+      "lib": "@mui/material/styles",
+      "libFullPath": "@mui/material/styles",
+      "name": "createTheme",
+      "type": "module",
+    },
+    Object {
+      "alias": "ThemeProvider",
+      "lib": "@mui/material/styles",
+      "libFullPath": "@mui/material/styles",
+      "name": "ThemeProvider",
+      "type": "module",
+    },
+  ],
+  "react": Array [
+    Object {
+      "alias": "useEffect",
+      "lib": "react",
+      "libFullPath": "react",
+      "name": "useEffect",
+      "type": "module",
+    },
+    Object {
+      "alias": "useState",
+      "lib": "react",
+      "libFullPath": "react",
+      "name": "useState",
+      "type": "module",
+    },
+  ],
+  "react-router-dom": Array [
+    Object {
+      "alias": "HashRouter",
+      "lib": "react-router-dom",
+      "libFullPath": "react-router-dom",
+      "name": "HashRouter",
+      "type": "module",
+    },
+    Object {
+      "alias": "Route",
+      "lib": "react-router-dom",
+      "libFullPath": "react-router-dom",
+      "name": "Route",
+      "type": "module",
+    },
+    Object {
+      "alias": "Routes",
+      "lib": "react-router-dom",
+      "libFullPath": "react-router-dom",
+      "name": "Routes",
+      "type": "module",
+    },
+  ],
+  "src/components/ActionDialogs": Array [
+    Object {
+      "alias": "ActionDialogs",
+      "lib": "src/components/ActionDialogs",
+      "libFullPath": "src/components/ActionDialogs",
+      "name": "ActionDialogs",
+      "type": "default",
+    },
+  ],
+  "src/components/AppHeader": Array [
+    Object {
+      "alias": "AppHeader",
+      "lib": "src/components/AppHeader",
+      "libFullPath": "src/components/AppHeader",
+      "name": "AppHeader",
+      "type": "default",
+    },
+  ],
+  "src/components/ElectronEventListener": Array [
+    Object {
+      "alias": "ElectronEventListener",
+      "lib": "src/components/ElectronEventListener",
+      "libFullPath": "src/components/ElectronEventListener",
+      "name": "ElectronEventListener",
+      "type": "default",
+    },
+  ],
+  "src/components/MissionControl": Array [
+    Object {
+      "alias": "MissionControl",
+      "lib": "src/components/MissionControl",
+      "libFullPath": "src/components/MissionControl",
+      "name": "MissionControl",
+      "type": "default",
+    },
+  ],
+  "src/components/Toasters": Array [
+    Object {
+      "alias": "Toasters",
+      "lib": "src/components/Toasters",
+      "libFullPath": "src/components/Toasters",
+      "name": "Toasters",
+      "type": "default",
+    },
+  ],
+  "src/data/session": Array [
+    Object {
+      "alias": "getDefaultSessionId",
+      "lib": "src/data/session",
+      "libFullPath": "src/data/session",
+      "name": "getDefaultSessionId",
+      "type": "module",
+    },
+    Object {
+      "alias": "setCurrentSessionId",
+      "lib": "src/data/session",
+      "libFullPath": "src/data/session",
+      "name": "setCurrentSessionId",
+      "type": "module",
+    },
+  ],
+  "src/hooks": Array [
+    Object {
+      "alias": "useDarkModeSetting",
+      "lib": "src/hooks",
+      "libFullPath": "src/hooks",
+      "name": "useDarkModeSetting",
+      "type": "module",
+    },
+    Object {
+      "alias": "useGetCurrentSession",
+      "lib": "src/hooks",
+      "libFullPath": "src/hooks",
+      "name": "useGetCurrentSession",
+      "type": "module",
+    },
+    Object {
+      "alias": "useGetSessions",
+      "lib": "src/hooks",
+      "libFullPath": "src/hooks",
+      "name": "useGetSessions",
+      "type": "module",
+    },
+    Object {
+      "alias": "useUpsertSession",
+      "lib": "src/hooks",
+      "libFullPath": "src/hooks",
+      "name": "useUpsertSession",
+      "type": "module",
+    },
+  ],
+  "src/views/EditConnectionPage": Array [
+    Object {
+      "alias": "EditConnectionPage",
+      "lib": "src/views/EditConnectionPage",
+      "libFullPath": "src/views/EditConnectionPage",
+      "name": "EditConnectionPage",
+      "type": "default",
+    },
+  ],
+  "src/views/MainPage": Array [
+    Object {
+      "alias": "MainPage",
+      "lib": "src/views/MainPage",
+      "libFullPath": "src/views/MainPage",
+      "name": "MainPage",
+      "type": "default",
+    },
+  ],
+  "src/views/NewConnectionPage": Array [
+    Object {
+      "alias": "NewConnectionPage",
+      "lib": "src/views/NewConnectionPage",
+      "libFullPath": "src/views/NewConnectionPage",
+      "name": "NewConnectionPage",
+      "type": "default",
+    },
+  ],
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample2 example with no transformation 2`] = `
+Object {
+  "ActionDialogs": Object {
+    "alias": "ActionDialogs",
+    "lib": "src/components/ActionDialogs",
+    "libFullPath": "src/components/ActionDialogs",
+    "name": "ActionDialogs",
+    "type": "default",
+  },
+  "Alert": Object {
+    "alias": "Alert",
+    "lib": "@mui/material/Alert",
+    "libFullPath": "@mui/material/Alert",
+    "name": "Alert",
+    "type": "default",
+  },
+  "AppHeader": Object {
+    "alias": "AppHeader",
+    "lib": "src/components/AppHeader",
+    "libFullPath": "src/components/AppHeader",
+    "name": "AppHeader",
+    "type": "default",
+  },
+  "Box": Object {
+    "alias": "Box",
+    "lib": "@mui/material/Box",
+    "libFullPath": "@mui/material/Box",
+    "name": "Box",
+    "type": "default",
+  },
+  "CircularProgress": Object {
+    "alias": "CircularProgress",
+    "lib": "@mui/material/CircularProgress",
+    "libFullPath": "@mui/material/CircularProgress",
+    "name": "CircularProgress",
+    "type": "default",
+  },
+  "EditConnectionPage": Object {
+    "alias": "EditConnectionPage",
+    "lib": "src/views/EditConnectionPage",
+    "libFullPath": "src/views/EditConnectionPage",
+    "name": "EditConnectionPage",
+    "type": "default",
+  },
+  "ElectronEventListener": Object {
+    "alias": "ElectronEventListener",
+    "lib": "src/components/ElectronEventListener",
+    "libFullPath": "src/components/ElectronEventListener",
+    "name": "ElectronEventListener",
+    "type": "default",
+  },
+  "HashRouter": Object {
+    "alias": "HashRouter",
+    "lib": "react-router-dom",
+    "libFullPath": "react-router-dom",
+    "name": "HashRouter",
+    "type": "module",
+  },
+  "MainPage": Object {
+    "alias": "MainPage",
+    "lib": "src/views/MainPage",
+    "libFullPath": "src/views/MainPage",
+    "name": "MainPage",
+    "type": "default",
+  },
+  "MissionControl": Object {
+    "alias": "MissionControl",
+    "lib": "src/components/MissionControl",
+    "libFullPath": "src/components/MissionControl",
+    "name": "MissionControl",
+    "type": "default",
+  },
+  "NewConnectionPage": Object {
+    "alias": "NewConnectionPage",
+    "lib": "src/views/NewConnectionPage",
+    "libFullPath": "src/views/NewConnectionPage",
+    "name": "NewConnectionPage",
+    "type": "default",
+  },
+  "Route": Object {
+    "alias": "Route",
+    "lib": "react-router-dom",
+    "libFullPath": "react-router-dom",
+    "name": "Route",
+    "type": "module",
+  },
+  "Routes": Object {
+    "alias": "Routes",
+    "lib": "react-router-dom",
+    "libFullPath": "react-router-dom",
+    "name": "Routes",
+    "type": "module",
+  },
+  "ThemeProvider": Object {
+    "alias": "ThemeProvider",
+    "lib": "@mui/material/styles",
+    "libFullPath": "@mui/material/styles",
+    "name": "ThemeProvider",
+    "type": "module",
+  },
+  "Toasters": Object {
+    "alias": "Toasters",
+    "lib": "src/components/Toasters",
+    "libFullPath": "src/components/Toasters",
+    "name": "Toasters",
+    "type": "default",
+  },
+  "createTheme": Object {
+    "alias": "createTheme",
+    "lib": "@mui/material/styles",
+    "libFullPath": "@mui/material/styles",
+    "name": "createTheme",
+    "type": "module",
+  },
+  "getDefaultSessionId": Object {
+    "alias": "getDefaultSessionId",
+    "lib": "src/data/session",
+    "libFullPath": "src/data/session",
+    "name": "getDefaultSessionId",
+    "type": "module",
+  },
+  "setCurrentSessionId": Object {
+    "alias": "setCurrentSessionId",
+    "lib": "src/data/session",
+    "libFullPath": "src/data/session",
+    "name": "setCurrentSessionId",
+    "type": "module",
+  },
+  "useDarkModeSetting": Object {
+    "alias": "useDarkModeSetting",
+    "lib": "src/hooks",
+    "libFullPath": "src/hooks",
+    "name": "useDarkModeSetting",
+    "type": "module",
+  },
+  "useEffect": Object {
+    "alias": "useEffect",
+    "lib": "react",
+    "libFullPath": "react",
+    "name": "useEffect",
+    "type": "module",
+  },
+  "useGetCurrentSession": Object {
+    "alias": "useGetCurrentSession",
+    "lib": "src/hooks",
+    "libFullPath": "src/hooks",
+    "name": "useGetCurrentSession",
+    "type": "module",
+  },
+  "useGetSessions": Object {
+    "alias": "useGetSessions",
+    "lib": "src/hooks",
+    "libFullPath": "src/hooks",
+    "name": "useGetSessions",
+    "type": "module",
+  },
+  "useState": Object {
+    "alias": "useState",
+    "lib": "react",
+    "libFullPath": "react",
+    "name": "useState",
+    "type": "module",
+  },
+  "useUpsertSession": Object {
+    "alias": "useUpsertSession",
+    "lib": "src/hooks",
+    "libFullPath": "src/hooks",
+    "name": "useUpsertSession",
+    "type": "module",
+  },
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample2 example with no transformation 3`] = `
+Set {
+  "createTheme",
+  "ThemeProvider",
+  "Alert",
+  "Box",
+  "CircularProgress",
+  "HashRouter",
+  "Route",
+  "Routes",
+  "useEffect",
+  "useState",
+  "getDefaultSessionId",
+  "setCurrentSessionId",
+  "useDarkModeSetting",
+  "useGetCurrentSession",
+  "useGetSessions",
+  "useUpsertSession",
+  "ActionDialogs",
+  "AppHeader",
+  "EditConnectionPage",
+  "ElectronEventListener",
+  "MainPage",
+  "MissionControl",
+  "NewConnectionPage",
+  "Toasters",
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample2 example with transform relative 1`] = `
+Object {
+  "@mui/material/Alert": Array [
+    Object {
+      "alias": "Alert",
+      "lib": "@mui/material/Alert",
+      "libFullPath": "@mui/material/Alert",
+      "name": "Alert",
+      "type": "default",
+    },
+  ],
+  "@mui/material/Box": Array [
+    Object {
+      "alias": "Box",
+      "lib": "@mui/material/Box",
+      "libFullPath": "@mui/material/Box",
+      "name": "Box",
+      "type": "default",
+    },
+  ],
+  "@mui/material/CircularProgress": Array [
+    Object {
+      "alias": "CircularProgress",
+      "lib": "@mui/material/CircularProgress",
+      "libFullPath": "@mui/material/CircularProgress",
+      "name": "CircularProgress",
+      "type": "default",
+    },
+  ],
+  "@mui/material/styles": Array [
+    Object {
+      "alias": "createTheme",
+      "lib": "@mui/material/styles",
+      "libFullPath": "@mui/material/styles",
+      "name": "createTheme",
+      "type": "module",
+    },
+    Object {
+      "alias": "ThemeProvider",
+      "lib": "@mui/material/styles",
+      "libFullPath": "@mui/material/styles",
+      "name": "ThemeProvider",
+      "type": "module",
+    },
+  ],
+  "react": Array [
+    Object {
+      "alias": "useEffect",
+      "lib": "react",
+      "libFullPath": "react",
+      "name": "useEffect",
+      "type": "module",
+    },
+    Object {
+      "alias": "useState",
+      "lib": "react",
+      "libFullPath": "react",
+      "name": "useState",
+      "type": "module",
+    },
+  ],
+  "react-router-dom": Array [
+    Object {
+      "alias": "HashRouter",
+      "lib": "react-router-dom",
+      "libFullPath": "react-router-dom",
+      "name": "HashRouter",
+      "type": "module",
+    },
+    Object {
+      "alias": "Route",
+      "lib": "react-router-dom",
+      "libFullPath": "react-router-dom",
+      "name": "Route",
+      "type": "module",
+    },
+    Object {
+      "alias": "Routes",
+      "lib": "react-router-dom",
+      "libFullPath": "react-router-dom",
+      "name": "Routes",
+      "type": "module",
+    },
+  ],
+  "src/components/ActionDialogs": Array [
+    Object {
+      "alias": "ActionDialogs",
+      "lib": "src/components/ActionDialogs",
+      "libFullPath": "src/components/ActionDialogs",
+      "name": "ActionDialogs",
+      "type": "default",
+    },
+  ],
+  "src/components/AppHeader": Array [
+    Object {
+      "alias": "AppHeader",
+      "lib": "src/components/AppHeader",
+      "libFullPath": "src/components/AppHeader",
+      "name": "AppHeader",
+      "type": "default",
+    },
+  ],
+  "src/components/ElectronEventListener": Array [
+    Object {
+      "alias": "ElectronEventListener",
+      "lib": "src/components/ElectronEventListener",
+      "libFullPath": "src/components/ElectronEventListener",
+      "name": "ElectronEventListener",
+      "type": "default",
+    },
+  ],
+  "src/components/MissionControl": Array [
+    Object {
+      "alias": "MissionControl",
+      "lib": "src/components/MissionControl",
+      "libFullPath": "src/components/MissionControl",
+      "name": "MissionControl",
+      "type": "default",
+    },
+  ],
+  "src/components/Toasters": Array [
+    Object {
+      "alias": "Toasters",
+      "lib": "src/components/Toasters",
+      "libFullPath": "src/components/Toasters",
+      "name": "Toasters",
+      "type": "default",
+    },
+  ],
+  "src/data/session": Array [
+    Object {
+      "alias": "getDefaultSessionId",
+      "lib": "src/data/session",
+      "libFullPath": "src/data/session",
+      "name": "getDefaultSessionId",
+      "type": "module",
+    },
+    Object {
+      "alias": "setCurrentSessionId",
+      "lib": "src/data/session",
+      "libFullPath": "src/data/session",
+      "name": "setCurrentSessionId",
+      "type": "module",
+    },
+  ],
+  "src/hooks": Array [
+    Object {
+      "alias": "useDarkModeSetting",
+      "lib": "src/hooks",
+      "libFullPath": "src/hooks",
+      "name": "useDarkModeSetting",
+      "type": "module",
+    },
+    Object {
+      "alias": "useGetCurrentSession",
+      "lib": "src/hooks",
+      "libFullPath": "src/hooks",
+      "name": "useGetCurrentSession",
+      "type": "module",
+    },
+    Object {
+      "alias": "useGetSessions",
+      "lib": "src/hooks",
+      "libFullPath": "src/hooks",
+      "name": "useGetSessions",
+      "type": "module",
+    },
+    Object {
+      "alias": "useUpsertSession",
+      "lib": "src/hooks",
+      "libFullPath": "src/hooks",
+      "name": "useUpsertSession",
+      "type": "module",
+    },
+  ],
+  "src/views/EditConnectionPage": Array [
+    Object {
+      "alias": "EditConnectionPage",
+      "lib": "src/views/EditConnectionPage",
+      "libFullPath": "src/views/EditConnectionPage",
+      "name": "EditConnectionPage",
+      "type": "default",
+    },
+  ],
+  "src/views/MainPage": Array [
+    Object {
+      "alias": "MainPage",
+      "lib": "src/views/MainPage",
+      "libFullPath": "src/views/MainPage",
+      "name": "MainPage",
+      "type": "default",
+    },
+  ],
+  "src/views/NewConnectionPage": Array [
+    Object {
+      "alias": "NewConnectionPage",
+      "lib": "src/views/NewConnectionPage",
+      "libFullPath": "src/views/NewConnectionPage",
+      "name": "NewConnectionPage",
+      "type": "default",
+    },
+  ],
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample2 example with transform relative 2`] = `
+Object {
+  "ActionDialogs": Object {
+    "alias": "ActionDialogs",
+    "lib": "src/components/ActionDialogs",
+    "libFullPath": "src/components/ActionDialogs",
+    "name": "ActionDialogs",
+    "type": "default",
+  },
+  "Alert": Object {
+    "alias": "Alert",
+    "lib": "@mui/material/Alert",
+    "libFullPath": "@mui/material/Alert",
+    "name": "Alert",
+    "type": "default",
+  },
+  "AppHeader": Object {
+    "alias": "AppHeader",
+    "lib": "src/components/AppHeader",
+    "libFullPath": "src/components/AppHeader",
+    "name": "AppHeader",
+    "type": "default",
+  },
+  "Box": Object {
+    "alias": "Box",
+    "lib": "@mui/material/Box",
+    "libFullPath": "@mui/material/Box",
+    "name": "Box",
+    "type": "default",
+  },
+  "CircularProgress": Object {
+    "alias": "CircularProgress",
+    "lib": "@mui/material/CircularProgress",
+    "libFullPath": "@mui/material/CircularProgress",
+    "name": "CircularProgress",
+    "type": "default",
+  },
+  "EditConnectionPage": Object {
+    "alias": "EditConnectionPage",
+    "lib": "src/views/EditConnectionPage",
+    "libFullPath": "src/views/EditConnectionPage",
+    "name": "EditConnectionPage",
+    "type": "default",
+  },
+  "ElectronEventListener": Object {
+    "alias": "ElectronEventListener",
+    "lib": "src/components/ElectronEventListener",
+    "libFullPath": "src/components/ElectronEventListener",
+    "name": "ElectronEventListener",
+    "type": "default",
+  },
+  "HashRouter": Object {
+    "alias": "HashRouter",
+    "lib": "react-router-dom",
+    "libFullPath": "react-router-dom",
+    "name": "HashRouter",
+    "type": "module",
+  },
+  "MainPage": Object {
+    "alias": "MainPage",
+    "lib": "src/views/MainPage",
+    "libFullPath": "src/views/MainPage",
+    "name": "MainPage",
+    "type": "default",
+  },
+  "MissionControl": Object {
+    "alias": "MissionControl",
+    "lib": "src/components/MissionControl",
+    "libFullPath": "src/components/MissionControl",
+    "name": "MissionControl",
+    "type": "default",
+  },
+  "NewConnectionPage": Object {
+    "alias": "NewConnectionPage",
+    "lib": "src/views/NewConnectionPage",
+    "libFullPath": "src/views/NewConnectionPage",
+    "name": "NewConnectionPage",
+    "type": "default",
+  },
+  "Route": Object {
+    "alias": "Route",
+    "lib": "react-router-dom",
+    "libFullPath": "react-router-dom",
+    "name": "Route",
+    "type": "module",
+  },
+  "Routes": Object {
+    "alias": "Routes",
+    "lib": "react-router-dom",
+    "libFullPath": "react-router-dom",
+    "name": "Routes",
+    "type": "module",
+  },
+  "ThemeProvider": Object {
+    "alias": "ThemeProvider",
+    "lib": "@mui/material/styles",
+    "libFullPath": "@mui/material/styles",
+    "name": "ThemeProvider",
+    "type": "module",
+  },
+  "Toasters": Object {
+    "alias": "Toasters",
+    "lib": "src/components/Toasters",
+    "libFullPath": "src/components/Toasters",
+    "name": "Toasters",
+    "type": "default",
+  },
+  "createTheme": Object {
+    "alias": "createTheme",
+    "lib": "@mui/material/styles",
+    "libFullPath": "@mui/material/styles",
+    "name": "createTheme",
+    "type": "module",
+  },
+  "getDefaultSessionId": Object {
+    "alias": "getDefaultSessionId",
+    "lib": "src/data/session",
+    "libFullPath": "src/data/session",
+    "name": "getDefaultSessionId",
+    "type": "module",
+  },
+  "setCurrentSessionId": Object {
+    "alias": "setCurrentSessionId",
+    "lib": "src/data/session",
+    "libFullPath": "src/data/session",
+    "name": "setCurrentSessionId",
+    "type": "module",
+  },
+  "useDarkModeSetting": Object {
+    "alias": "useDarkModeSetting",
+    "lib": "src/hooks",
+    "libFullPath": "src/hooks",
+    "name": "useDarkModeSetting",
+    "type": "module",
+  },
+  "useEffect": Object {
+    "alias": "useEffect",
+    "lib": "react",
+    "libFullPath": "react",
+    "name": "useEffect",
+    "type": "module",
+  },
+  "useGetCurrentSession": Object {
+    "alias": "useGetCurrentSession",
+    "lib": "src/hooks",
+    "libFullPath": "src/hooks",
+    "name": "useGetCurrentSession",
+    "type": "module",
+  },
+  "useGetSessions": Object {
+    "alias": "useGetSessions",
+    "lib": "src/hooks",
+    "libFullPath": "src/hooks",
+    "name": "useGetSessions",
+    "type": "module",
+  },
+  "useState": Object {
+    "alias": "useState",
+    "lib": "react",
+    "libFullPath": "react",
+    "name": "useState",
+    "type": "module",
+  },
+  "useUpsertSession": Object {
+    "alias": "useUpsertSession",
+    "lib": "src/hooks",
+    "libFullPath": "src/hooks",
+    "name": "useUpsertSession",
+    "type": "module",
+  },
+}
+`;
+
+exports[`coreUtils.parseRawImportLines importSample2 example with transform relative 3`] = `
+Set {
+  "createTheme",
+  "ThemeProvider",
+  "Alert",
+  "Box",
+  "CircularProgress",
+  "HashRouter",
+  "Route",
+  "Routes",
+  "useEffect",
+  "useState",
+  "getDefaultSessionId",
+  "setCurrentSessionId",
+  "useDarkModeSetting",
+  "useGetCurrentSession",
+  "useGetSessions",
+  "useUpsertSession",
+  "ActionDialogs",
+  "AppHeader",
+  "EditConnectionPage",
+  "ElectronEventListener",
+  "MainPage",
+  "MissionControl",
+  "NewConnectionPage",
+  "Toasters",
+}
+`;
