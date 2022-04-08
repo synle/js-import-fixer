@@ -113,9 +113,32 @@ The full command will look something like this
 npx import-fixer --aggressive
 ```
 
+
+#### `--transformRelativeImport`
+- `--transformRelativeImport` : when turned on, the script will transform relative imports such as `import IDataAdapter from './IDataAdapter';` in a file to an absolute import such as `import IDataAdapter from 'commons/adapters/IDataAdapter';`
+
+- You can add your own path prefix, by default, we will resolve the full path and add this path prefix to the front of the file.
+
+For these examples, we will consider the original import line as followed
+
+```
+import IDataAdapter from './IDataAdapter';
+```
+
+- The minimal command will be like this, and will convert the import line to `import IDataAdapter from 'commons/adapters/IDataAdapter';`
+
+```
+npx import-fixer --transformRelativeImport
+```
+
+- If you need to pass in custom prefix for path, you can use this command. This will convert the sample import into this with the prefix src/ `import IDataAdapter from 'src/commons/adapters/IDataAdapter';`
+
+```
+npx import-fixer --transformRelativeImport="src/"
+```
+
 ## Limitations
 
-- At the moment the script will treat individual imports from the same library as a separate import line. In the future, we can have an optional parameter that will group these imports.
 - The script currently only supports `import` syntax, so if you have `require` syntax in your code base, it will skip those. In the future, I plan to combine the two and give users an option to consolidate the import as `import` or require syntax.
 - The code that checks for usage of library uses contains, if your module contains a common name like Box / Button, there might be a false negative, so you might need to remove those manually.
 
@@ -127,6 +150,7 @@ npx import-fixer --aggressive
 - [x] Publish this package to npm registry.
 - [x] Make this package executable with `npx` (Using `npx import-fixer`).
 - [x] Respect the files in `.gitignore` and skip those files when running the script.
+- [x] Added an option to transform relative imports into absolute imports (Using [`--transformRelativeImport`](https://synle.github.io/js-import-fixer/#--transformRelativeImport)).
 - [ ] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
 
 ## Examples Run

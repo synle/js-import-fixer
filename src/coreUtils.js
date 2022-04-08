@@ -211,6 +211,7 @@ const coreUtils = {
         }
       });
 
+      // TODO: remove me
       console.log('allImportedModules', allImportedModules);
       console.log('libToModules', libToModules);
       console.log('moduleToLibs', moduleToLibs);
@@ -335,7 +336,6 @@ const coreUtils = {
 
           if (libImportedModules.length > 0) {
             const libFullPath = libToModules[lib][0].libFullPath;
-
             newImportedContent.push(
               `import ${libImportedModules.join(", ")} from '${libFullPath}';`
             );
