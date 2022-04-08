@@ -150,10 +150,10 @@ npx import-fixer --importQuote=single
 ```
 
 Refer to this table for more information:
-| Option                           | Output                                 |
+| Option | Output |
 |----------------------------------|----------------------------------------|
 | `--importQuote=single` (Default) | `import { SqluiCore } from 'typings';` |
-| `--importQuote=double`           | `import { SqluiCore } from "typings";` |
+| `--importQuote=double` | `import { SqluiCore } from "typings";` |
 
 ## Limitations
 

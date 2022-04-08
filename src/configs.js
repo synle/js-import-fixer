@@ -25,7 +25,8 @@ for (const argv of process.argv) {
     configs.transformRelativeImport = "";
   }
   if (argv.includes(`--importQuote=`)) {
-    configs.importQuote = argv.substr(argv.indexOf(`=`) + 1).trim() !== 'single' ? `"`: `'`;
+    configs.importQuote =
+      argv.substr(argv.indexOf(`=`) + 1).trim() !== "single" ? `"` : `'`;
   }
 }
 
