@@ -1,3 +1,4 @@
+// @ts-nocheck
 String.prototype.blue = function () {
   return `\x1b[36m${this}\x1b[0m`;
 };
