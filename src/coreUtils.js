@@ -101,9 +101,9 @@ const coreUtils = {
       // '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]
       let libToModules = {};
       let moduleToLibs = {};
+      let allImportedModules = new Set();
 
       // set of used modules
-      let allImportedModules = new Set();
       let notUsedModules = new Set();
       let usedModules = new Set();
 
@@ -114,17 +114,7 @@ const coreUtils = {
         REGEX_INCLUDING_RELATIVE_IMPORTS,
         ""
       );
-      let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS);
-
-      if (!importCodeLines || importCodeLines.length === 0) {
-        console.log(
-          "> Skipped File (No Import):".padStart(17, " ").yellow(),
-          file,
-          importCodeLines
-        );
-        countSkipped++;
-        return;
-      }
+      let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
 
       // here we figured out what imports are being imported
       // and if it has an alias and if it's a module / default imported
@@ -219,6 +209,15 @@ const coreUtils = {
           }
         }
       });
+
+      if (!allImportedModules || allImportedModules.length === 0) {
+        console.log(
+          "> Skipped File (No Import):".padStart(17, " ").yellow(),
+          file
+        );
+        countSkipped++;
+        return;
+      }
 
       // here we figure out if an import is actually used in the code
       for (const aModule of allImportedModules) {
