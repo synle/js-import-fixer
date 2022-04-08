@@ -110,7 +110,10 @@ const coreUtils = {
       const REGEX_INCLUDING_RELATIVE_IMPORTS =
         /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/g;
 
-      let rawContentWithoutImport = content.replace(REGEX_INCLUDING_RELATIVE_IMPORTS,"")
+      let rawContentWithoutImport = content.replace(
+        REGEX_INCLUDING_RELATIVE_IMPORTS,
+        ""
+      );
       let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS);
 
       if (!importCodeLines || importCodeLines.length === 0) {
@@ -131,8 +134,7 @@ const coreUtils = {
           .replace(/from[ ]+['"]/, "")
           .replace(/['"]/, "")
           .replace(/;/, "");
-        libToModules[lib] =
-          libToModules[lib] || [];
+        libToModules[lib] = libToModules[lib] || [];
         let parsed = s
           .replace(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, "")
           .replace("import ", "")
@@ -141,13 +143,18 @@ const coreUtils = {
         const moduleSplits = parsed.split("{");
 
         let libFullPath = lib;
-        if(libFullPath.indexOf('./') === 0 || libFullPath.indexOf('../') === 0){
+        if (
+          libFullPath.indexOf("./") === 0 ||
+          libFullPath.indexOf("../") === 0
+        ) {
           // this is a relative imports, then resolve the path if needed
-          if(configs.transformRelativeImport !== undefined ){
-            libFullPath = path.resolve(path.dirname(file), lib).replace(process.cwd() + '/', '');
+          if (configs.transformRelativeImport !== undefined) {
+            libFullPath = path
+              .resolve(path.dirname(file), lib)
+              .replace(process.cwd() + "/", "");
 
             // adding the prefix
-            if(configs.transformRelativeImport){
+            if (configs.transformRelativeImport) {
               libFullPath = configs.transformRelativeImport + libFullPath;
             }
           }
@@ -265,15 +272,13 @@ const coreUtils = {
               );
             } else {
               newImportedContent.push(
-                `import { ${ name} } from '${libFullPath}';`
+                `import { ${name} } from '${libFullPath}';`
               );
             }
           } else {
             // default
             if (alias === name) {
-              newImportedContent.push(
-                `import ${name} from '${libFullPath}';`
-              );
+              newImportedContent.push(`import ${name} from '${libFullPath}';`);
             } else {
               newImportedContent.push(
                 `import ${name} as ${alias} from '${libFullPath}';`

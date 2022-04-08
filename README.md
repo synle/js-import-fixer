@@ -64,8 +64,8 @@ Then it will become
 When this flag is turned on, the following import lines
 
 ```js
-import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
-import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
+import { databaseActionScripts as RmdbDatabaseActionScripts } from "src/scripts/rmdb";
+import { tableActionScripts as RmdbTableActionScripts } from "src/scripts/rmdb";
 ```
 
 Will become
@@ -74,7 +74,7 @@ Will become
 import {
   databaseActionScripts as RmdbDatabaseActionScripts,
   tableActionScripts as RmdbTableActionScripts,
-} from 'src/scripts/rmdb';
+} from "src/scripts/rmdb";
 ```
 
 When this flag is turned off (by default), imports will be separated into each individual line. So the following imports
@@ -83,14 +83,14 @@ When this flag is turned off (by default), imports will be separated into each i
 import {
   databaseActionScripts as RmdbDatabaseActionScripts,
   tableActionScripts as RmdbTableActionScripts,
-} from 'src/scripts/rmdb';
+} from "src/scripts/rmdb";
 ```
 
 will become
 
 ```js
-import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
-import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
+import { databaseActionScripts as RmdbDatabaseActionScripts } from "src/scripts/rmdb";
+import { tableActionScripts as RmdbTableActionScripts } from "src/scripts/rmdb";
 ```
 
 #### `--filter`
@@ -113,8 +113,8 @@ The full command will look something like this
 npx import-fixer --aggressive
 ```
 
-
 #### `--transformRelativeImport`
+
 - `--transformRelativeImport` : when turned on, the script will transform relative imports such as `import IDataAdapter from './IDataAdapter';` in a file to an absolute import such as `import IDataAdapter from 'commons/adapters/IDataAdapter';`
 
 - You can add your own path prefix, by default, we will resolve the full path and add this path prefix to the front of the file.
@@ -134,13 +134,10 @@ npx import-fixer --transformRelativeImport="src/"
 ```
 
 Refer to this table for more information.
-| Option                           | Original                                   | After Transformation                                          |
+| Option | Original | After Transformation |
 |---------------------------------|--------------------------------------------|---------------------------------------------------------------|
-| `--transformRelativeImport`       | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'commons/adapters/IDataAdapter';`     |
+| `--transformRelativeImport` | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'commons/adapters/IDataAdapter';` |
 | `--transformRelativeImport="src"` | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'src/commons/adapters/IDataAdapter';` |
-
-
-
 
 ## Limitations
 
