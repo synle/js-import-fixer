@@ -1,9 +1,9 @@
-const path = require('path');
-const fileUtils = require('./fileUtils');
-const configs = require('./configs');
-const coreUtils = require('./coreUtils');
-const packageJson = require('./packageJson');
-const libraryJson = require('../package.json');
+import path from 'path';
+import fileUtils from './fileUtils';
+import configs from './configs';
+import coreUtils from './coreUtils';
+import packageJson from './packageJson';
+import libraryJson from '../package.json';
 
 console.log('Inputs / Configs '.padEnd(100, '=').blue());
 console.log('PWD:', process.cwd());

@@ -1,9 +1,8 @@
-// @ts-nocheck
 import path from 'path';
 import configs from 'src/configs';
 import fileUtils from 'src/fileUtils';
 import gitiginorePatterns from 'src/gitiginorePatterns';
-require('./color');
+import './color';
 
 type ImportType = 'module' | 'default';
 
@@ -352,7 +351,7 @@ const coreUtils = {
         '\n' +
         rawContentWithoutImport.replace(/[\n][\n][\n]+/g, '\n').trim();
 
-      if (content.includes('')) {
+      if (content.includes('// @ts-nocheck')) {
         finalContent = '// @ts-nocheck\n' + finalContent.replace(/\/\/[ ]+@ts-nocheck/, '');
       }
 
@@ -377,3 +376,5 @@ const coreUtils = {
 };
 
 module.exports = coreUtils;
+
+export default coreUtils;
