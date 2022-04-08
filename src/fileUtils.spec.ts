@@ -19,8 +19,8 @@ describe('fileUtils.js', () => {
   test('listDirNested', async () => {
     const actual = fileUtils.listDirNested(process.cwd());
     expect(actual.length > 0).toBe(true);
-    expect(actual.some((f) => f.includes('/src/index.js'))).toBe(true);
-    expect(actual.some((f) => f.includes('/src/coreUtils.js'))).toBe(true);
+    expect(actual.some((f) => f.includes('/src/'))).toBe(true);
+    expect(actual.some((f) => f.includes('/__mocks__/nested_dir_a/nested_dir_b/sample_4.js'))).toBe(true);
   });
 
   test('shouldIncludeFile - False Use Cases', async () => {

@@ -130,6 +130,7 @@ const coreUtils = {
         }
 
         for (let moduleSplit of moduleSplits) {
+          let importEntry: ImportEntry
           if (moduleSplit.includes('}')) {
             // will be parsed as module
             moduleSplit = moduleSplit.replace('}', '');
@@ -142,21 +143,17 @@ const coreUtils = {
               const aliasName = coreUtils.getAliasName(moduleName);
               moduleName = coreUtils.getModuleName(moduleName);
               allImportedModules.add(aliasName);
-              moduleUsageMap[lib].push({
-                name: moduleName,
-                alias: aliasName,
-                type: 'module',
-                lib,
-                libFullPath,
-              });
 
-              libraryImportMap[aliasName] = {
-                lib,
-                libFullPath,
+              importEntry = {
                 name: moduleName,
                 alias: aliasName,
                 type: 'module',
-              };
+                lib,
+                libFullPath,
+              }
+
+              moduleUsageMap[lib].push(importEntry);
+              libraryImportMap[aliasName] = importEntry;
             }
           } else {
             // will be parsed as default
@@ -169,21 +166,17 @@ const coreUtils = {
               const aliasName = coreUtils.getAliasName(moduleName);
               moduleName = coreUtils.getModuleName(moduleName);
               allImportedModules.add(aliasName);
-              moduleUsageMap[lib].push({
-                name: moduleName,
-                alias: aliasName,
-                type: 'default',
-                lib,
-                libFullPath,
-              });
 
-              libraryImportMap[aliasName] = {
-                lib,
-                libFullPath,
+              importEntry = {
                 name: moduleName,
                 alias: aliasName,
                 type: 'default',
-              };
+                lib,
+                libFullPath,
+              }
+
+              moduleUsageMap[lib].push(importEntry);
+              libraryImportMap[aliasName] = importEntry;
             }
           }
         }
@@ -262,7 +255,7 @@ const coreUtils = {
       // generate the new import
       let newImportedContent = [];
 
-      const librariesUsedByThisFile = new Set(); // note here, we don't count duplicate lib imports in the same file...
+      const librariesUsedByThisFile = new Set<string>(); // note here, we don't count duplicate lib imports in the same file...
 
       if (configs.groupImport === false) {
         // here we don't group, each import is treated as a separate line
@@ -286,7 +279,7 @@ const coreUtils = {
           }
         }
       } else {
-        let importGroups: any = {}; // libName => default , module
+        let importGroups: Record<string, Record<string, string[]>> = {}; // libName => default , module
 
         for (const aModule of usedModules) {
           const { type, lib, libFullPath, alias, name } = libraryImportMap[aModule];
