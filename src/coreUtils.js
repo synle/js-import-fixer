@@ -147,7 +147,9 @@ const coreUtils = {
             libFullPath = path.resolve(path.dirname(file), lib).replace(process.cwd() + '/', '');
 
             // adding the prefix
-            libFullPath = configs.transformRelativeImport + libFullPath;
+            if(configs.transformRelativeImport){
+              libFullPath = configs.transformRelativeImport + libFullPath;
+            }
           }
         }
 
