@@ -1,8 +1,8 @@
-const fileUtils = require('./fileUtils');
-const path = require('path');
+import path from 'path';
+import fileUtils from './fileUtils';
 
 // figuring out what files in gitignore to skip
-let gitiginorePatterns = [];
+let gitiginorePatterns: string[] = [];
 
 try {
   const gitignoreContent = fileUtils.read(path.join(process.cwd(), '.gitignore'));
@@ -10,7 +10,8 @@ try {
     .split('\n')
     .filter((s) => !s.includes('#') && !s.includes('*') && s);
 } catch (err) {
-  console.log('[Warning] Failed to read .gitignore'.yellow);
+  console.warn('Failed to read .gitignore');
 }
 
 module.exports = gitiginorePatterns;
+export default gitiginorePatterns;

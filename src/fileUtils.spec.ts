@@ -1,5 +1,6 @@
-const path = require('path');
-const fileUtils = require('./fileUtils');
+// @ts-nocheck
+import path from 'path';
+import fileUtils from './fileUtils';
 
 describe('fileUtils.js', () => {
   test('read', async () => {

@@ -1,6 +1,7 @@
-const path = require('path');
-const coreUtils = require('./coreUtils');
-const configs = require('./configs');
+// @ts-nocheck
+import path from 'path';
+import coreUtils from './coreUtils';
+import configs from './configs';
 
 describe('coreUtils.parseRawImportLines', () => {
   const fileNameSample1 = '/git/sqlui-native/commons/adapters/RedisDataAdapter.ts';

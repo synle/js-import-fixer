@@ -1,6 +1,7 @@
-const path = require('path');
-const coreUtils = require('./coreUtils');
-const configs = require('./configs');
+// @ts-nocheck
+import path from 'path';
+import coreUtils from './coreUtils';
+import configs from './configs';
 
 describe('coreUtils.getAliasName', () => {
   test('complex moduleName with as', async () => {
