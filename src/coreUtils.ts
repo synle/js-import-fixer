@@ -1,8 +1,8 @@
-import fs from 'fs';
-import fileUtils from './fileUtils';
+// @ts-nocheck
 import path from 'path';
-import configs from './configs';
-import gitiginorePatterns from './gitiginorePatterns';
+import configs from 'src/configs';
+import fileUtils from 'src/fileUtils';
+import gitiginorePatterns from 'src/gitiginorePatterns';
 require('./color');
 
 type ImportType = 'module' | 'default';
@@ -352,7 +352,7 @@ const coreUtils = {
         '\n' +
         rawContentWithoutImport.replace(/[\n][\n][\n]+/g, '\n').trim();
 
-      if (content.includes('// @ts-nocheck')) {
+      if (content.includes('')) {
         finalContent = '// @ts-nocheck\n' + finalContent.replace(/\/\/[ ]+@ts-nocheck/, '');
       }
 

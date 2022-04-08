@@ -1,6 +1,5 @@
 import path from 'path';
-import fileUtils from './fileUtils';
-
+import fileUtils from 'src/fileUtils';
 // figuring out what files in gitignore to skip
 let gitiginorePatterns: string[] = [];
 
@@ -14,4 +13,5 @@ try {
 }
 
 module.exports = gitiginorePatterns;
+
 export default gitiginorePatterns;
