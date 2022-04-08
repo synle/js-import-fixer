@@ -80,6 +80,7 @@ describe("coreUtils.js", () => {
 
     const fileSample1 = path.join("__mocks__/", "sample_1.js");
     const fileSample2 = path.join("__mocks__/", "sample_2.js");
+    const fileSample3 = path.join("__mocks__/nested_dir_a/nested_dir_b", "sample_3.js");
 
     test("sample_1.js simple", async () => {
       global.countSkipped = 0;
@@ -183,6 +184,42 @@ myAliasMethod1();
 var a2 = constant2;
 var temp2 = externalLib2();"
 `);
+    });
+
+
+
+    test("sample_3.js with simple transformation", async () => {
+      global.countSkipped = 0;
+      global.countProcessed = 0;
+      global.countLibUsedByFile = {};
+
+      configs.groupImport = true;
+      configs.transformRelativeImport = "";
+
+      const actual = coreUtils.process(
+        fileSample3,
+        mockedExternalPackage,
+        true
+      );
+
+      expect(actual).toMatchInlineSnapshot();
+    });
+
+    test("sample_3.js with simple transformation", async () => {
+      global.countSkipped = 0;
+      global.countProcessed = 0;
+      global.countLibUsedByFile = {};
+
+      configs.groupImport = true;
+      configs.transformRelativeImport = "./";
+
+      const actual = coreUtils.process(
+        fileSample3,
+        mockedExternalPackage,
+        true
+      );
+
+      expect(actual).toMatchInlineSnapshot();
     });
   });
 });
