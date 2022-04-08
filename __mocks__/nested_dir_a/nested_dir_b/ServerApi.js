@@ -1,3 +1,3 @@
-export default const ServerApi = {
+export default {
   save: (res) => null,
 }

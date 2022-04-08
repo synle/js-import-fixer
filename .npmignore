@@ -2,8 +2,14 @@
 .github
 .gitignore
 .prettierignore
+__mocks__
 _config.yml
+coverage
+jest.config.js
+jest.setup.js
+package.json
 publishBetaTags.js
 src
+tsconfig.json
 webpack.config.js
-__mocks__
+CONTRIBUTING.md
