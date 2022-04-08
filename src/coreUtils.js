@@ -145,6 +145,9 @@ const coreUtils = {
           // this is a relative imports, then resolve the path if needed
           if(configs.transformRelativeImport !== undefined ){
             libFullPath = path.resolve(path.dirname(file), lib).replace(process.cwd() + '/', '');
+
+            // adding the prefix
+            libFullPath = configs.transformRelativeImport + libFullPath;
           }
         }
 
