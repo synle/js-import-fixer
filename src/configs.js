@@ -4,6 +4,7 @@ const configs = {
   aggressiveCheck: false,
   transformRelativeImport: undefined,
   isTest: !!process.env.JEST_WORKER_ID,
+  importQuote: `"`,
 };
 
 for (const argv of process.argv) {
@@ -22,6 +23,9 @@ for (const argv of process.argv) {
       .replace(/"/g, "");
   } else if (argv.includes(`--transformRelativeImport`)) {
     configs.transformRelativeImport = "";
+  }
+  if (argv.includes(`--importQuote=`)) {
+    configs.importQuote = argv.substr(argv.indexOf(`=`) + 1).trim() !== 'single' ? `"`: `'`;
   }
 }
 

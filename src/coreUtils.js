@@ -397,7 +397,7 @@ const coreUtils = {
       }
 
       newImportedContent = coreUtils.getSortedImports(
-        newImportedContent,
+        newImportedContent.map(importedLine => importedLine.replace(/'/g, configs.importQuote)),
         externalPackagesFromJson
       );
 
