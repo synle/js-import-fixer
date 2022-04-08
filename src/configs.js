@@ -3,6 +3,7 @@ const configs = {
   filteredFiles: [],
   aggressiveCheck: false,
   transformRelativeImport: undefined,
+  isTest: !!process.env.JEST_WORKER_ID,
 };
 
 for (const argv of process.argv) {
@@ -22,6 +23,11 @@ for (const argv of process.argv) {
   } else if (argv.includes(`--transformRelativeImport`)) {
     configs.transformRelativeImport = "";
   }
+}
+
+// hooking up logging
+if (configs.isTest) {
+  console.log = () => null;
 }
 
 module.exports = configs;

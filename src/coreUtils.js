@@ -106,7 +106,13 @@ const coreUtils = {
    * @param  {Set<string>} allImportedModules list of all imported modules
    * @return None
    */
-  parseRawImportLines:(file, importCodeLines, libToModules, moduleToLibs, allImportedModules) => {
+  parseRawImportLines: (
+    file,
+    importCodeLines,
+    libToModules,
+    moduleToLibs,
+    allImportedModules
+  ) => {
     importCodeLines.forEach((s) => {
       const lib = s
         .match(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, "")[0]
@@ -122,10 +128,7 @@ const coreUtils = {
       const moduleSplits = parsed.split("{");
 
       let libFullPath = lib;
-      if (
-        libFullPath.indexOf("./") === 0 ||
-        libFullPath.indexOf("../") === 0
-      ) {
+      if (libFullPath.indexOf("./") === 0 || libFullPath.indexOf("../") === 0) {
         // this is a relative imports, then resolve the path if needed
         if (configs.transformRelativeImport !== undefined) {
           libFullPath = path
@@ -242,10 +245,17 @@ const coreUtils = {
         REGEX_INCLUDING_RELATIVE_IMPORTS,
         ""
       );
-      let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
+      let importCodeLines =
+        content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
 
       // here we parse raw imports
-      coreUtils.parseRawImportLines(file, importCodeLines, libToModules, moduleToLibs, allImportedModules);
+      coreUtils.parseRawImportLines(
+        file,
+        importCodeLines,
+        libToModules,
+        moduleToLibs,
+        allImportedModules
+      );
 
       if (!allImportedModules || allImportedModules.size === 0) {
         console.log(
