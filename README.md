@@ -1,22 +1,21 @@
 [![build-main](https://github.com/synle/js-import-fixer/actions/workflows/build-main.yml/badge.svg)](https://github.com/synle/js-import-fixer/actions/workflows/build-main.yml)
 [![npm version](https://badge.fury.io/js/import-fixer.svg)](https://badge.fury.io/js/import-fixer)
 
-# js-import-fixer
+A script that cleans up javascript / typescript duplicates or unused imports in a deterministic way.
 
-A shell command tool that cleaned up unused imports in a Typescript / Javascript codebase.
+- [JS Import Fixer - Official Home Page](https://synle.github.io/js-import-fixer/)
+- [JS Import Fixer - Github Page](https://github.com/synle/js-import-fixer)
 
-[JS Import Fixer - Official Home Page](https://synle.github.io/js-import-fixer/)
+## Background Information
 
-## Why / Background Information?
-
-- There are times where you worked on an existing Typescript / Javascript code base with a lot of unused imports. It causes eslint error to show a lot of warning. Removing the unused imports by hands is just not feasible.
+- There are times where you worked on an existing TypeScript / JavaScript code base with a lot of unused imports. It causes eslint error to show a lot of warning. Removing the unused imports by hands is just not feasible.
 - Another area is that people tend to have no convention when it comes to importing library. Sometimes we imported external libraries first, then we imported local modules.
 
 That's why I came up with this tool to clean up unused imports and organize imports in a way that are more deterministic.
 
 ## Features
 
-- Will look at the Javascript / Typescript code for import usages. And remove unused imports.
+- Will look at the JavaScript / TypeScript code for import usages. And remove unused imports.
 - Will also fix duplicate imports issue. Say if you have multiple lines of `import react from 'react';`. So it will consolidate that into a single import and will allow your script to compile and run.
 - There is an option `--groupImport` that will consolidate multiple lines of imports from the same library into a single one.
 
@@ -133,11 +132,29 @@ npx import-fixer --transformRelativeImport
 npx import-fixer --transformRelativeImport="src/"
 ```
 
-Refer to this table for more information.
-| Option | Original | After Transformation |
-|---------------------------------|--------------------------------------------|---------------------------------------------------------------|
-| `--transformRelativeImport` | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'commons/adapters/IDataAdapter';` |
+Refer to this table for more information:
+
+| Option                            | Original                                     | After Transformation                                            |
+| --------------------------------- | -------------------------------------------- | --------------------------------------------------------------- |
+| `--transformRelativeImport`       | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'commons/adapters/IDataAdapter';`     |
 | `--transformRelativeImport="src"` | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'src/commons/adapters/IDataAdapter';` |
+
+#### `--importQuote`
+
+- `--importQuote`: can be used to set the import line quote. So it's either double quote or single quote. The default behavior is using single quote.
+
+- The minimal command will look like this.
+
+```bash
+npx import-fixer --importQuote=single
+```
+
+Refer to this table for more information:
+
+| Option                           | Output                                 |
+| -------------------------------- | -------------------------------------- |
+| `--importQuote=single` (Default) | `import { SqluiCore } from 'typings';` |
+| `--importQuote=double`           | `import { SqluiCore } from "typings";` |
 
 ## Limitations
 
@@ -153,6 +170,7 @@ Refer to this table for more information.
 - [x] Make this package executable with `npx` (Using `npx import-fixer`).
 - [x] Respect the files in `.gitignore` and skip those files when running the script.
 - [x] Added an option to transform relative imports into absolute imports (Using [`--transformRelativeImport`](https://synle.github.io/js-import-fixer/#--transformRelativeImport)).
+- [x] Added an option to control what's the output quote is in the import line. Either single quote or double quote. [`--importQuote`](https://synle.github.io/js-import-fixer/#--importQuote)
 - [ ] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
 
 ## Examples Run
