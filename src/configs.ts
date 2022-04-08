@@ -44,5 +44,4 @@ if (configs.isTest) {
   console.log = () => null;
 }
 
-module.exports = configs;
 export default configs;

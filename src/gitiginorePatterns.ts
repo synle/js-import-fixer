@@ -12,6 +12,4 @@ try {
   console.warn('Failed to read .gitignore');
 }
 
-module.exports = gitiginorePatterns;
-
 export default gitiginorePatterns;

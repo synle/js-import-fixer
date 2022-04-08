@@ -375,6 +375,4 @@ const coreUtils = {
   },
 };
 
-module.exports = coreUtils;
-
 export default coreUtils;
