@@ -1,2 +1,7 @@
-main.js
 __mocks__
+_layouts
+build
+coverage
+main.js
+node_modules
+public/vs
