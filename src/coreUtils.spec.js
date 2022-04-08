@@ -1,33 +1,33 @@
-const path = require("path");
-const coreUtils = require("./coreUtils");
-const configs = require("./configs");
+const path = require('path');
+const coreUtils = require('./coreUtils');
+const configs = require('./configs');
 
-describe("coreUtils.getAliasName", () => {
-  test("complex moduleName with as", async () => {
-    const actual = coreUtils.getAliasName("MySimpleLibrary as MyAliasName");
-    expect(actual).toBe("MyAliasName");
+describe('coreUtils.getAliasName', () => {
+  test('complex moduleName with as', async () => {
+    const actual = coreUtils.getAliasName('MySimpleLibrary as MyAliasName');
+    expect(actual).toBe('MyAliasName');
   });
 
-  test("simple moduleName", async () => {
-    const actual = coreUtils.getAliasName("MySimpleLibrary");
-    expect(actual).toBe("MySimpleLibrary");
-  });
-});
-
-describe("coreUtils.getModuleName", () => {
-  test("complex moduleName with as", async () => {
-    const actual = coreUtils.getModuleName("MySimpleLibrary as MyAliasName");
-    expect(actual).toBe("MySimpleLibrary");
-  });
-
-  test("simple moduleName", async () => {
-    const actual = coreUtils.getModuleName("MySimpleLibrary");
-    expect(actual).toBe("MySimpleLibrary");
+  test('simple moduleName', async () => {
+    const actual = coreUtils.getAliasName('MySimpleLibrary');
+    expect(actual).toBe('MySimpleLibrary');
   });
 });
 
-describe("coreUtils.getSortedImports", () => {
-  test("should work", async () => {
+describe('coreUtils.getModuleName', () => {
+  test('complex moduleName with as', async () => {
+    const actual = coreUtils.getModuleName('MySimpleLibrary as MyAliasName');
+    expect(actual).toBe('MySimpleLibrary');
+  });
+
+  test('simple moduleName', async () => {
+    const actual = coreUtils.getModuleName('MySimpleLibrary');
+    expect(actual).toBe('MySimpleLibrary');
+  });
+});
+
+describe('coreUtils.getSortedImports', () => {
+  test('should work', async () => {
     const actual = coreUtils.getSortedImports([
       "import useToaster, { ToasterHandler } from 'src/hooks/useToaster';",
       "import Box from '@mui/material/Box';",

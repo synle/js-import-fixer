@@ -18,15 +18,12 @@ for (const argv of process.argv) {
     configs.aggressiveCheck = true;
   }
   if (argv.includes(`--transformRelativeImport=`)) {
-    configs.transformRelativeImport = argv
-      .substr(argv.indexOf(`=`) + 1)
-      .replace(/"/g, "");
+    configs.transformRelativeImport = argv.substr(argv.indexOf(`=`) + 1).replace(/"/g, '');
   } else if (argv.includes(`--transformRelativeImport`)) {
-    configs.transformRelativeImport = "";
+    configs.transformRelativeImport = '';
   }
   if (argv.includes(`--importQuote=`)) {
-    configs.importQuote =
-      argv.substr(argv.indexOf(`=`) + 1).trim() !== "single" ? `"` : `'`;
+    configs.importQuote = argv.substr(argv.indexOf(`=`) + 1).trim() !== 'single' ? `"` : `'`;
   }
 }
 

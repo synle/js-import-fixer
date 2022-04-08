@@ -1,13 +1,13 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 const fileUtils = {
-  read: (file) => fs.readFileSync(file, { encoding: "utf-8" }),
+  read: (file) => fs.readFileSync(file, { encoding: 'utf-8' }),
   readJson: (file) => {
     try {
       return JSON.parse(fileUtils.read(file));
     } catch (err) {
-      console.log("[Warning] readJson failed".yellow, err);
+      console.log('[Warning] readJson failed'.yellow, err);
       return undefined;
     }
   },
@@ -21,13 +21,9 @@ const fileUtils = {
 
       if (fs.lstatSync(item).isDirectory()) {
         // is a dir
-        const items = fs
-          .readdirSync(item)
-          .map((newItem) => path.join(item, newItem));
+        const items = fs.readdirSync(item).map((newItem) => path.join(item, newItem));
         stack = [...stack, ...items].filter(
-          (newItem) =>
-            !newItem.includes("/node_modules/") &&
-            !newItem.includes("/coverage/")
+          (newItem) => !newItem.includes('/node_modules/') && !newItem.includes('/coverage/'),
         );
       } else {
         // is a file
@@ -40,19 +36,19 @@ const fileUtils = {
   },
   shouldIncludeFile: (item) => {
     if (
-      !item.includes(".json") &&
-      !item.includes(".snap") &&
-      !item.includes(".eslint") &&
-      !item.includes("/typings/") &&
-      !item.includes("typings.ts") &&
-      !item.includes(".d.ts") &&
+      !item.includes('.json') &&
+      !item.includes('.snap') &&
+      !item.includes('.eslint') &&
+      !item.includes('/typings/') &&
+      !item.includes('typings.ts') &&
+      !item.includes('.d.ts') &&
       true
     ) {
       if (
-        item.includes(".ts") ||
-        item.includes(".tsx") ||
-        item.includes(".js") ||
-        item.includes(".tsx")
+        item.includes('.ts') ||
+        item.includes('.tsx') ||
+        item.includes('.js') ||
+        item.includes('.tsx')
       ) {
         return true;
       }

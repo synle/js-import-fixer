@@ -63,8 +63,8 @@ Then it will become
 When this flag is turned on, the following import lines
 
 ```js
-import { databaseActionScripts as RmdbDatabaseActionScripts } from "src/scripts/rmdb";
-import { tableActionScripts as RmdbTableActionScripts } from "src/scripts/rmdb";
+import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
+import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
 ```
 
 Will become
@@ -73,7 +73,7 @@ Will become
 import {
   databaseActionScripts as RmdbDatabaseActionScripts,
   tableActionScripts as RmdbTableActionScripts,
-} from "src/scripts/rmdb";
+} from 'src/scripts/rmdb';
 ```
 
 When this flag is turned off (by default), imports will be separated into each individual line. So the following imports
@@ -82,14 +82,14 @@ When this flag is turned off (by default), imports will be separated into each i
 import {
   databaseActionScripts as RmdbDatabaseActionScripts,
   tableActionScripts as RmdbTableActionScripts,
-} from "src/scripts/rmdb";
+} from 'src/scripts/rmdb';
 ```
 
 will become
 
 ```js
-import { databaseActionScripts as RmdbDatabaseActionScripts } from "src/scripts/rmdb";
-import { tableActionScripts as RmdbTableActionScripts } from "src/scripts/rmdb";
+import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
+import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
 ```
 
 #### `--filter`

@@ -1,10 +1,9 @@
-const path = require("path");
-const coreUtils = require("./coreUtils");
-const configs = require("./configs");
+const path = require('path');
+const coreUtils = require('./coreUtils');
+const configs = require('./configs');
 
-describe("coreUtils.parseRawImportLines", () => {
-  const fileNameSample1 =
-    "/git/sqlui-native/commons/adapters/RedisDataAdapter.ts";
+describe('coreUtils.parseRawImportLines', () => {
+  const fileNameSample1 = '/git/sqlui-native/commons/adapters/RedisDataAdapter.ts';
   const importSample1 = [
     "import { createClient, RedisClientType } from 'redis';",
     "import { SqluiCore } from '../../typings';",
@@ -13,7 +12,7 @@ describe("coreUtils.parseRawImportLines", () => {
     "import { Express } from 'express';",
   ];
 
-  const fileNameSample2 = "/git/sqlui-native/src/App.tsx";
+  const fileNameSample2 = '/git/sqlui-native/src/App.tsx';
   const importSample2 = [
     `import { createTheme } from '@mui/material/styles';`,
     `import { ThemeProvider } from '@mui/material/styles';`,
@@ -41,19 +40,19 @@ describe("coreUtils.parseRawImportLines", () => {
     `import Toasters from 'src/components/Toasters';`,
   ];
 
-  test("importSample1 example with transform relative", async () => {
+  test('importSample1 example with transform relative', async () => {
     let libToModules = {};
     let moduleToLibs = {};
     let allImportedModules = new Set();
 
-    configs.transformRelativeImport = "";
+    configs.transformRelativeImport = '';
 
     const actual = coreUtils.parseRawImportLines(
       fileNameSample1,
       importSample1,
       libToModules,
       moduleToLibs,
-      allImportedModules
+      allImportedModules,
     );
 
     expect(libToModules).toMatchSnapshot();
@@ -66,14 +65,14 @@ describe("coreUtils.parseRawImportLines", () => {
     let moduleToLibs = {};
     let allImportedModules = new Set();
 
-    configs.transformRelativeImport = "src/";
+    configs.transformRelativeImport = 'src/';
 
     const actual = coreUtils.parseRawImportLines(
       fileNameSample1,
       importSample1,
       libToModules,
       moduleToLibs,
-      allImportedModules
+      allImportedModules,
     );
 
     expect(libToModules).toMatchSnapshot();
@@ -81,7 +80,7 @@ describe("coreUtils.parseRawImportLines", () => {
     expect(allImportedModules).toMatchSnapshot();
   });
 
-  test("importSample1 example with no transformation", async () => {
+  test('importSample1 example with no transformation', async () => {
     let libToModules = {};
     let moduleToLibs = {};
     let allImportedModules = new Set();
@@ -93,7 +92,7 @@ describe("coreUtils.parseRawImportLines", () => {
       importSample1,
       libToModules,
       moduleToLibs,
-      allImportedModules
+      allImportedModules,
     );
 
     expect(libToModules).toMatchSnapshot();
@@ -101,19 +100,19 @@ describe("coreUtils.parseRawImportLines", () => {
     expect(allImportedModules).toMatchSnapshot();
   });
 
-  test("importSample2 example with transform relative", async () => {
+  test('importSample2 example with transform relative', async () => {
     let libToModules = {};
     let moduleToLibs = {};
     let allImportedModules = new Set();
 
-    configs.transformRelativeImport = "";
+    configs.transformRelativeImport = '';
 
     const actual = coreUtils.parseRawImportLines(
       fileNameSample2,
       importSample2,
       libToModules,
       moduleToLibs,
-      allImportedModules
+      allImportedModules,
     );
 
     expect(libToModules).toMatchSnapshot();
@@ -121,7 +120,7 @@ describe("coreUtils.parseRawImportLines", () => {
     expect(allImportedModules).toMatchSnapshot();
   });
 
-  test("importSample2 example with no transformation", async () => {
+  test('importSample2 example with no transformation', async () => {
     let libToModules = {};
     let moduleToLibs = {};
     let allImportedModules = new Set();
@@ -133,7 +132,7 @@ describe("coreUtils.parseRawImportLines", () => {
       importSample2,
       libToModules,
       moduleToLibs,
-      allImportedModules
+      allImportedModules,
     );
 
     expect(libToModules).toMatchSnapshot();

@@ -1,9 +1,9 @@
-const fs = require("fs");
-const fileUtils = require("./fileUtils");
-const path = require("path");
-const configs = require("./configs");
-const gitiginorePatterns = require("./gitiginorePatterns");
-require("./color");
+const fs = require('fs');
+const fileUtils = require('./fileUtils');
+const path = require('path');
+const configs = require('./configs');
+const gitiginorePatterns = require('./gitiginorePatterns');
+require('./color');
 
 const coreUtils = {
   getFilesToProcess: (startPath) => {
@@ -13,18 +13,15 @@ const coreUtils = {
     if (gitiginorePatterns.length > 0) {
       files = files.filter((file) =>
         gitiginorePatterns.every(
-          (gitiginorePattern) =>
-            !file.replace(process.cwd(), "").includes(gitiginorePattern)
-        )
+          (gitiginorePattern) => !file.replace(process.cwd(), '').includes(gitiginorePattern),
+        ),
       );
     }
 
     // filter out the file if there is a filter
     if (configs.filteredFiles.length > 0) {
       files = files.filter((file) =>
-        configs.filteredFiles.some((filteredFile) =>
-          file.includes(filteredFile)
-        )
+        configs.filteredFiles.some((filteredFile) => file.includes(filteredFile)),
       );
     }
 
@@ -34,22 +31,22 @@ const coreUtils = {
     return files;
   },
   getAliasName: (moduleName) => {
-    if (moduleName.includes(" as ")) {
-      return moduleName.substr(moduleName.indexOf(" as ") + 4).trim();
+    if (moduleName.includes(' as ')) {
+      return moduleName.substr(moduleName.indexOf(' as ') + 4).trim();
     } else {
       return moduleName;
     }
   },
   getModuleName: (moduleName) => {
-    if (moduleName.includes(" as ")) {
-      return moduleName.substr(0, moduleName.indexOf(" as ")).trim();
+    if (moduleName.includes(' as ')) {
+      return moduleName.substr(0, moduleName.indexOf(' as ')).trim();
     } else {
       return moduleName;
     }
   },
   getLibrarySortOrder: (a, externalPackages) => {
-    let ca = a.substr(a.indexOf(" from ") + 7);
-    ca = ca.replace(/[ '";]+/g, "");
+    let ca = a.substr(a.indexOf(' from ') + 7);
+    ca = ca.replace(/[ '";]+/g, '');
 
     for (let i = 0; i < externalPackages.length; i++) {
       if (ca.includes(externalPackages[i])) {
@@ -69,8 +66,8 @@ const coreUtils = {
 
       if (res === 0) {
         // then compare by the order of the library
-        ca = a.substr(a.indexOf(" from "));
-        cb = b.substr(b.indexOf(" from "));
+        ca = a.substr(a.indexOf(' from '));
+        cb = b.substr(b.indexOf(' from '));
 
         res = ca.localeCompare(cb);
 
@@ -106,34 +103,26 @@ const coreUtils = {
    * @param  {Set<string>} allImportedModules list of all imported modules
    * @return None
    */
-  parseRawImportLines: (
-    file,
-    importCodeLines,
-    libToModules,
-    moduleToLibs,
-    allImportedModules
-  ) => {
+  parseRawImportLines: (file, importCodeLines, libToModules, moduleToLibs, allImportedModules) => {
     importCodeLines.forEach((s) => {
       const lib = s
-        .match(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, "")[0]
-        .replace(/from[ ]+['"]/, "")
-        .replace(/['"]/, "")
-        .replace(/;/, "");
+        .match(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, '')[0]
+        .replace(/from[ ]+['"]/, '')
+        .replace(/['"]/, '')
+        .replace(/;/, '');
       libToModules[lib] = libToModules[lib] || [];
       let parsed = s
-        .replace(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, "")
-        .replace("import ", "")
-        .replace(/[ \n]+/g, " ");
+        .replace(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, '')
+        .replace('import ', '')
+        .replace(/[ \n]+/g, ' ');
 
-      const moduleSplits = parsed.split("{");
+      const moduleSplits = parsed.split('{');
 
       let libFullPath = lib;
-      if (libFullPath.indexOf("./") === 0 || libFullPath.indexOf("../") === 0) {
+      if (libFullPath.indexOf('./') === 0 || libFullPath.indexOf('../') === 0) {
         // this is a relative imports, then resolve the path if needed
         if (configs.transformRelativeImport !== undefined) {
-          libFullPath = path
-            .resolve(path.dirname(file), lib)
-            .replace(process.cwd() + "/", "");
+          libFullPath = path.resolve(path.dirname(file), lib).replace(process.cwd() + '/', '');
 
           // adding the prefix
           if (configs.transformRelativeImport) {
@@ -143,11 +132,11 @@ const coreUtils = {
       }
 
       for (let moduleSplit of moduleSplits) {
-        if (moduleSplit.includes("}")) {
+        if (moduleSplit.includes('}')) {
           // will be parsed as module
-          moduleSplit = moduleSplit.replace("}", "");
+          moduleSplit = moduleSplit.replace('}', '');
           const childModuleSplits = moduleSplit
-            .split(",")
+            .split(',')
             .map((s) => s.trim())
             .filter((s) => s);
           for (let moduleName of childModuleSplits) {
@@ -158,7 +147,7 @@ const coreUtils = {
             libToModules[lib].push({
               name: moduleName,
               alias: aliasName,
-              type: "module",
+              type: 'module',
               lib,
               libFullPath,
             });
@@ -168,13 +157,13 @@ const coreUtils = {
               libFullPath,
               name: moduleName,
               alias: aliasName,
-              type: "module",
+              type: 'module',
             };
           }
         } else {
           // will be parsed as default
           const defaultModuleSplits = moduleSplit
-            .split(",")
+            .split(',')
             .map((s) => s.trim())
             .filter((s) => s);
           for (let moduleName of defaultModuleSplits) {
@@ -185,7 +174,7 @@ const coreUtils = {
             libToModules[lib].push({
               name: moduleName,
               alias: aliasName,
-              type: "default",
+              type: 'default',
               lib,
               libFullPath,
             });
@@ -195,7 +184,7 @@ const coreUtils = {
               libFullPath,
               name: moduleName,
               alias: aliasName,
-              type: "default",
+              type: 'default',
             };
           }
         }
@@ -207,10 +196,7 @@ const coreUtils = {
       const content = fileUtils.read(file).trim();
 
       if (!content) {
-        console.log(
-          "> Skipped File (Empty Content):".padStart(17, " ").yellow(),
-          file
-        );
+        console.log('> Skipped File (Empty Content):'.padStart(17, ' ').yellow(), file);
         countSkipped++;
         return;
       }
@@ -241,12 +227,8 @@ const coreUtils = {
       const REGEX_INCLUDING_RELATIVE_IMPORTS =
         /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/g;
 
-      let rawContentWithoutImport = content.replace(
-        REGEX_INCLUDING_RELATIVE_IMPORTS,
-        ""
-      );
-      let importCodeLines =
-        content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
+      let rawContentWithoutImport = content.replace(REGEX_INCLUDING_RELATIVE_IMPORTS, '');
+      let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
 
       // here we parse raw imports
       coreUtils.parseRawImportLines(
@@ -254,14 +236,11 @@ const coreUtils = {
         importCodeLines,
         libToModules,
         moduleToLibs,
-        allImportedModules
+        allImportedModules,
       );
 
       if (!allImportedModules || allImportedModules.size === 0) {
-        console.log(
-          "> Skipped File (No Import):".padStart(17, " ").yellow(),
-          file
-        );
+        console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
         countSkipped++;
         return;
       }
@@ -276,13 +255,9 @@ const coreUtils = {
             isModuleUsed = true;
           }
           if (
-            rawContentWithoutImport.match(
-              new RegExp("[ ]+" + aModule + "[ ]*")
-            ) ||
-            rawContentWithoutImport.match(
-              new RegExp("[ ]*" + aModule + "[ ]+")
-            ) ||
-            rawContentWithoutImport.match(new RegExp(aModule + "[.}(-+]+"))
+            rawContentWithoutImport.match(new RegExp('[ ]+' + aModule + '[ ]*')) ||
+            rawContentWithoutImport.match(new RegExp('[ ]*' + aModule + '[ ]+')) ||
+            rawContentWithoutImport.match(new RegExp(aModule + '[.}(-+]+'))
           ) {
             // used as a method or an expression
             isModuleUsed = true;
@@ -311,24 +286,18 @@ const coreUtils = {
           const { type, lib, libFullPath, alias, name } = moduleToLibs[aModule];
           librariesUsedByThisFile.add(lib);
 
-          if (type === "module") {
+          if (type === 'module') {
             if (alias !== name) {
-              newImportedContent.push(
-                `import { ${name} as ${alias} } from '${libFullPath}';`
-              );
+              newImportedContent.push(`import { ${name} as ${alias} } from '${libFullPath}';`);
             } else {
-              newImportedContent.push(
-                `import { ${name} } from '${libFullPath}';`
-              );
+              newImportedContent.push(`import { ${name} } from '${libFullPath}';`);
             }
           } else {
             // default
             if (alias === name) {
               newImportedContent.push(`import ${name} from '${libFullPath}';`);
             } else {
-              newImportedContent.push(
-                `import ${name} as ${alias} from '${libFullPath}';`
-              );
+              newImportedContent.push(`import ${name} as ${alias} from '${libFullPath}';`);
             }
           }
         }
@@ -341,51 +310,43 @@ const coreUtils = {
 
           importGroups[lib] = importGroups[lib] || {};
 
-          if (type === "module") {
-            importGroups[lib]["module"] = importGroups[lib]["module"] || [];
+          if (type === 'module') {
+            importGroups[lib]['module'] = importGroups[lib]['module'] || [];
 
             if (alias !== name) {
-              importGroups[lib]["module"].push(`${name} as ${alias}`);
+              importGroups[lib]['module'].push(`${name} as ${alias}`);
             } else {
-              importGroups[lib]["module"].push(`${name}`);
+              importGroups[lib]['module'].push(`${name}`);
             }
           } else {
             // default
             if (alias === name) {
-              importGroups[lib]["default"] = [aModule];
+              importGroups[lib]['default'] = [aModule];
             } else {
               // import * as ... , then treat it as a separate import line
-              newImportedContent.push(
-                `import ${name} as ${alias} from '${lib}';`
-              );
+              newImportedContent.push(`import ${name} as ${alias} from '${lib}';`);
             }
           }
         }
 
         for (const lib of Object.keys(importGroups)) {
           const libImportedModules = [];
-          if (
-            importGroups[lib]["default"] &&
-            importGroups[lib]["default"].length === 1
-          ) {
-            libImportedModules.push(importGroups[lib]["default"][0]);
+          if (importGroups[lib]['default'] && importGroups[lib]['default'].length === 1) {
+            libImportedModules.push(importGroups[lib]['default'][0]);
           }
 
-          if (
-            importGroups[lib]["module"] &&
-            importGroups[lib]["module"].length > 0
-          ) {
+          if (importGroups[lib]['module'] && importGroups[lib]['module'].length > 0) {
             libImportedModules.push(
-              `{ ${importGroups[lib]["module"]
+              `{ ${importGroups[lib]['module']
                 .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
-                .join(", ")} }`
+                .join(', ')} }`,
             );
           }
 
           if (libImportedModules.length > 0) {
             const libFullPath = libToModules[lib][0].libFullPath;
             newImportedContent.push(
-              `import ${libImportedModules.join(", ")} from '${libFullPath}';`
+              `import ${libImportedModules.join(', ')} from '${libFullPath}';`,
             );
           }
         }
@@ -397,37 +358,34 @@ const coreUtils = {
       }
 
       newImportedContent = coreUtils.getSortedImports(
-        newImportedContent.map((importedLine) =>
-          importedLine.replace(/'/g, configs.importQuote)
-        ),
-        externalPackagesFromJson
+        newImportedContent.map((importedLine) => importedLine.replace(/'/g, configs.importQuote)),
+        externalPackagesFromJson,
       );
 
       console.log(
-        "> Repaired File:".padStart(17, " ").green(),
+        '> Repaired File:'.padStart(17, ' ').green(),
         file,
-        notUsedModules.size + " Removed"
+        notUsedModules.size + ' Removed',
       );
       countProcessed++;
 
       let finalContent =
-        newImportedContent.join("\n").trim() +
-        "\n" +
-        rawContentWithoutImport.replace(/[\n][\n][\n]+/g, "\n").trim();
+        newImportedContent.join('\n').trim() +
+        '\n' +
+        rawContentWithoutImport.replace(/[\n][\n][\n]+/g, '\n').trim();
 
-      if (content.includes("// @ts-nocheck")) {
-        finalContent =
-          "// @ts-nocheck\n" + finalContent.replace(/\/\/[ ]+@ts-nocheck/, "");
+      if (content.includes('// @ts-nocheck')) {
+        finalContent = '// @ts-nocheck\n' + finalContent.replace(/\/\/[ ]+@ts-nocheck/, '');
       }
 
       finalContent = finalContent
-        .replace(";\n\nimport", ";\nimport")
-        .replace(";\ninterface", ";\n\ninterface")
-        .replace(";\nconst", ";\n\nconst")
-        .replace(";\ntype", ";\n\ntype")
-        .replace(";\ndescribe", ";\n\ndescribe")
-        .replace(";\ntest", ";\n\ntest")
-        .replace(";\nexport", ";\n\nexport");
+        .replace(';\n\nimport', ';\nimport')
+        .replace(';\ninterface', ';\n\ninterface')
+        .replace(';\nconst', ';\n\nconst')
+        .replace(';\ntype', ';\n\ntype')
+        .replace(';\ndescribe', ';\n\ndescribe')
+        .replace(';\ntest', ';\n\ntest')
+        .replace(';\nexport', ';\n\nexport');
 
       if (dontWriteToOutputFile !== true) {
         fileUtils.write(file, finalContent);
@@ -435,7 +393,7 @@ const coreUtils = {
 
       return finalContent;
     } catch (err) {
-      console.log("[Error] process failed for file: ".red(), file, err);
+      console.log('[Error] process failed for file: '.red(), file, err);
     }
   },
 };
