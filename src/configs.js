@@ -1,10 +1,10 @@
 const configs = {
+  isTest: !!process.env.JEST_WORKER_ID,
   groupImport: false,
   filteredFiles: [],
   aggressiveCheck: false,
   transformRelativeImport: undefined,
-  isTest: !!process.env.JEST_WORKER_ID,
-  importQuote: `"`,
+  importQuote: `'`,
 };
 
 for (const argv of process.argv) {

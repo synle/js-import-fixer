@@ -133,11 +133,27 @@ npx import-fixer --transformRelativeImport
 npx import-fixer --transformRelativeImport="src/"
 ```
 
-Refer to this table for more information.
+Refer to this table for more information:
 | Option | Original | After Transformation |
 |---------------------------------|--------------------------------------------|---------------------------------------------------------------|
 | `--transformRelativeImport` | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'commons/adapters/IDataAdapter';` |
 | `--transformRelativeImport="src"` | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'src/commons/adapters/IDataAdapter';` |
+
+#### `--importQuote`
+
+- `--importQuote`: can be used to set the import line quote. So it's either double quote or single quote. The default behavior is using single quote.
+
+- The minimal command will look like this.
+
+```bash
+npx import-fixer --importQuote=single
+```
+
+Refer to this table for more information:
+| Option                           | Output                                 |
+|----------------------------------|----------------------------------------|
+| `--importQuote=single` (Default) | `import { SqluiCore } from 'typings';` |
+| `--importQuote=double`           | `import { SqluiCore } from "typings";` |
 
 ## Limitations
 
@@ -153,6 +169,7 @@ Refer to this table for more information.
 - [x] Make this package executable with `npx` (Using `npx import-fixer`).
 - [x] Respect the files in `.gitignore` and skip those files when running the script.
 - [x] Added an option to transform relative imports into absolute imports (Using [`--transformRelativeImport`](https://synle.github.io/js-import-fixer/#--transformRelativeImport)).
+- [x] Added an option to control what's the output quote is in the import line. Either single quote or double quote. [`--importQuote`](https://synle.github.io/js-import-fixer/#--importQuote)
 - [ ] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
 
 ## Examples Run
