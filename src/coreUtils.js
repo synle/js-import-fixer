@@ -107,13 +107,22 @@ const coreUtils = {
       let notUsedModules = new Set();
       let usedModules = new Set();
 
-      const REGEX_ABSOLUTE_IMPORTS =
+      const REGEX_ABSOLUTE_ONLY_IMPORTS =
         /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][@/a-zA-Z0-9-]+['"][;]*/g;
 
-      let rawContentWithoutImport;
-      rawContentWithoutImport = content.replace(REGEX_ABSOLUTE_IMPORTS, "");
+      const REGEX_INCLUDING_RELATIVE_IMPORTS =
+        /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/g;
 
-      const importCodeLines = content.match(REGEX_ABSOLUTE_IMPORTS);
+      let rawContentWithoutImport  = content;
+
+      configs.transformRelativeImport = true; // TODO: remove me
+      if(configs.transformRelativeImport === true ){
+        rawContentWithoutImport = rawContentWithoutImport.replace(REGEX_INCLUDING_RELATIVE_IMPORTS,"")
+      } else {
+        rawContentWithoutImport = rawContentWithoutImport.replace(REGEX_ABSOLUTE_ONLY_IMPORTS, "");
+      }
+
+      const importCodeLines = content.match(REGEX_ABSOLUTE_ONLY_IMPORTS);
       if (!importCodeLines || importCodeLines.length === 0) {
         console.log(
           "> Skipped File (No Import):".padStart(17, " ").yellow(),
