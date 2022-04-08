@@ -1,6 +1,6 @@
 {
   "name": "import-fixer",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A shell command tool that cleaned up unused imports in a Typescript / Javascript code base.",
   "main": "main.js",
   "bin": {
