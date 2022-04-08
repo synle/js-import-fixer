@@ -84,9 +84,29 @@ const coreUtils = {
       return res;
     });
   },
-  // here we figured out what imports are being imported
-  // and if it has an alias and if it's a module / default imported
-  parseRawImportLines:(file, importCodeLines, libToModules, allImportedModules, moduleToLibs) => {
+  /**
+   * here we figured out what imports are being imported
+    and if it has an alias and if it's a module / default imported
+   * @param  {string} file               [description]
+   * @param  {string} importCodeLines    [description]
+   * @param  {map} libToModules  lib_name => [array of modules]
+                                 '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]
+   * @param  {map} moduleToLibs  moduleName => detailed imported lib
+   *                             {
+   *                               ...
+                                    createClient: {
+                                      lib: 'redis',
+                                      libFullPath: 'redis',
+                                      name: 'createClient',
+                                      alias: 'createClient',
+                                      type: 'module'
+                                    }
+                                    ...
+                                  }
+   * @param  {Set<string>} allImportedModules list of all imported modules
+   * @return None
+   */
+  parseRawImportLines:(file, importCodeLines, libToModules, moduleToLibs, allImportedModules) => {
     importCodeLines.forEach((s) => {
       const lib = s
         .match(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, "")[0]
@@ -192,9 +212,22 @@ const coreUtils = {
         return;
       }
 
-      // lib_name => [array of modules]
-      // '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]
+      /**
+       * @type {map} lib_name => [array of modules]
+               '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]
+       */
       let libToModules = {};
+
+      /**
+       * @type {map} moduleName => detailed imported lib
+         createClient: {
+          lib: 'redis',
+          libFullPath: 'redis',
+          name: 'createClient',
+          alias: 'createClient',
+          type: 'module'
+        },
+       */
       let moduleToLibs = {};
       let allImportedModules = new Set();
 
@@ -212,9 +245,9 @@ const coreUtils = {
       let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
 
       // here we parse raw imports
-      coreUtils.parseRawImportLines(file, importCodeLines, libToModules, allImportedModules, moduleToLibs);
+      coreUtils.parseRawImportLines(file, importCodeLines, libToModules, moduleToLibs, allImportedModules);
 
-      if (!allImportedModules || allImportedModules.length === 0) {
+      if (!allImportedModules || allImportedModules.size === 0) {
         console.log(
           "> Skipped File (No Import):".padStart(17, " ").yellow(),
           file
