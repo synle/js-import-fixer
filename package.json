@@ -7,7 +7,7 @@
     "import-fixer": "main.js"
   },
   "scripts": {
-    "format": "npx prettier --write **/*.{js,json,md}",
+    "format": "npx prettier --config ./.prettierrc --write **/*.{js,json,md}",
     "build": "npx webpack --config webpack.config.js",
     "test": "npx jest"
   },
