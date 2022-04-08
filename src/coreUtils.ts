@@ -1,12 +1,26 @@
-const fs = require('fs');
-const fileUtils = require('./fileUtils');
-const path = require('path');
-const configs = require('./configs');
-const gitiginorePatterns = require('./gitiginorePatterns');
+import fs from 'fs';
+import fileUtils from './fileUtils';
+import path from 'path';
+import configs from './configs';
+import gitiginorePatterns from './gitiginorePatterns';
 require('./color');
 
+type ImportType = 'module' | 'default';
+
+type ImportEntry = {
+  name: string;
+  type: ImportType;
+  lib: string;
+  libFullPath: string;
+  alias: string;
+}
+
+type ModuleUsageMap = Record<string, ImportEntry[]>;
+
+type LibraryImportMap = Record<string, ImportEntry>
+
 const coreUtils = {
-  getFilesToProcess: (startPath) => {
+  getFilesToProcess: (startPath: string) => {
     let files = fileUtils.listDirNested(startPath);
 
     // filter out all the files in gitignore
@@ -30,21 +44,21 @@ const coreUtils = {
 
     return files;
   },
-  getAliasName: (moduleName) => {
+  getAliasName: (moduleName: string) => {
     if (moduleName.includes(' as ')) {
       return moduleName.substr(moduleName.indexOf(' as ') + 4).trim();
     } else {
       return moduleName;
     }
   },
-  getModuleName: (moduleName) => {
+  getModuleName: (moduleName: string) => {
     if (moduleName.includes(' as ')) {
       return moduleName.substr(0, moduleName.indexOf(' as ')).trim();
     } else {
       return moduleName;
     }
   },
-  getLibrarySortOrder: (a, externalPackages) => {
+  getLibrarySortOrder: (a: string, externalPackages: string []) => {
     let ca = a.substr(a.indexOf(' from ') + 7);
     ca = ca.replace(/[ '";]+/g, '');
 
@@ -56,7 +70,7 @@ const coreUtils = {
 
     return 99999;
   },
-  getSortedImports: (unsortedImports, externalPackages = []) => {
+  getSortedImports: (unsortedImports: string[], externalPackages : string[]= []) => {
     return unsortedImports.sort((a, b) => {
       // first compare by the order in packages.json
       let ca = coreUtils.getLibrarySortOrder(a, externalPackages);
@@ -66,10 +80,10 @@ const coreUtils = {
 
       if (res === 0) {
         // then compare by the order of the library
-        ca = a.substr(a.indexOf(' from '));
-        cb = b.substr(b.indexOf(' from '));
+        const sa = a.substr(a.indexOf(' from '));
+        const sb = b.substr(b.indexOf(' from '));
 
-        res = ca.localeCompare(cb);
+        res = sa.localeCompare(sb);
 
         // if from the same library, then compare against the order of the
         // imported modules
@@ -84,114 +98,92 @@ const coreUtils = {
   /**
    * here we figured out what imports are being imported
     and if it has an alias and if it's a module / default imported
-   * @param  {string} file               [description]
-   * @param  {string} importCodeLines    [description]
-   * @param  {map} libToModules  lib_name => [array of modules]
-                                 '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]
-   * @param  {map} moduleToLibs  moduleName => detailed imported lib
-   *                             {
-   *                               ...
-                                    createClient: {
-                                      lib: 'redis',
-                                      libFullPath: 'redis',
-                                      name: 'createClient',
-                                      alias: 'createClient',
-                                      type: 'module'
-                                    }
-                                    ...
-                                  }
-   * @param  {Set<string>} allImportedModules list of all imported modules
-   * @return None
    */
-  parseRawImportLines: (file, importCodeLines, libToModules, moduleToLibs, allImportedModules) => {
+  parseRawImportLines: (file: string, importCodeLines: string [], moduleUsageMap: ModuleUsageMap, libraryImportMap: LibraryImportMap, allImportedModules: Set<string>) => {
     importCodeLines.forEach((s) => {
-      const lib = s
-        .match(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, '')[0]
-        .replace(/from[ ]+['"]/, '')
-        .replace(/['"]/, '')
-        .replace(/;/, '');
-      libToModules[lib] = libToModules[lib] || [];
-      let parsed = s
-        .replace(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, '')
-        .replace('import ', '')
-        .replace(/[ \n]+/g, ' ');
+      try{
+        //@ts-ignore
+        const lib = s
+          .match(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/)[0]
+          .replace(/from[ ]+['"]/, '')
+          .replace(/['"]/, '')
+          .replace(/;/, '');
+        moduleUsageMap[lib] = moduleUsageMap[lib] || [];
+        let parsed = s
+          .replace(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, '')
+          .replace('import ', '')
+          .replace(/[ \n]+/g, ' ');
 
-      const moduleSplits = parsed.split('{');
+        const moduleSplits = parsed.split('{');
 
-      let libFullPath = lib;
-      if (libFullPath.indexOf('./') === 0 || libFullPath.indexOf('../') === 0) {
-        // this is a relative imports, then resolve the path if needed
-        if (configs.transformRelativeImport !== undefined) {
-          libFullPath = path.resolve(path.dirname(file), lib).replace(process.cwd() + '/', '');
+        let libFullPath = lib;
+        if (libFullPath.indexOf('./') === 0 || libFullPath.indexOf('../') === 0) {
+          // this is a relative imports, then resolve the path if needed
+          if (configs.transformRelativeImport !== undefined) {
+            libFullPath = path.resolve(path.dirname(file), lib).replace(process.cwd() + '/', '');
 
-          // adding the prefix
-          if (configs.transformRelativeImport) {
-            libFullPath = configs.transformRelativeImport + libFullPath;
+            // adding the prefix
+            if (configs.transformRelativeImport) {
+              libFullPath = configs.transformRelativeImport + libFullPath;
+            }
           }
         }
-      }
 
-      for (let moduleSplit of moduleSplits) {
-        if (moduleSplit.includes('}')) {
-          // will be parsed as module
-          moduleSplit = moduleSplit.replace('}', '');
-          const childModuleSplits = moduleSplit
-            .split(',')
-            .map((s) => s.trim())
-            .filter((s) => s);
-          for (let moduleName of childModuleSplits) {
-            // is a child module import
-            const aliasName = coreUtils.getAliasName(moduleName);
-            moduleName = coreUtils.getModuleName(moduleName);
-            allImportedModules.add(aliasName);
-            libToModules[lib].push({
-              name: moduleName,
-              alias: aliasName,
-              type: 'module',
-              lib,
-              libFullPath,
-            });
+        for (let moduleSplit of moduleSplits) {
+          let importEntry: ImportEntry
+          if (moduleSplit.includes('}')) {
+            // will be parsed as module
+            moduleSplit = moduleSplit.replace('}', '');
+            const childModuleSplits = moduleSplit
+              .split(',')
+              .map((s) => s.trim())
+              .filter((s) => s);
+            for (let moduleName of childModuleSplits) {
+              // is a child module import
+              const aliasName = coreUtils.getAliasName(moduleName);
+              moduleName = coreUtils.getModuleName(moduleName);
+              allImportedModules.add(aliasName);
 
-            moduleToLibs[aliasName] = {
-              lib,
-              libFullPath,
-              name: moduleName,
-              alias: aliasName,
-              type: 'module',
-            };
-          }
-        } else {
-          // will be parsed as default
-          const defaultModuleSplits = moduleSplit
-            .split(',')
-            .map((s) => s.trim())
-            .filter((s) => s);
-          for (let moduleName of defaultModuleSplits) {
-            // is default import
-            const aliasName = coreUtils.getAliasName(moduleName);
-            moduleName = coreUtils.getModuleName(moduleName);
-            allImportedModules.add(aliasName);
-            libToModules[lib].push({
-              name: moduleName,
-              alias: aliasName,
-              type: 'default',
-              lib,
-              libFullPath,
-            });
+              importEntry = {
+                name: moduleName,
+                alias: aliasName,
+                type: 'module',
+                lib,
+                libFullPath,
+              }
 
-            moduleToLibs[aliasName] = {
-              lib,
-              libFullPath,
-              name: moduleName,
-              alias: aliasName,
-              type: 'default',
-            };
+              moduleUsageMap[lib].push(importEntry);
+              libraryImportMap[aliasName] = importEntry;
+            }
+          } else {
+            // will be parsed as default
+            const defaultModuleSplits = moduleSplit
+              .split(',')
+              .map((s) => s.trim())
+              .filter((s) => s);
+            for (let moduleName of defaultModuleSplits) {
+              // is default import
+              const aliasName = coreUtils.getAliasName(moduleName);
+              moduleName = coreUtils.getModuleName(moduleName);
+              allImportedModules.add(aliasName);
+
+              importEntry = {
+                name: moduleName,
+                alias: aliasName,
+                type: 'default',
+                lib,
+                libFullPath,
+              }
+
+              moduleUsageMap[lib].push(importEntry);
+              libraryImportMap[aliasName] = importEntry;
+            }
           }
         }
-      }
+      } catch(err){}
     });
   },
-  process: (file, externalPackagesFromJson, dontWriteToOutputFile = false) => {
+  process: (file: string, externalPackagesFromJson: string [], dontWriteToOutputFile = false) => {
     try {
       const content = fileUtils.read(file).trim();
 
@@ -201,28 +193,13 @@ const coreUtils = {
         return;
       }
 
-      /**
-       * @type {map} lib_name => [array of modules]
-               '@mui/material/CircularProgress': [ { name: 'CircularProgress', type: 'default' } ]
-       */
-      let libToModules = {};
-
-      /**
-       * @type {map} moduleName => detailed imported lib
-         createClient: {
-          lib: 'redis',
-          libFullPath: 'redis',
-          name: 'createClient',
-          alias: 'createClient',
-          type: 'module'
-        },
-       */
-      let moduleToLibs = {};
-      let allImportedModules = new Set();
+      let moduleUsageMap : ModuleUsageMap = {};
+      let libraryImportMap : LibraryImportMap = {};
+      let allImportedModules = new Set<string>();
 
       // set of used modules
-      let notUsedModules = new Set();
-      let usedModules = new Set();
+      let notUsedModules = new Set<string>();
+      let usedModules = new Set<string>();
 
       const REGEX_INCLUDING_RELATIVE_IMPORTS =
         /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/g;
@@ -234,8 +211,8 @@ const coreUtils = {
       coreUtils.parseRawImportLines(
         file,
         importCodeLines,
-        libToModules,
-        moduleToLibs,
+        moduleUsageMap,
+        libraryImportMap,
         allImportedModules,
       );
 
@@ -278,12 +255,12 @@ const coreUtils = {
       // generate the new import
       let newImportedContent = [];
 
-      const librariesUsedByThisFile = new Set(); // note here, we don't count duplicate lib imports in the same file...
+      const librariesUsedByThisFile = new Set<string>(); // note here, we don't count duplicate lib imports in the same file...
 
       if (configs.groupImport === false) {
         // here we don't group, each import is treated as a separate line
         for (const aModule of usedModules) {
-          const { type, lib, libFullPath, alias, name } = moduleToLibs[aModule];
+          const { type, lib, libFullPath, alias, name } = libraryImportMap[aModule];
           librariesUsedByThisFile.add(lib);
 
           if (type === 'module') {
@@ -302,10 +279,10 @@ const coreUtils = {
           }
         }
       } else {
-        let importGroups = {}; // libName => default , module
+        let importGroups: Record<string, Record<string, string[]>> = {}; // libName => default , module
 
         for (const aModule of usedModules) {
-          const { type, lib, libFullPath, alias, name } = moduleToLibs[aModule];
+          const { type, lib, libFullPath, alias, name } = libraryImportMap[aModule];
           librariesUsedByThisFile.add(lib);
 
           importGroups[lib] = importGroups[lib] || {};
@@ -330,21 +307,22 @@ const coreUtils = {
         }
 
         for (const lib of Object.keys(importGroups)) {
-          const libImportedModules = [];
+          const libImportedModules : string []= [];
           if (importGroups[lib]['default'] && importGroups[lib]['default'].length === 1) {
             libImportedModules.push(importGroups[lib]['default'][0]);
           }
 
           if (importGroups[lib]['module'] && importGroups[lib]['module'].length > 0) {
+            //@ts-ignore
             libImportedModules.push(
               `{ ${importGroups[lib]['module']
-                .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+                .sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase()))
                 .join(', ')} }`,
             );
           }
 
           if (libImportedModules.length > 0) {
-            const libFullPath = libToModules[lib][0].libFullPath;
+            const libFullPath = moduleUsageMap[lib][0].libFullPath;
             newImportedContent.push(
               `import ${libImportedModules.join(', ')} from '${libFullPath}';`,
             );
