@@ -30,7 +30,7 @@ Run this script in your project root.
 
 ### Run it directly
 
-```
+```bash
 npx import-fixer
 ```
 
@@ -40,7 +40,7 @@ It's best to use this script as part of your preformat script in node / frontend
 
 Say you if you have a format script like this
 
-```
+```js
 ...
 "format": "npx prettier --config ./.prettierrc --write **/*.{ts,tsx,js,jsx,scss,yml,html} *.{json,MD}",
 ...
@@ -48,7 +48,7 @@ Say you if you have a format script like this
 
 Then it will become
 
-```
+```js
 ...
 "preformat": "npx import-fixer --groupImport",
 "format": "npx prettier --config ./.prettierrc --write **/*.{ts,tsx,js,jsx,scss,yml,html} *.{json,MD}",
@@ -63,14 +63,14 @@ Then it will become
 
 When this flag is turned on, the following import lines
 
-```
+```js
 import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
 import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
 ```
 
 Will become
 
-```
+```js
 import {
   databaseActionScripts as RmdbDatabaseActionScripts,
   tableActionScripts as RmdbTableActionScripts,
@@ -79,7 +79,7 @@ import {
 
 When this flag is turned off (by default), imports will be separated into each individual line. So the following imports
 
-```
+```js
 import {
   databaseActionScripts as RmdbDatabaseActionScripts,
   tableActionScripts as RmdbTableActionScripts,
@@ -88,7 +88,7 @@ import {
 
 will become
 
-```
+```js
 import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
 import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
 ```
@@ -99,7 +99,7 @@ import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
 
 The full command will look something like this
 
-```
+```bash
 npx import-fixer --filter=App.tsx,Header.tsx
 ```
 
@@ -109,7 +109,7 @@ npx import-fixer --filter=App.tsx,Header.tsx
 
 The full command will look something like this
 
-```
+```bash
 npx import-fixer --aggressive
 ```
 
@@ -121,21 +121,26 @@ npx import-fixer --aggressive
 
 For these examples, we will consider the original import line as followed
 
-```
-import IDataAdapter from './IDataAdapter';
-```
+- The minimal command will be like this.
 
-- The minimal command will be like this, and will convert the import line to `import IDataAdapter from 'commons/adapters/IDataAdapter';`
-
-```
+```bash
 npx import-fixer --transformRelativeImport
 ```
 
-- If you need to pass in custom prefix for path, you can use this command. This will convert the sample import into this with the prefix src/ `import IDataAdapter from 'src/commons/adapters/IDataAdapter';`
+- You can also pass in the path prefix for the resolved absolute import paths using `--transformRelativeImport="<pathPrefix>"`.
 
-```
+```bash
 npx import-fixer --transformRelativeImport="src/"
 ```
+
+Refer to this table for more information.
+| Option                          | Original                                   | After Transformation                                          |
+|---------------------------------|--------------------------------------------|---------------------------------------------------------------|
+| --transformRelativeImport       | import IDataAdapter from './IDataAdapter'; | import IDataAdapter from 'commons/adapters/IDataAdapter';     |
+| --transformRelativeImport="src" | import IDataAdapter from './IDataAdapter'; | import IDataAdapter from 'src/commons/adapters/IDataAdapter'; |
+
+
+
 
 ## Limitations
 
