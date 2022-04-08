@@ -261,22 +261,22 @@ const coreUtils = {
           if (type === "module") {
             if (alias !== name) {
               newImportedContent.push(
-                "import {" + name + " as " + alias + "} from '" + libFullPath + "';"
+                `import { ${name} as ${alias} } from '${libFullPath}';`
               );
             } else {
               newImportedContent.push(
-                "import {" + name + "} from '" + libFullPath + "';"
+                `import { ${ name} } from '${libFullPath}';`
               );
             }
           } else {
             // default
             if (alias === name) {
               newImportedContent.push(
-                "import " + name + " from '" + libFullPath + "';"
+                `import ${name} from '${libFullPath}';`
               );
             } else {
               newImportedContent.push(
-                "import " + name + " as " + alias + " from '" + libFullPath + "';"
+                `import ${name} as ${alias} from '${libFullPath}';`
               );
             }
           }

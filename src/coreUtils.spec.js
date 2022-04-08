@@ -98,11 +98,11 @@ describe("coreUtils.js", () => {
       );
 
       expect(actual).toMatchInlineSnapshot(`
-        "import {aliasMethodLib1 as myAliasMethod1} from 'externalLib1';
-        import {constant1} from 'externalLib1';
-        import {methodLib1} from 'externalLib1';
+        "import { aliasMethodLib1 as myAliasMethod1 } from 'externalLib1';
+        import { constant1 } from 'externalLib1';
+        import { methodLib1 } from 'externalLib1';
         import externalLib1 from 'externalLib1';
-        import {constant2} from 'externalLib2';
+        import { constant2 } from 'externalLib2';
         import externalLib2 from 'externalLib2';
         var a1 = constant1;
         methodLib1();
