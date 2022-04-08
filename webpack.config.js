@@ -13,4 +13,26 @@ module.exports = {
   plugins: [
     new webpack.BannerPlugin({ banner: "#! /usr/bin/env node", raw: true }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx|ts|tsx)$/,
+        use: [
+          {
+            loader: "ts-loader",
+            options: {
+              configFile: "tsconfig.json",
+            },
+          },
+        ],
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js", ".jsx"],
+    alias: {
+      src: path.resolve(__dirname, "src"),
+    },
+  },
 };
