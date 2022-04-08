@@ -31,6 +31,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
     alias: {
       src: path.resolve(__dirname, 'src'),
+      'package.json': path.resolve(__dirname, 'package.json'),
     },
   },
 };

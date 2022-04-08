@@ -1,9 +1,8 @@
-const path = require('path');
-const fileUtils = require('./fileUtils');
-const configs = require('./configs');
-const coreUtils = require('./coreUtils');
-const packageJson = require('./packageJson');
-const libraryJson = require('../package.json');
+import libraryJson from 'package.json';
+import configs from 'src/configs';
+import coreUtils from 'src/coreUtils';
+import fileUtils from 'src/fileUtils';
+import packageJson from 'src/packageJson';
 
 console.log('Inputs / Configs '.padEnd(100, '=').blue());
 console.log('PWD:', process.cwd());
@@ -47,8 +46,6 @@ for (const file of files) {
 
   coreUtils.process(file, externalPackagesFromJson);
 }
-
-
 let countLibUsedByFileList : [string, number][]= [];
 for (const lib of Object.keys(countLibUsedByFile)) {
   countLibUsedByFileList.push([lib, countLibUsedByFile[lib]]);

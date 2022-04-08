@@ -43,20 +43,20 @@ describe('coreUtils.process', () => {
       `);
 
     expect(actual).toMatchInlineSnapshot(`
-        "import { aliasMethodLib1 as myAliasMethod1 } from 'externalLib1';
-        import { constant1 } from 'externalLib1';
-        import { methodLib1 } from 'externalLib1';
-        import externalLib1 from 'externalLib1';
-        import { constant2 } from 'externalLib2';
-        import externalLib2 from 'externalLib2';
-        var a1 = constant1;
-        methodLib1();
-        externalLib1();
-        myAliasMethod1();
+      "import { aliasMethodLib1 as myAliasMethod1 } from 'externalLib1';
+      import { constant1 } from 'externalLib1';
+      import { methodLib1 } from 'externalLib1';
+      import externalLib1 from 'externalLib1';
+      import { constant2 } from 'externalLib2';
+      import externalLib2 from 'externalLib2';
+      var a1 = constant1;
+      methodLib1();
+      externalLib1();
+      myAliasMethod1();
 
-        var a2 = constant2;
-        var temp2 = externalLib2();"
-      `);
+      var a2 = constant2;
+      var temp2 = externalLib2();"
+    `);
   });
 
   test('sample_1.js withGroupImport', async () => {
@@ -79,16 +79,16 @@ describe('coreUtils.process', () => {
       `);
 
     expect(actual).toMatchInlineSnapshot(`
-        "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
-        import externalLib2, { constant2 } from 'externalLib2';
-        var a1 = constant1;
-        methodLib1();
-        externalLib1();
-        myAliasMethod1();
+      "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+      import externalLib2, { constant2 } from 'externalLib2';
+      var a1 = constant1;
+      methodLib1();
+      externalLib1();
+      myAliasMethod1();
 
-        var a2 = constant2;
-        var temp2 = externalLib2();"
-      `);
+      var a2 = constant2;
+      var temp2 = externalLib2();"
+    `);
   });
 
   test('sample_2.js simple', async () => {
@@ -109,16 +109,16 @@ describe('coreUtils.process', () => {
       `);
 
     expect(actual).toMatchInlineSnapshot(`
-        "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
-        import externalLib2, { constant2 } from 'externalLib2';
-        var a1 = constant1;
-        methodLib1();
-        externalLib1();
-        myAliasMethod1();
+      "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+      import externalLib2, { constant2 } from 'externalLib2';
+      var a1 = constant1;
+      methodLib1();
+      externalLib1();
+      myAliasMethod1();
 
-        var a2 = constant2;
-        var temp2 = externalLib2();"
-      `);
+      var a2 = constant2;
+      var temp2 = externalLib2();"
+    `);
   });
 
   test('sample_2.js withGroupImport', async () => {
@@ -141,16 +141,16 @@ describe('coreUtils.process', () => {
       `);
 
     expect(actual).toMatchInlineSnapshot(`
-        "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
-        import externalLib2, { constant2 } from 'externalLib2';
-        var a1 = constant1;
-        methodLib1();
-        externalLib1();
-        myAliasMethod1();
+      "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+      import externalLib2, { constant2 } from 'externalLib2';
+      var a1 = constant1;
+      methodLib1();
+      externalLib1();
+      myAliasMethod1();
 
-        var a2 = constant2;
-        var temp2 = externalLib2();"
-      `);
+      var a2 = constant2;
+      var temp2 = externalLib2();"
+    `);
   });
 
   test('sample_3.js withGroupImport', async () => {
@@ -173,16 +173,16 @@ describe('coreUtils.process', () => {
       `);
 
     expect(actual).toMatchInlineSnapshot(`
-        "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
-        import externalLib2, { constant2 } from 'externalLib2';
-        var a1 = constant1;
-        methodLib1();
-        externalLib1();
-        myAliasMethod1();
+      "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+      import externalLib2, { constant2 } from 'externalLib2';
+      var a1 = constant1;
+      methodLib1();
+      externalLib1();
+      myAliasMethod1();
 
-        var a2 = constant2;
-        var temp2 = externalLib2();"
-      `);
+      var a2 = constant2;
+      var temp2 = externalLib2();"
+    `);
   });
 
   test('sample_4.js with transformRelativeImport', async () => {
@@ -206,12 +206,12 @@ describe('coreUtils.process', () => {
       `);
 
     expect(actual).toMatchInlineSnapshot(`
-        "import externalLib1 from 'externalLib1';
-        import { sum } from '__mocks__/nested_dir_a/Calculator';
+      "import externalLib1 from 'externalLib1';
+      import { sum } from '__mocks__/nested_dir_a/Calculator';
 
-        const res1 = sum(1,2);
-        externalLib1();"
-      `);
+      const res1 = sum(1,2);
+      externalLib1();"
+    `);
   });
 
   test('sample_4.js with transformRelativeImport=somePathPrefix/', async () => {
@@ -235,11 +235,11 @@ describe('coreUtils.process', () => {
       `);
 
     expect(actual).toMatchInlineSnapshot(`
-        "import externalLib1 from 'externalLib1';
-        import { sum } from 'somePathPrefix/__mocks__/nested_dir_a/Calculator';
+      "import externalLib1 from 'externalLib1';
+      import { sum } from 'somePathPrefix/__mocks__/nested_dir_a/Calculator';
 
-        const res1 = sum(1,2);
-        externalLib1();"
-      `);
+      const res1 = sum(1,2);
+      externalLib1();"
+    `);
   });
 });

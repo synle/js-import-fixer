@@ -1,9 +1,8 @@
-import fs from 'fs';
-import fileUtils from './fileUtils';
 import path from 'path';
-import configs from './configs';
-import gitiginorePatterns from './gitiginorePatterns';
-require('./color');
+import configs from 'src/configs';
+import fileUtils from 'src/fileUtils';
+import gitiginorePatterns from 'src/gitiginorePatterns';
+import './color';
 
 type ImportType = 'module' | 'default';
 
@@ -376,4 +375,4 @@ const coreUtils = {
   },
 };
 
-module.exports = coreUtils;
+export default coreUtils;
