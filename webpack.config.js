@@ -1,27 +1,25 @@
-const path = require("path");
-const webpack = require("webpack");
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  mode: "production",
-  target: ["node"],
-  entry: "./src/index.js",
+  mode: 'production',
+  target: ['node'],
+  entry: './src/index.js',
   output: {
-    filename: "main.js",
-    libraryTarget: "this",
-    path: path.resolve(__dirname, "./"),
+    filename: 'main.js',
+    libraryTarget: 'this',
+    path: path.resolve(__dirname, './'),
   },
-  plugins: [
-    new webpack.BannerPlugin({ banner: "#! /usr/bin/env node", raw: true }),
-  ],
+  plugins: [new webpack.BannerPlugin({ banner: '#! /usr/bin/env node', raw: true })],
   module: {
     rules: [
       {
         test: /\.(js|jsx|ts|tsx)$/,
         use: [
           {
-            loader: "ts-loader",
+            loader: 'ts-loader',
             options: {
-              configFile: "tsconfig.json",
+              configFile: 'tsconfig.json',
             },
           },
         ],
@@ -30,9 +28,9 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js", ".jsx"],
+    extensions: ['.tsx', '.ts', '.js', '.jsx'],
     alias: {
-      src: path.resolve(__dirname, "src"),
+      src: path.resolve(__dirname, 'src'),
     },
   },
 };

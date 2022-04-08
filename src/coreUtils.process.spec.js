@@ -1,20 +1,17 @@
-const path = require("path");
-const coreUtils = require("./coreUtils");
-const configs = require("./configs");
+const path = require('path');
+const coreUtils = require('./coreUtils');
+const configs = require('./configs');
 
-describe("coreUtils.process", () => {
-  const mockedExternalPackage = ["externalLib1", "externalLib2"];
+describe('coreUtils.process', () => {
+  const mockedExternalPackage = ['externalLib1', 'externalLib2'];
 
-  const fileSample0 = path.join("__mocks__/", "sample_0.js");
-  const fileSample1 = path.join("__mocks__/", "sample_1.js");
-  const fileSample2 = path.join("__mocks__/", "sample_2.js");
-  const fileSample3 = path.join("__mocks__/", "sample_3.js");
-  const fileSample4 = path.join(
-    "__mocks__/nested_dir_a/nested_dir_b",
-    "sample_4.js"
-  );
+  const fileSample0 = path.join('__mocks__/', 'sample_0.js');
+  const fileSample1 = path.join('__mocks__/', 'sample_1.js');
+  const fileSample2 = path.join('__mocks__/', 'sample_2.js');
+  const fileSample3 = path.join('__mocks__/', 'sample_3.js');
+  const fileSample4 = path.join('__mocks__/nested_dir_a/nested_dir_b', 'sample_4.js');
 
-  test("sample_0.js simple", async () => {
+  test('sample_0.js simple', async () => {
     global.countSkipped = 0;
     global.countProcessed = 0;
     global.countLibUsedByFile = {};
@@ -27,7 +24,7 @@ describe("coreUtils.process", () => {
     expect(global.countLibUsedByFile).toMatchInlineSnapshot(`Object {}`);
   });
 
-  test("sample_1.js simple", async () => {
+  test('sample_1.js simple', async () => {
     global.countSkipped = 0;
     global.countProcessed = 0;
     global.countLibUsedByFile = {};
@@ -61,7 +58,7 @@ describe("coreUtils.process", () => {
       `);
   });
 
-  test("sample_1.js withGroupImport", async () => {
+  test('sample_1.js withGroupImport', async () => {
     global.countSkipped = 0;
     global.countProcessed = 0;
     global.countLibUsedByFile = {};
@@ -93,7 +90,7 @@ describe("coreUtils.process", () => {
       `);
   });
 
-  test("sample_2.js simple", async () => {
+  test('sample_2.js simple', async () => {
     global.countSkipped = 0;
     global.countProcessed = 0;
     global.countLibUsedByFile = {};
@@ -123,7 +120,7 @@ describe("coreUtils.process", () => {
       `);
   });
 
-  test("sample_2.js withGroupImport", async () => {
+  test('sample_2.js withGroupImport', async () => {
     global.countSkipped = 0;
     global.countProcessed = 0;
     global.countLibUsedByFile = {};
@@ -155,7 +152,7 @@ describe("coreUtils.process", () => {
       `);
   });
 
-  test("sample_3.js withGroupImport", async () => {
+  test('sample_3.js withGroupImport', async () => {
     global.countSkipped = 0;
     global.countProcessed = 0;
     global.countLibUsedByFile = {};
@@ -187,13 +184,13 @@ describe("coreUtils.process", () => {
       `);
   });
 
-  test("sample_4.js with transformRelativeImport", async () => {
+  test('sample_4.js with transformRelativeImport', async () => {
     global.countSkipped = 0;
     global.countProcessed = 0;
     global.countLibUsedByFile = {};
 
     configs.groupImport = true;
-    configs.transformRelativeImport = "";
+    configs.transformRelativeImport = '';
 
     const actual = coreUtils.process(fileSample4, mockedExternalPackage, true);
 
@@ -216,13 +213,13 @@ describe("coreUtils.process", () => {
       `);
   });
 
-  test("sample_4.js with transformRelativeImport=somePathPrefix/", async () => {
+  test('sample_4.js with transformRelativeImport=somePathPrefix/', async () => {
     global.countSkipped = 0;
     global.countProcessed = 0;
     global.countLibUsedByFile = {};
 
     configs.groupImport = true;
-    configs.transformRelativeImport = "somePathPrefix/";
+    configs.transformRelativeImport = 'somePathPrefix/';
 
     const actual = coreUtils.process(fileSample4, mockedExternalPackage, true);
 
