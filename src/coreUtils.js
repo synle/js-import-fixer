@@ -107,13 +107,15 @@ const coreUtils = {
       let notUsedModules = new Set();
       let usedModules = new Set();
 
-      const REGEX_ABSOLUTE_IMPORTS =
-        /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][@/a-zA-Z0-9-]+['"][;]*/g;
+      const REGEX_INCLUDING_RELATIVE_IMPORTS =
+        /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/g;
 
-      let rawContentWithoutImport;
-      rawContentWithoutImport = content.replace(REGEX_ABSOLUTE_IMPORTS, "");
+      let rawContentWithoutImport = content.replace(
+        REGEX_INCLUDING_RELATIVE_IMPORTS,
+        ""
+      );
+      let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS);
 
-      const importCodeLines = content.match(REGEX_ABSOLUTE_IMPORTS);
       if (!importCodeLines || importCodeLines.length === 0) {
         console.log(
           "> Skipped File (No Import):".padStart(17, " ").yellow(),
@@ -127,19 +129,36 @@ const coreUtils = {
       // here we figured out what imports are being imported
       // and if it has an alias and if it's a module / default imported
       importCodeLines.forEach((s) => {
-        const foundImportedModules = s
-          .match(/from[ ]+['"][@/a-zA-Z0-9-]+['"][;]*/, "")[0]
+        const lib = s
+          .match(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, "")[0]
           .replace(/from[ ]+['"]/, "")
           .replace(/['"]/, "")
           .replace(/;/, "");
-        libToModules[foundImportedModules] =
-          libToModules[foundImportedModules] || [];
+        libToModules[lib] = libToModules[lib] || [];
         let parsed = s
-          .replace(/from[ ]+['"][@/a-zA-Z0-9-]+['"][;]*/, "")
+          .replace(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, "")
           .replace("import ", "")
           .replace(/[ \n]+/g, " ");
 
         const moduleSplits = parsed.split("{");
+
+        let libFullPath = lib;
+        if (
+          libFullPath.indexOf("./") === 0 ||
+          libFullPath.indexOf("../") === 0
+        ) {
+          // this is a relative imports, then resolve the path if needed
+          if (configs.transformRelativeImport !== undefined) {
+            libFullPath = path
+              .resolve(path.dirname(file), lib)
+              .replace(process.cwd() + "/", "");
+
+            // adding the prefix
+            if (configs.transformRelativeImport) {
+              libFullPath = configs.transformRelativeImport + libFullPath;
+            }
+          }
+        }
 
         for (let moduleSplit of moduleSplits) {
           if (moduleSplit.includes("}")) {
@@ -154,14 +173,17 @@ const coreUtils = {
               const aliasName = coreUtils.getAliasName(moduleName);
               moduleName = coreUtils.getModuleName(moduleName);
               allImportedModules.add(aliasName);
-              libToModules[foundImportedModules].push({
+              libToModules[lib].push({
                 name: moduleName,
                 alias: aliasName,
                 type: "module",
+                lib,
+                libFullPath,
               });
 
               moduleToLibs[aliasName] = {
-                lib: foundImportedModules,
+                lib,
+                libFullPath,
                 name: moduleName,
                 alias: aliasName,
                 type: "module",
@@ -178,14 +200,17 @@ const coreUtils = {
               const aliasName = coreUtils.getAliasName(moduleName);
               moduleName = coreUtils.getModuleName(moduleName);
               allImportedModules.add(aliasName);
-              libToModules[foundImportedModules].push({
+              libToModules[lib].push({
                 name: moduleName,
                 alias: aliasName,
                 type: "default",
+                lib,
+                libFullPath,
               });
 
               moduleToLibs[aliasName] = {
-                lib: foundImportedModules,
+                lib,
+                libFullPath,
                 name: moduleName,
                 alias: aliasName,
                 type: "default",
@@ -237,29 +262,26 @@ const coreUtils = {
       if (configs.groupImport === false) {
         // here we don't group, each import is treated as a separate line
         for (const aModule of usedModules) {
-          const { type, lib, alias, name } = moduleToLibs[aModule];
+          const { type, lib, libFullPath, alias, name } = moduleToLibs[aModule];
           librariesUsedByThisFile.add(lib);
 
           if (type === "module") {
             if (alias !== name) {
               newImportedContent.push(
-                "import {" + name + " as " + alias + "} from '" + lib + "';"
+                `import { ${name} as ${alias} } from '${libFullPath}';`
               );
             } else {
               newImportedContent.push(
-                "import {" + name + "} from '" + lib + "';"
+                `import { ${name} } from '${libFullPath}';`
               );
             }
           } else {
             // default
-
             if (alias === name) {
-              newImportedContent.push(
-                "import " + name + " from '" + lib + "';"
-              );
+              newImportedContent.push(`import ${name} from '${libFullPath}';`);
             } else {
               newImportedContent.push(
-                "import " + name + " as " + alias + " from '" + lib + "';"
+                `import ${name} as ${alias} from '${libFullPath}';`
               );
             }
           }
@@ -268,7 +290,7 @@ const coreUtils = {
         let importGroups = {}; // libName => default , module
 
         for (const aModule of usedModules) {
-          const { type, lib, alias, name } = moduleToLibs[aModule];
+          const { type, lib, libFullPath, alias, name } = moduleToLibs[aModule];
           librariesUsedByThisFile.add(lib);
 
           importGroups[lib] = importGroups[lib] || {};
@@ -315,8 +337,9 @@ const coreUtils = {
           }
 
           if (libImportedModules.length > 0) {
+            const libFullPath = libToModules[lib][0].libFullPath;
             newImportedContent.push(
-              `import ${libImportedModules.join(", ")} from '${lib}';`
+              `import ${libImportedModules.join(", ")} from '${libFullPath}';`
             );
           }
         }

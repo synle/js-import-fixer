@@ -30,7 +30,7 @@ Run this script in your project root.
 
 ### Run it directly
 
-```
+```bash
 npx import-fixer
 ```
 
@@ -40,7 +40,7 @@ It's best to use this script as part of your preformat script in node / frontend
 
 Say you if you have a format script like this
 
-```
+```js
 ...
 "format": "npx prettier --config ./.prettierrc --write **/*.{ts,tsx,js,jsx,scss,yml,html} *.{json,MD}",
 ...
@@ -48,7 +48,7 @@ Say you if you have a format script like this
 
 Then it will become
 
-```
+```js
 ...
 "preformat": "npx import-fixer --groupImport",
 "format": "npx prettier --config ./.prettierrc --write **/*.{ts,tsx,js,jsx,scss,yml,html} *.{json,MD}",
@@ -63,34 +63,34 @@ Then it will become
 
 When this flag is turned on, the following import lines
 
-```
-import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
-import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
+```js
+import { databaseActionScripts as RmdbDatabaseActionScripts } from "src/scripts/rmdb";
+import { tableActionScripts as RmdbTableActionScripts } from "src/scripts/rmdb";
 ```
 
 Will become
 
-```
+```js
 import {
   databaseActionScripts as RmdbDatabaseActionScripts,
   tableActionScripts as RmdbTableActionScripts,
-} from 'src/scripts/rmdb';
+} from "src/scripts/rmdb";
 ```
 
 When this flag is turned off (by default), imports will be separated into each individual line. So the following imports
 
-```
+```js
 import {
   databaseActionScripts as RmdbDatabaseActionScripts,
   tableActionScripts as RmdbTableActionScripts,
-} from 'src/scripts/rmdb';
+} from "src/scripts/rmdb";
 ```
 
 will become
 
-```
-import { databaseActionScripts as RmdbDatabaseActionScripts } from 'src/scripts/rmdb';
-import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
+```js
+import { databaseActionScripts as RmdbDatabaseActionScripts } from "src/scripts/rmdb";
+import { tableActionScripts as RmdbTableActionScripts } from "src/scripts/rmdb";
 ```
 
 #### `--filter`
@@ -99,7 +99,7 @@ import { tableActionScripts as RmdbTableActionScripts } from 'src/scripts/rmdb';
 
 The full command will look something like this
 
-```
+```bash
 npx import-fixer --filter=App.tsx,Header.tsx
 ```
 
@@ -109,13 +109,38 @@ npx import-fixer --filter=App.tsx,Header.tsx
 
 The full command will look something like this
 
-```
+```bash
 npx import-fixer --aggressive
 ```
 
+#### `--transformRelativeImport`
+
+- `--transformRelativeImport` : when turned on, the script will transform relative imports such as `import IDataAdapter from './IDataAdapter';` in a file to an absolute import such as `import IDataAdapter from 'commons/adapters/IDataAdapter';`
+
+- You can add your own path prefix, by default, we will resolve the full path and add this path prefix to the front of the file.
+
+For these examples, we will consider the original import line as followed
+
+- The minimal command will be like this.
+
+```bash
+npx import-fixer --transformRelativeImport
+```
+
+- You can also pass in the path prefix for the resolved absolute import paths using `--transformRelativeImport="<pathPrefix>"`.
+
+```bash
+npx import-fixer --transformRelativeImport="src/"
+```
+
+Refer to this table for more information.
+| Option | Original | After Transformation |
+|---------------------------------|--------------------------------------------|---------------------------------------------------------------|
+| `--transformRelativeImport` | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'commons/adapters/IDataAdapter';` |
+| `--transformRelativeImport="src"` | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'src/commons/adapters/IDataAdapter';` |
+
 ## Limitations
 
-- At the moment the script will treat individual imports from the same library as a separate import line. In the future, we can have an optional parameter that will group these imports.
 - The script currently only supports `import` syntax, so if you have `require` syntax in your code base, it will skip those. In the future, I plan to combine the two and give users an option to consolidate the import as `import` or require syntax.
 - The code that checks for usage of library uses contains, if your module contains a common name like Box / Button, there might be a false negative, so you might need to remove those manually.
 
@@ -127,6 +152,7 @@ npx import-fixer --aggressive
 - [x] Publish this package to npm registry.
 - [x] Make this package executable with `npx` (Using `npx import-fixer`).
 - [x] Respect the files in `.gitignore` and skip those files when running the script.
+- [x] Added an option to transform relative imports into absolute imports (Using [`--transformRelativeImport`](https://synle.github.io/js-import-fixer/#--transformRelativeImport)).
 - [ ] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
 
 ## Examples Run
