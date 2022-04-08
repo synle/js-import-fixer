@@ -1,12 +1,12 @@
-const fs = require('fs');
-const fileUtils = require('./fileUtils');
-const path = require('path');
-const configs = require('./configs');
-const gitiginorePatterns = require('./gitiginorePatterns');
+import fs from 'fs';
+import fileUtils from './fileUtils';
+import path from 'path';
+import configs from './configs';
+import gitiginorePatterns from './gitiginorePatterns';
 require('./color');
 
 const coreUtils = {
-  getFilesToProcess: (startPath) => {
+  getFilesToProcess: (startPath: string) => {
     let files = fileUtils.listDirNested(startPath);
 
     // filter out all the files in gitignore
@@ -30,21 +30,21 @@ const coreUtils = {
 
     return files;
   },
-  getAliasName: (moduleName) => {
+  getAliasName: (moduleName: string) => {
     if (moduleName.includes(' as ')) {
       return moduleName.substr(moduleName.indexOf(' as ') + 4).trim();
     } else {
       return moduleName;
     }
   },
-  getModuleName: (moduleName) => {
+  getModuleName: (moduleName: string) => {
     if (moduleName.includes(' as ')) {
       return moduleName.substr(0, moduleName.indexOf(' as ')).trim();
     } else {
       return moduleName;
     }
   },
-  getLibrarySortOrder: (a, externalPackages) => {
+  getLibrarySortOrder: (a: string, externalPackages: string []) => {
     let ca = a.substr(a.indexOf(' from ') + 7);
     ca = ca.replace(/[ '";]+/g, '');
 
@@ -56,7 +56,7 @@ const coreUtils = {
 
     return 99999;
   },
-  getSortedImports: (unsortedImports, externalPackages = []) => {
+  getSortedImports: (unsortedImports: string[], externalPackages : string[]= []) => {
     return unsortedImports.sort((a, b) => {
       // first compare by the order in packages.json
       let ca = coreUtils.getLibrarySortOrder(a, externalPackages);
@@ -66,10 +66,10 @@ const coreUtils = {
 
       if (res === 0) {
         // then compare by the order of the library
-        ca = a.substr(a.indexOf(' from '));
-        cb = b.substr(b.indexOf(' from '));
+        const sa = a.substr(a.indexOf(' from '));
+        const sb = b.substr(b.indexOf(' from '));
 
-        res = ca.localeCompare(cb);
+        res = sa.localeCompare(sb);
 
         // if from the same library, then compare against the order of the
         // imported modules
@@ -103,7 +103,7 @@ const coreUtils = {
    * @param  {Set<string>} allImportedModules list of all imported modules
    * @return None
    */
-  parseRawImportLines: (file, importCodeLines, libToModules, moduleToLibs, allImportedModules) => {
+  parseRawImportLines: (file: string, importCodeLines, libToModules, moduleToLibs, allImportedModules) => {
     importCodeLines.forEach((s) => {
       const lib = s
         .match(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, '')[0]
