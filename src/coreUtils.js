@@ -107,23 +107,14 @@ const coreUtils = {
       let notUsedModules = new Set();
       let usedModules = new Set();
 
-      const REGEX_ABSOLUTE_ONLY_IMPORTS =
-        /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][@/a-zA-Z0-9-]+['"][;]*/g;
-
       const REGEX_INCLUDING_RELATIVE_IMPORTS =
         /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/g;
 
-      let rawContentWithoutImport  = content;
-      let importCodeLines;
 
       configs.transformRelativeImport = ''; // TODO: remove me
-      if(configs.transformRelativeImport !== undefined ){
-        rawContentWithoutImport = rawContentWithoutImport.replace(REGEX_INCLUDING_RELATIVE_IMPORTS,"")
-        importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS);
-      } else {
-        rawContentWithoutImport = rawContentWithoutImport.replace(REGEX_ABSOLUTE_ONLY_IMPORTS, "");
-        importCodeLines = content.match(REGEX_ABSOLUTE_ONLY_IMPORTS);
-      }
+
+      let rawContentWithoutImport = content.replace(REGEX_INCLUDING_RELATIVE_IMPORTS,"")
+      let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS);
 
       if (!importCodeLines || importCodeLines.length === 0) {
         console.log(
@@ -156,7 +147,7 @@ const coreUtils = {
         if(libFullPath.indexOf('./') === 0 || libFullPath.indexOf('../') === 0){
           // this is a relative imports, then resolve the path if needed
           if(configs.transformRelativeImport !== undefined ){
-            libFullPath = path.resolve(path.dirname(file), lib);
+            libFullPath = path.resolve(path.dirname(file), lib).replace(process.cwd() + '/', '');
           }
         }
 
@@ -224,8 +215,6 @@ const coreUtils = {
       console.log('libToModules', libToModules);
       console.log('moduleToLibs', moduleToLibs);
 
-      process.exit();
-
       // here we figure out if an import is actually used in the code
       for (const aModule of allImportedModules) {
         let isModuleUsed = false;
@@ -268,29 +257,28 @@ const coreUtils = {
       if (configs.groupImport === false) {
         // here we don't group, each import is treated as a separate line
         for (const aModule of usedModules) {
-          const { type, lib, alias, name } = moduleToLibs[aModule];
+          const { type, lib, libFullPath, alias, name } = moduleToLibs[aModule];
           librariesUsedByThisFile.add(lib);
 
           if (type === "module") {
             if (alias !== name) {
               newImportedContent.push(
-                "import {" + name + " as " + alias + "} from '" + lib + "';"
+                "import {" + name + " as " + alias + "} from '" + libFullPath + "';"
               );
             } else {
               newImportedContent.push(
-                "import {" + name + "} from '" + lib + "';"
+                "import {" + name + "} from '" + libFullPath + "';"
               );
             }
           } else {
             // default
-
             if (alias === name) {
               newImportedContent.push(
-                "import " + name + " from '" + lib + "';"
+                "import " + name + " from '" + libFullPath + "';"
               );
             } else {
               newImportedContent.push(
-                "import " + name + " as " + alias + " from '" + lib + "';"
+                "import " + name + " as " + alias + " from '" + libFullPath + "';"
               );
             }
           }
@@ -299,7 +287,7 @@ const coreUtils = {
         let importGroups = {}; // libName => default , module
 
         for (const aModule of usedModules) {
-          const { type, lib, alias, name } = moduleToLibs[aModule];
+          const { type, lib, libFullPath, alias, name } = moduleToLibs[aModule];
           librariesUsedByThisFile.add(lib);
 
           importGroups[lib] = importGroups[lib] || {};
@@ -346,8 +334,10 @@ const coreUtils = {
           }
 
           if (libImportedModules.length > 0) {
+            const libFullPath = libToModules[lib][0].libFullPath;
+
             newImportedContent.push(
-              `import ${libImportedModules.join(", ")} from '${lib}';`
+              `import ${libImportedModules.join(", ")} from '${libFullPath}';`
             );
           }
         }
