@@ -134,10 +134,10 @@ npx import-fixer --transformRelativeImport="src/"
 ```
 
 Refer to this table for more information.
-| Option                          | Original                                   | After Transformation                                          |
+| Option                           | Original                                   | After Transformation                                          |
 |---------------------------------|--------------------------------------------|---------------------------------------------------------------|
-| --transformRelativeImport       | import IDataAdapter from './IDataAdapter'; | import IDataAdapter from 'commons/adapters/IDataAdapter';     |
-| --transformRelativeImport="src" | import IDataAdapter from './IDataAdapter'; | import IDataAdapter from 'src/commons/adapters/IDataAdapter'; |
+| `--transformRelativeImport`       | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'commons/adapters/IDataAdapter';`     |
+| `--transformRelativeImport="src"` | `import IDataAdapter from './IDataAdapter';` | `import IDataAdapter from 'src/commons/adapters/IDataAdapter';` |
 
 
 

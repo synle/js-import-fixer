@@ -190,6 +190,32 @@ describe("coreUtils.js", () => {
       `);
     });
 
+    test("sample_3.js withGroupImport", async () => {
+      global.countSkipped = 0;
+      global.countProcessed = 0;
+      global.countLibUsedByFile = {};
+
+      configs.groupImport = true;
+
+      const actual = coreUtils.process(
+        fileSample3,
+        mockedExternalPackage,
+        true
+      );
+
+      expect(actual).toMatchInlineSnapshot(`
+        "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+        import externalLib2, { constant2 } from 'externalLib2';
+        var a1 = constant1;
+        methodLib1();
+        externalLib1();
+        myAliasMethod1();
+
+        var a2 = constant2;
+        var temp2 = externalLib2();"
+      `);
+    });
+
     test("sample_4.js with transformRelativeImport", async () => {
       global.countSkipped = 0;
       global.countProcessed = 0;

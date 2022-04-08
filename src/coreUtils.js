@@ -213,11 +213,6 @@ const coreUtils = {
         }
       });
 
-      // TODO: remove me
-      console.log('allImportedModules', allImportedModules);
-      console.log('libToModules', libToModules);
-      console.log('moduleToLibs', moduleToLibs);
-
       // here we figure out if an import is actually used in the code
       for (const aModule of allImportedModules) {
         let isModuleUsed = false;
