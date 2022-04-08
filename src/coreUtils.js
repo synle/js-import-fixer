@@ -114,15 +114,17 @@ const coreUtils = {
         /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/g;
 
       let rawContentWithoutImport  = content;
+      let importCodeLines;
 
-      configs.transformRelativeImport = true; // TODO: remove me
-      if(configs.transformRelativeImport === true ){
+      configs.transformRelativeImport = ''; // TODO: remove me
+      if(configs.transformRelativeImport !== undefined ){
         rawContentWithoutImport = rawContentWithoutImport.replace(REGEX_INCLUDING_RELATIVE_IMPORTS,"")
+        importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS);
       } else {
         rawContentWithoutImport = rawContentWithoutImport.replace(REGEX_ABSOLUTE_ONLY_IMPORTS, "");
+        importCodeLines = content.match(REGEX_ABSOLUTE_ONLY_IMPORTS);
       }
 
-      const importCodeLines = content.match(REGEX_ABSOLUTE_ONLY_IMPORTS);
       if (!importCodeLines || importCodeLines.length === 0) {
         console.log(
           "> Skipped File (No Import):".padStart(17, " ").yellow(),
@@ -136,19 +138,27 @@ const coreUtils = {
       // here we figured out what imports are being imported
       // and if it has an alias and if it's a module / default imported
       importCodeLines.forEach((s) => {
-        const foundImportedModules = s
-          .match(/from[ ]+['"][@/a-zA-Z0-9-]+['"][;]*/, "")[0]
+        const lib = s
+          .match(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, "")[0]
           .replace(/from[ ]+['"]/, "")
           .replace(/['"]/, "")
           .replace(/;/, "");
-        libToModules[foundImportedModules] =
-          libToModules[foundImportedModules] || [];
+        libToModules[lib] =
+          libToModules[lib] || [];
         let parsed = s
-          .replace(/from[ ]+['"][@/a-zA-Z0-9-]+['"][;]*/, "")
+          .replace(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, "")
           .replace("import ", "")
           .replace(/[ \n]+/g, " ");
 
         const moduleSplits = parsed.split("{");
+
+        let libFullPath = lib;
+        if(libFullPath.indexOf('./') === 0 || libFullPath.indexOf('../') === 0){
+          // this is a relative imports, then resolve the path if needed
+          if(configs.transformRelativeImport !== undefined ){
+            libFullPath = path.resolve(path.dirname(file), lib);
+          }
+        }
 
         for (let moduleSplit of moduleSplits) {
           if (moduleSplit.includes("}")) {
@@ -163,14 +173,17 @@ const coreUtils = {
               const aliasName = coreUtils.getAliasName(moduleName);
               moduleName = coreUtils.getModuleName(moduleName);
               allImportedModules.add(aliasName);
-              libToModules[foundImportedModules].push({
+              libToModules[lib].push({
                 name: moduleName,
                 alias: aliasName,
                 type: "module",
+                lib,
+                libFullPath,
               });
 
               moduleToLibs[aliasName] = {
-                lib: foundImportedModules,
+                lib,
+                libFullPath,
                 name: moduleName,
                 alias: aliasName,
                 type: "module",
@@ -187,14 +200,17 @@ const coreUtils = {
               const aliasName = coreUtils.getAliasName(moduleName);
               moduleName = coreUtils.getModuleName(moduleName);
               allImportedModules.add(aliasName);
-              libToModules[foundImportedModules].push({
+              libToModules[lib].push({
                 name: moduleName,
                 alias: aliasName,
                 type: "default",
+                lib,
+                libFullPath,
               });
 
               moduleToLibs[aliasName] = {
-                lib: foundImportedModules,
+                lib,
+                libFullPath,
                 name: moduleName,
                 alias: aliasName,
                 type: "default",
@@ -203,6 +219,12 @@ const coreUtils = {
           }
         }
       });
+
+      console.log('allImportedModules', allImportedModules);
+      console.log('libToModules', libToModules);
+      console.log('moduleToLibs', moduleToLibs);
+
+      process.exit();
 
       // here we figure out if an import is actually used in the code
       for (const aModule of allImportedModules) {
