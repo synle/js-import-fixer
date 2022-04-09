@@ -199,6 +199,10 @@ const coreUtils = {
     });
   },
   generateImportsOutput: (usedModules: Set<string>, moduleUsageMap: ModuleUsageMap, libraryImportMap : LibraryImportMap) => {
+    console.log(usedModules);
+    console.log(moduleUsageMap);
+    console.log(libraryImportMap);
+
     // generate the new import
       let newImportedContent: string[] = [];
 
