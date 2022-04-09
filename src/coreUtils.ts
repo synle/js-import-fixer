@@ -14,9 +14,19 @@ type ImportEntry = {
   alias: string;
 }
 
-type ModuleUsageMap = Record<string, ImportEntry[]>;
+/**
+ * React, Redis, etc... (library name)
+ * @type {[type]}
+ */
+type LibraryName = string;
+type ModuleUsageMap = Record<LibraryName, ImportEntry[]>;
 
-type LibraryImportMap = Record<string, ImportEntry>
+/**
+ * useState, useEffect, etc... (module name)
+ * @type {[type]}
+ */
+type ModuleName = string;
+type LibraryImportMap = Record<ModuleName, ImportEntry>
 
 const coreUtils = {
   getFilesToProcess: (startPath: string) => {
@@ -188,77 +198,13 @@ const coreUtils = {
       } catch(err){}
     });
   },
-  process: (file: string, externalPackagesFromJson: string [], dontWriteToOutputFile = false) => {
-    try {
-      const content = fileUtils.read(file).trim();
+  generateImportsOutput: (usedModules: Set<string>, moduleUsageMap: ModuleUsageMap, libraryImportMap : LibraryImportMap) => {
+    console.log(usedModules);
+    console.log(moduleUsageMap);
+    console.log(libraryImportMap);
 
-      if (!content) {
-        console.log('> Skipped File (Empty Content):'.padStart(17, ' ').yellow(), file);
-        countSkipped++;
-        return;
-      }
-
-      let moduleUsageMap : ModuleUsageMap = {};
-      let libraryImportMap : LibraryImportMap = {};
-      let allImportedModules = new Set<string>();
-
-      // set of used modules
-      let notUsedModules = new Set<string>();
-      let usedModules = new Set<string>();
-
-      const REGEX_INCLUDING_RELATIVE_IMPORTS =
-        /^import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/gm;
-
-      let rawContentWithoutImport = content.replace(REGEX_INCLUDING_RELATIVE_IMPORTS, '');
-      let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
-
-      // here we parse raw imports
-      coreUtils.parseRawImportLines(
-        file,
-        importCodeLines,
-        moduleUsageMap,
-        libraryImportMap,
-        allImportedModules,
-      );
-
-      if (!allImportedModules || allImportedModules.size === 0) {
-        console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
-        countSkipped++;
-        return;
-      }
-
-      // here we figure out if an import is actually used in the code
-      for (const aModule of allImportedModules) {
-        let isModuleUsed = false;
-
-        if (configs.aggressiveCheck === true) {
-          if (rawContentWithoutImport.match(`<${aModule}`)) {
-            // used as a react component
-            isModuleUsed = true;
-          }
-          if (
-            rawContentWithoutImport.match(new RegExp('[ ]+' + aModule + '[ ]*')) ||
-            rawContentWithoutImport.match(new RegExp('[ ]*' + aModule + '[ ]+')) ||
-            rawContentWithoutImport.match(new RegExp(aModule + '[.}(-+]+'))
-          ) {
-            // used as a method or an expression
-            isModuleUsed = true;
-          }
-        } else {
-          if (rawContentWithoutImport.includes(aModule)) {
-            isModuleUsed = true;
-          }
-        }
-
-        if (isModuleUsed) {
-          usedModules.add(aModule);
-        } else {
-          notUsedModules.add(aModule);
-        }
-      }
-
-      // generate the new import
-      let newImportedContent = [];
+    // generate the new import
+      let newImportedContent: string[] = [];
 
       const librariesUsedByThisFile = new Set<string>(); // note here, we don't count duplicate lib imports in the same file...
 
@@ -339,6 +285,80 @@ const coreUtils = {
         countLibUsedByFile[lib] = countLibUsedByFile[lib] || 0;
         countLibUsedByFile[lib]++;
       }
+
+      return newImportedContent;
+    },
+  process: (file: string, externalPackagesFromJson: string [], dontWriteToOutputFile = false) => {
+    try {
+      const content = fileUtils.read(file).trim();
+
+      if (!content) {
+        console.log('> Skipped File (Empty Content):'.padStart(17, ' ').yellow(), file);
+        countSkipped++;
+        return;
+      }
+
+      let moduleUsageMap : ModuleUsageMap = {};
+      let libraryImportMap : LibraryImportMap = {};
+      let allImportedModules = new Set<string>();
+
+      // set of used modules
+      let notUsedModules = new Set<string>();
+      let usedModules = new Set<string>();
+
+      const REGEX_INCLUDING_RELATIVE_IMPORTS =
+        /^import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/gm;
+
+      let rawContentWithoutImport = content.replace(REGEX_INCLUDING_RELATIVE_IMPORTS, '');
+      let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
+
+      // here we parse raw imports
+      coreUtils.parseRawImportLines(
+        file,
+        importCodeLines,
+        moduleUsageMap,
+        libraryImportMap,
+        allImportedModules,
+      );
+
+      if (!allImportedModules || allImportedModules.size === 0) {
+        console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
+        countSkipped++;
+        return;
+      }
+
+      // here we figure out if an import is actually used in the code
+      for (const aModule of allImportedModules) {
+        let isModuleUsed = false;
+
+        if (configs.aggressiveCheck === true) {
+          if (rawContentWithoutImport.match(`<${aModule}`)) {
+            // used as a react component
+            isModuleUsed = true;
+          }
+          if (
+            rawContentWithoutImport.match(new RegExp('[ ]+' + aModule + '[ ]*')) ||
+            rawContentWithoutImport.match(new RegExp('[ ]*' + aModule + '[ ]+')) ||
+            rawContentWithoutImport.match(new RegExp(aModule + '[.}(-+]+'))
+          ) {
+            // used as a method or an expression
+            isModuleUsed = true;
+          }
+        } else {
+          if (rawContentWithoutImport.includes(aModule)) {
+            isModuleUsed = true;
+          }
+        }
+
+        if (isModuleUsed) {
+          usedModules.add(aModule);
+        } else {
+          notUsedModules.add(aModule);
+        }
+      }
+
+      // generate the new import
+      let newImportedContent = coreUtils.generateImportsOutput(usedModules, moduleUsageMap, libraryImportMap);
 
       newImportedContent = coreUtils.getSortedImports(
         newImportedContent.map((importedLine) => importedLine.replace(/'/g, configs.importQuote)),
