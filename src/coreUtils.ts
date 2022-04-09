@@ -201,7 +201,7 @@ const coreUtils = {
       let usedModules = new Set<string>();
 
       const REGEX_INCLUDING_RELATIVE_IMPORTS =
-        /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/g;
+        /^import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/gm;
 
       let rawContentWithoutImport = content.replace(REGEX_INCLUDING_RELATIVE_IMPORTS, '');
       let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
