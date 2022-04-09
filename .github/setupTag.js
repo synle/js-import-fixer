@@ -15,9 +15,13 @@ const minute = new Date().getMinutes().toString().padStart(2, '0');
 const fullVersionName = `${year}${month}${day}${hour}${minute}`;
 
 // construct the new temp build
-const newTempVersion = `${major}.${minor}.${fullVersionName}`;
+let newTempVersion = `${major}.${minor}.${fullVersionName}`;
+if(process.env.TAG_MODE === 'beta'){
+  newTempVersion += `-beta`;
+}
+
 
 // set the new temp version
 oldPackageJson.version = newTempVersion;
 fs.writeFileSync('./package.json', JSON.stringify(oldPackageJson, null, 2));
-console.log('New Version:', newTempVersion);
+console.log('New Version:', process.env.TAG_MODE, newTempVersion);
