@@ -102,6 +102,16 @@ The full command will look something like this
 npx import-fixer --filter=App.tsx,Header.tsx
 ```
 
+#### `--ignored`
+
+- `--ignored`: similar to `--filter` but used to ignore certain files from being formatted `--ignored=__mocks__`
+
+The full command will look something like this
+
+```bash
+npx import-fixer --ignored=__mocks__
+```
+
 #### `--aggressive`
 
 - `--aggressive` : when turned on, the script will be more aggressive when checking for usages of the imports. By default this flag is turned off.
