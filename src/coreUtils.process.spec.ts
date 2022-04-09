@@ -1,7 +1,7 @@
 // @ts-nocheck
 import path from 'path';
-import coreUtils from './coreUtils';
-import configs from './configs';
+import configs from 'src/configs';
+import coreUtils from 'src/coreUtils';
 
 describe('coreUtils.process', () => {
   const mockedExternalPackage = ['externalLib1', 'externalLib2'];

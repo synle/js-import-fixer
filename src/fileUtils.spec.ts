@@ -1,6 +1,6 @@
 // @ts-nocheck
 import path from 'path';
-import fileUtils from './fileUtils';
+import fileUtils from 'src/fileUtils';
 
 describe('fileUtils.js', () => {
   test('read', async () => {
