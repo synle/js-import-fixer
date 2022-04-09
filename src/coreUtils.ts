@@ -351,7 +351,7 @@ const coreUtils = {
         '\n' +
         rawContentWithoutImport.replace(/[\n][\n][\n]+/g, '\n').trim();
 
-      if (content.includes('// @ts-nocheck')) {
+      if (content.match(/^\/\/[ ]+@ts-nocheck+/)) {
         finalContent = '// @ts-nocheck\n' + finalContent.replace(/\/\/[ ]+@ts-nocheck/, '');
       }
 
