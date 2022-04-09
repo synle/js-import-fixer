@@ -24,7 +24,7 @@ jobs:
       - run: npm install
       # here we run fix-import on this same codebase
       # to make sure the build works
+      - run: npm test
       - run: npm run build
       - run: npm run fix-import
-      - run: npm test
       - run: npm run build
