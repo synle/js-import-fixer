@@ -201,7 +201,7 @@ const coreUtils = {
       let usedModules = new Set<string>();
 
       const REGEX_INCLUDING_RELATIVE_IMPORTS =
-        /import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/g;
+        /^import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/gm;
 
       let rawContentWithoutImport = content.replace(REGEX_INCLUDING_RELATIVE_IMPORTS, '');
       let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
@@ -351,7 +351,7 @@ const coreUtils = {
         '\n' +
         rawContentWithoutImport.replace(/[\n][\n][\n]+/g, '\n').trim();
 
-      if (content.includes('// @ts-nocheck')) {
+      if (content.match(/^\/\/[ ]+@ts-nocheck+/)) {
         finalContent = '// @ts-nocheck\n' + finalContent.replace(/\/\/[ ]+@ts-nocheck/, '');
       }
 
