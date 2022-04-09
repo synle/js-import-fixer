@@ -1,6 +1,6 @@
 // @ts-nocheck
-import coreUtils from 'src/coreUtils';
-import configs from 'src/configs';
+import coreUtils from 'src/utils/coreUtils';
+import configs from 'src/utils/configs';
 
 const usedModules = new Set([
   'Alert',

@@ -22,9 +22,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
       - run: npm install
+      - run: npm test
       - run: npm run build # run first to generate the binary
       - run: npm run format
-      - run: npm test
       - run: npm run build # build again to make sure the format and fix import works
       - uses: EndBug/add-and-commit@v8
         with:

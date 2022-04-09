@@ -1,8 +1,8 @@
 import path from 'path';
-import configs from 'src/configs';
-import fileUtils from 'src/fileUtils';
-import gitiginorePatterns from 'src/gitiginorePatterns';
-import './color';
+import configs from 'src/utils/configs';
+import fileUtils from 'src/utils/fileUtils';
+import gitiginorePatterns from 'src/utils/gitiginorePatterns';
+import 'src/utils/color';
 
 type ImportType = 'module' | 'default';
 
@@ -50,7 +50,7 @@ const coreUtils = {
 
     if (configs.ignoredFiles.length > 0) {
       files = files.filter((file) =>
-        !configs.ignoredFiles.every((ignoredFile) => file.includes(ignoredFile)),
+        !configs.ignoredFiles.some((ignoredFile) => file.includes(ignoredFile)),
       );
     }
 
@@ -199,10 +199,6 @@ const coreUtils = {
     });
   },
   generateImportsOutput: (usedModules: Set<string>, moduleUsageMap: ModuleUsageMap, libraryImportMap : LibraryImportMap) => {
-    console.log(usedModules);
-    console.log(moduleUsageMap);
-    console.log(libraryImportMap);
-
     // generate the new import
       let newImportedContent: string[] = [];
 
