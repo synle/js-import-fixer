@@ -11,10 +11,12 @@ console.log(JSON.stringify(configs, null, 2));
 console.log(''.padEnd(100, '=').blue());
 
 // external packages from json
-let externalPackagesFromJson = [...new Set([
-  ...Object.keys(packageJson.devDependencies || {}),
-  ...Object.keys(packageJson.dependencies || {}),
-])].sort();
+let externalPackagesFromJson = [
+  ...new Set([
+    ...Object.keys(packageJson.devDependencies || {}),
+    ...Object.keys(packageJson.dependencies || {}),
+  ]),
+].sort();
 
 // get all relevant files
 let startPath = process.cwd();
@@ -45,7 +47,7 @@ for (const file of files) {
 
   coreUtils.process(file, externalPackagesFromJson);
 }
-let countLibUsedByFileList : [string, number][]= [];
+let countLibUsedByFileList: [string, number][] = [];
 for (const lib of Object.keys(countLibUsedByFile)) {
   countLibUsedByFileList.push([lib, countLibUsedByFile[lib]]);
 }

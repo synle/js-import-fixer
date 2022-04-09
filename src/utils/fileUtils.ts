@@ -13,13 +13,13 @@ const fileUtils = {
   },
   write: (file: string, content: string) => fs.writeFileSync(file, content),
   listDirNested: (startPath: string) => {
-    let files : string[] = [];
-    let stack : string[] = [startPath];
+    let files: string[] = [];
+    let stack: string[] = [startPath];
 
     while (stack.length > 0) {
       const file = stack.pop();
 
-      if(!file){
+      if (!file) {
         continue;
       }
 

@@ -12,7 +12,7 @@ type ImportEntry = {
   lib: string;
   libFullPath: string;
   alias: string;
-}
+};
 
 /**
  * React, Redis, etc... (library name)
@@ -28,7 +28,7 @@ type ModuleUsageMap = Record<LibraryName, ImportEntry[]>;
  */
 type ModuleName = string;
 
-type LibraryImportMap = Record<ModuleName, ImportEntry>
+type LibraryImportMap = Record<ModuleName, ImportEntry>;
 
 const coreUtils = {
   getFilesToProcess: (startPath: string) => {
@@ -51,8 +51,8 @@ const coreUtils = {
     }
 
     if (configs.ignoredFiles.length > 0) {
-      files = files.filter((file) =>
-        !configs.ignoredFiles.some((ignoredFile) => file.includes(ignoredFile)),
+      files = files.filter(
+        (file) => !configs.ignoredFiles.some((ignoredFile) => file.includes(ignoredFile)),
       );
     }
 
@@ -75,7 +75,7 @@ const coreUtils = {
       return moduleName;
     }
   },
-  getLibrarySortOrder: (a: string, externalPackages: string []) => {
+  getLibrarySortOrder: (a: string, externalPackages: string[]) => {
     let ca = a.substr(a.indexOf(' from ') + 7);
     ca = ca.replace(/[ '";]+/g, '');
 
@@ -87,7 +87,7 @@ const coreUtils = {
 
     return 99999;
   },
-  getSortedImports: (unsortedImports: string[], externalPackages : string[]= []) => {
+  getSortedImports: (unsortedImports: string[], externalPackages: string[] = []) => {
     return unsortedImports.sort((a, b) => {
       // first compare by the order in packages.json
       let ca = coreUtils.getLibrarySortOrder(a, externalPackages);
@@ -116,9 +116,15 @@ const coreUtils = {
    * here we figured out what imports are being imported
     and if it has an alias and if it's a module / default imported
    */
-  parseRawImportLines: (file: string, importCodeLines: string [], moduleUsageMap: ModuleUsageMap, libraryImportMap: LibraryImportMap, allImportedModules: Set<string>) => {
+  parseRawImportLines: (
+    file: string,
+    importCodeLines: string[],
+    moduleUsageMap: ModuleUsageMap,
+    libraryImportMap: LibraryImportMap,
+    allImportedModules: Set<string>,
+  ) => {
     importCodeLines.forEach((s) => {
-      try{
+      try {
         //@ts-ignore
         const lib = s
           .match(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/)[0]
@@ -147,7 +153,7 @@ const coreUtils = {
         }
 
         for (let moduleSplit of moduleSplits) {
-          let importEntry: ImportEntry
+          let importEntry: ImportEntry;
           if (moduleSplit.includes('}')) {
             // will be parsed as module
             moduleSplit = moduleSplit.replace('}', '');
@@ -167,7 +173,7 @@ const coreUtils = {
                 type: 'module',
                 lib,
                 libFullPath,
-              }
+              };
 
               moduleUsageMap[lib].push(importEntry);
               libraryImportMap[aliasName] = importEntry;
@@ -190,103 +196,105 @@ const coreUtils = {
                 type: 'default',
                 lib,
                 libFullPath,
-              }
+              };
 
               moduleUsageMap[lib].push(importEntry);
               libraryImportMap[aliasName] = importEntry;
             }
           }
         }
-      } catch(err){}
+      } catch (err) {}
     });
   },
-  generateImportsOutput: (usedModules: Set<string>, moduleUsageMap: ModuleUsageMap, libraryImportMap : LibraryImportMap) => {
+  generateImportsOutput: (
+    usedModules: Set<string>,
+    moduleUsageMap: ModuleUsageMap,
+    libraryImportMap: LibraryImportMap,
+  ) => {
     // generate the new import
-      let newImportedContent: string[] = [];
+    let newImportedContent: string[] = [];
 
-      const librariesUsedByThisFile = new Set<string>(); // note here, we don't count duplicate lib imports in the same file...
+    const librariesUsedByThisFile = new Set<string>(); // note here, we don't count duplicate lib imports in the same file...
 
-      if (configs.groupImport === false) {
-        // here we don't group, each import is treated as a separate line
-        for (const aModule of usedModules) {
-          const { type, lib, libFullPath, alias, name } = libraryImportMap[aModule];
-          librariesUsedByThisFile.add(lib);
+    if (configs.groupImport === false) {
+      // here we don't group, each import is treated as a separate line
+      for (const aModule of usedModules) {
+        const { type, lib, libFullPath, alias, name } = libraryImportMap[aModule];
+        librariesUsedByThisFile.add(lib);
 
-          if (type === 'module') {
-            if (alias !== name) {
-              newImportedContent.push(`import { ${name} as ${alias} } from '${libFullPath}';`);
-            } else {
-              newImportedContent.push(`import { ${name} } from '${libFullPath}';`);
-            }
+        if (type === 'module') {
+          if (alias !== name) {
+            newImportedContent.push(`import { ${name} as ${alias} } from '${libFullPath}';`);
           } else {
-            // default
-            if (alias === name) {
-              newImportedContent.push(`import ${name} from '${libFullPath}';`);
-            } else {
-              newImportedContent.push(`import ${name} as ${alias} from '${libFullPath}';`);
-            }
+            newImportedContent.push(`import { ${name} } from '${libFullPath}';`);
+          }
+        } else {
+          // default
+          if (alias === name) {
+            newImportedContent.push(`import ${name} from '${libFullPath}';`);
+          } else {
+            newImportedContent.push(`import ${name} as ${alias} from '${libFullPath}';`);
           }
         }
-      } else {
-        let importGroups: Record<string, Record<string, string[]>> = {}; // libName => default , module
+      }
+    } else {
+      let importGroups: Record<string, Record<string, string[]>> = {}; // libName => default , module
 
-        for (const aModule of usedModules) {
-          const { type, lib, libFullPath, alias, name } = libraryImportMap[aModule];
-          librariesUsedByThisFile.add(lib);
+      for (const aModule of usedModules) {
+        const { type, lib, libFullPath, alias, name } = libraryImportMap[aModule];
+        librariesUsedByThisFile.add(lib);
 
-          importGroups[lib] = importGroups[lib] || {};
+        importGroups[lib] = importGroups[lib] || {};
 
-          if (type === 'module') {
-            importGroups[lib]['module'] = importGroups[lib]['module'] || [];
+        if (type === 'module') {
+          importGroups[lib]['module'] = importGroups[lib]['module'] || [];
 
-            if (alias !== name) {
-              importGroups[lib]['module'].push(`${name} as ${alias}`);
-            } else {
-              importGroups[lib]['module'].push(`${name}`);
-            }
+          if (alias !== name) {
+            importGroups[lib]['module'].push(`${name} as ${alias}`);
           } else {
-            // default
-            if (alias === name) {
-              importGroups[lib]['default'] = [aModule];
-            } else {
-              // import * as ... , then treat it as a separate import line
-              newImportedContent.push(`import ${name} as ${alias} from '${lib}';`);
-            }
+            importGroups[lib]['module'].push(`${name}`);
           }
-        }
-
-        for (const lib of Object.keys(importGroups)) {
-          const libImportedModules : string []= [];
-          if (importGroups[lib]['default'] && importGroups[lib]['default'].length === 1) {
-            libImportedModules.push(importGroups[lib]['default'][0]);
-          }
-
-          if (importGroups[lib]['module'] && importGroups[lib]['module'].length > 0) {
-            //@ts-ignore
-            libImportedModules.push(
-              `{ ${importGroups[lib]['module']
-                .sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase()))
-                .join(', ')} }`,
-            );
-          }
-
-          if (libImportedModules.length > 0) {
-            const libFullPath = moduleUsageMap[lib][0].libFullPath;
-            newImportedContent.push(
-              `import ${libImportedModules.join(', ')} from '${libFullPath}';`,
-            );
+        } else {
+          // default
+          if (alias === name) {
+            importGroups[lib]['default'] = [aModule];
+          } else {
+            // import * as ... , then treat it as a separate import line
+            newImportedContent.push(`import ${name} as ${alias} from '${lib}';`);
           }
         }
       }
 
-      for (const lib of librariesUsedByThisFile) {
-        countLibUsedByFile[lib] = countLibUsedByFile[lib] || 0;
-        countLibUsedByFile[lib]++;
-      }
+      for (const lib of Object.keys(importGroups)) {
+        const libImportedModules: string[] = [];
+        if (importGroups[lib]['default'] && importGroups[lib]['default'].length === 1) {
+          libImportedModules.push(importGroups[lib]['default'][0]);
+        }
 
-      return newImportedContent;
-    },
-  process: (file: string, externalPackagesFromJson: string [], dontWriteToOutputFile = false) => {
+        if (importGroups[lib]['module'] && importGroups[lib]['module'].length > 0) {
+          //@ts-ignore
+          libImportedModules.push(
+            `{ ${importGroups[lib]['module']
+              .sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase()))
+              .join(', ')} }`,
+          );
+        }
+
+        if (libImportedModules.length > 0) {
+          const libFullPath = moduleUsageMap[lib][0].libFullPath;
+          newImportedContent.push(`import ${libImportedModules.join(', ')} from '${libFullPath}';`);
+        }
+      }
+    }
+
+    for (const lib of librariesUsedByThisFile) {
+      countLibUsedByFile[lib] = countLibUsedByFile[lib] || 0;
+      countLibUsedByFile[lib]++;
+    }
+
+    return newImportedContent;
+  },
+  process: (file: string, externalPackagesFromJson: string[], dontWriteToOutputFile = false) => {
     try {
       const content = fileUtils.read(file).trim();
 
@@ -296,8 +304,8 @@ const coreUtils = {
         return;
       }
 
-      let moduleUsageMap : ModuleUsageMap = {};
-      let libraryImportMap : LibraryImportMap = {};
+      let moduleUsageMap: ModuleUsageMap = {};
+      let libraryImportMap: LibraryImportMap = {};
       let allImportedModules = new Set<string>();
 
       // set of used modules
@@ -356,7 +364,11 @@ const coreUtils = {
       }
 
       // generate the new import
-      let newImportedContent = coreUtils.generateImportsOutput(usedModules, moduleUsageMap, libraryImportMap);
+      let newImportedContent = coreUtils.generateImportsOutput(
+        usedModules,
+        moduleUsageMap,
+        libraryImportMap,
+      );
 
       newImportedContent = coreUtils.getSortedImports(
         newImportedContent.map((importedLine) => importedLine.replace(/'/g, configs.importQuote)),

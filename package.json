@@ -9,7 +9,7 @@
   "scripts": {
     "fix-import": "node main.js  --groupImport --transformRelativeImport --ignored=__mocks__,.github",
     "preformat": "npm run fix-import",
-    "format": "npx prettier --config ./.prettierrc --write **/*.{js,json,md}",
+    "format": "npx prettier --config ./.prettierrc --write **/*.{ts,js,json,md}",
     "build": "npx webpack --config webpack.config.js",
     "test": "npx jest"
   },
