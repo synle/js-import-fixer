@@ -22,8 +22,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
       - run: npm install
-      - run: npm test
+      # here we run fix-import on this same codebase
+      # to make sure the build works
       - run: npm run build
-      # here we run format and validate if the script works
       - run: npm run fix-import
+      - run: npm test
       - run: npm run build
