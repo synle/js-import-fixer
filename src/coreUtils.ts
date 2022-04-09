@@ -38,6 +38,12 @@ const coreUtils = {
       );
     }
 
+    if (configs.ignoredFiles.length > 0) {
+      files = files.filter((file) =>
+        !configs.ignoredFiles.every((ignoredFile) => file.includes(ignoredFile)),
+      );
+    }
+
     // doing a quick sort to make file easier to follow
     files = files.sort();
 
