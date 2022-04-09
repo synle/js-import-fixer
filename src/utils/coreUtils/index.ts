@@ -19,6 +19,7 @@ type ImportEntry = {
  * @type {[type]}
  */
 type LibraryName = string;
+
 type ModuleUsageMap = Record<LibraryName, ImportEntry[]>;
 
 /**
