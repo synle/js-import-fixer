@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
-      - run: node .github/publishMain.js
+      - run: TAG_MODE='stable' node .github/setupTag.js
       - run: npm install
       - run: npm test
       - run: npm run build
