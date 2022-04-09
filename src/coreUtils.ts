@@ -14,9 +14,19 @@ type ImportEntry = {
   alias: string;
 }
 
-type ModuleUsageMap = Record<string, ImportEntry[]>;
+/**
+ * React, Redis, etc... (library name)
+ * @type {[type]}
+ */
+type LibraryName = string;
+type ModuleUsageMap = Record<LibraryName, ImportEntry[]>;
 
-type LibraryImportMap = Record<string, ImportEntry>
+/**
+ * useState, useEffect, etc... (module name)
+ * @type {[type]}
+ */
+type ModuleName = string;
+type LibraryImportMap = Record<ModuleName, ImportEntry>
 
 const coreUtils = {
   getFilesToProcess: (startPath: string) => {
