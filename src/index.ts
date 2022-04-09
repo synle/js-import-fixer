@@ -3,7 +3,6 @@ import configs from 'src/configs';
 import coreUtils from 'src/coreUtils';
 import fileUtils from 'src/fileUtils';
 import packageJson from 'src/packageJson';
-
 console.log('Inputs / Configs '.padEnd(100, '=').blue());
 console.log('PWD:', process.cwd());
 console.log('Version:', libraryJson.version);
