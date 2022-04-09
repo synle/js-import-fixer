@@ -1,5 +1,5 @@
 // @ts-nocheck
-import coreUtils from 'src/coreUtils';
+import coreUtils from 'src/utils/coreUtils';
 
 describe('coreUtils.getAliasName', () => {
   test('complex moduleName with as', async () => {

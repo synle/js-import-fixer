@@ -1,5 +1,5 @@
 import path from 'path';
-import fileUtils from 'src/fileUtils';
+import fileUtils from 'src/utils/fileUtils';
 // figuring out what files in gitignore to skip
 let gitiginorePatterns: string[] = [];
 

@@ -1,5 +1,5 @@
 import path from 'path';
-import fileUtils from 'src/fileUtils';
+import fileUtils from 'src/utils/fileUtils';
 
 const packageJson = fileUtils.readJson(path.join(process.cwd(), 'package.json')) || {};
 
