@@ -24,3 +24,6 @@ jobs:
       - run: npm install
       - run: npm test
       - run: npm run build
+      # here we run format and validate if the script works
+      - run: npm run fix-import
+      - run: npm run build

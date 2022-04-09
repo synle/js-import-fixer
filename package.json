@@ -7,6 +7,8 @@
     "import-fixer": "main.js"
   },
   "scripts": {
+    "fix-import": "node main.js  --groupImport --transformRelativeImport --ignored=__mocks__",
+    "preformat": "npm run fix-import",
     "format": "npx prettier --config ./.prettierrc --write **/*.{js,json,md}",
     "build": "npx webpack --config webpack.config.js",
     "test": "npx jest"
