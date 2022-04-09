@@ -7,6 +7,7 @@
     "import-fixer": "main.js"
   },
   "scripts": {
+    "prefix-import": "npm run build",
     "fix-import": "node main.js  --groupImport --transformRelativeImport --ignored=__mocks__,.github",
     "preformat": "npm run fix-import",
     "format": "npx prettier --config ./.prettierrc --write **/*.{ts,js,json,md}",
