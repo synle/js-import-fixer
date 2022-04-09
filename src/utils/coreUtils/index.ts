@@ -27,6 +27,7 @@ type ModuleUsageMap = Record<LibraryName, ImportEntry[]>;
  * @type {[type]}
  */
 type ModuleName = string;
+
 type LibraryImportMap = Record<ModuleName, ImportEntry>
 
 const coreUtils = {

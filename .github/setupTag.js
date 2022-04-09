@@ -16,10 +16,9 @@ const fullVersionName = `${year}${month}${day}${hour}${minute}`;
 
 // construct the new temp build
 let newTempVersion = `${major}.${minor}.${fullVersionName}`;
-if(process.env.TAG_MODE === 'beta'){
+if (process.env.TAG_MODE === 'beta') {
   newTempVersion += `-beta`;
 }
-
 
 // set the new temp version
 oldPackageJson.version = newTempVersion;
