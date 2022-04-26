@@ -27,7 +27,7 @@ describe('coreUtils.getModuleName', () => {
 });
 
 describe('coreUtils.getSortedImports', () => {
-  test('should work for a basic example', async () => {
+  test('example 1 - a basic example', async () => {
     const actual = coreUtils.getSortedImports([
       `import useToaster, { ToasterHandler } from 'src/hooks/useToaster';`,
       `import Box from '@mui/material/Box';`,
@@ -75,7 +75,7 @@ describe('coreUtils.getSortedImports', () => {
     `);
   });
 
-  test('should work for a complex example', async () => {
+  test('example 2 - a complex example', async () => {
     const mockedExternalPackage = fileUtils.getExternalDependencies([]);
 
     const actual = coreUtils.getSortedImports(
@@ -101,4 +101,23 @@ describe('coreUtils.getSortedImports', () => {
       ]
     `);
   });
+
+  test('example 3', async () => {
+    const mockedExternalPackage = fileUtils.getExternalDependencies([]);
+
+    const actual = coreUtils.getSortedImports(
+      [
+        `import configs from 'src/utils/configs';`,
+        `import packageJson from 'src/utils/packageJson';`,
+        `import coreUtils from 'src/utils/coreUtils';`,
+        `import fileUtils from 'src/utils/fileUtils';`,
+        `import libraryJson from 'package.json';`,
+      ],
+      mockedExternalPackage,
+    );
+
+    expect(actual).toMatchInlineSnapshot();
+  });
+
+
 });
