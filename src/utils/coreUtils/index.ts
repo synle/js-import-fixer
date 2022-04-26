@@ -85,7 +85,7 @@ const coreUtils = {
     ca = ca.replace(/[ '";]+/g, '');
 
     for (let i = 0; i < externalPackages.length; i++) {
-      if (ca.includes(externalPackages[i])) {
+      if (ca.indexOf(externalPackages[i]) === 0) {
         return i;
       }
     }
