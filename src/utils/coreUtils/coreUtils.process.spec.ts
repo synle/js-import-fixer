@@ -257,6 +257,7 @@ describe('coreUtils.process', () => {
 
     expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
       Object {
+        "child_process": 1,
         "externalLib1": 1,
         "path": 1,
         "src/internalLib3": 1,
@@ -264,14 +265,13 @@ describe('coreUtils.process', () => {
     `);
 
     expect(actual).toMatchInlineSnapshot(`
-      "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+      "import { default as my_child_process } from 'child_process';
+      import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
       import path from 'path';
       import { constant2 } from 'src/internalLib3';
-      import {default as my_child_process} from 'child_process';
 
       const a = path.join('a1', 'a2')
       const b = externalLib1(a);
-
       const c = methodLib1() + constant1;
       const d = myAliasMethod1(constant2);
       const e = my_child_process();"
@@ -292,6 +292,7 @@ describe('coreUtils.process', () => {
 
     expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
       Object {
+        "child_process": 1,
         "externalLib1": 1,
         "path": 1,
         "src/internalLib3": 1,
@@ -299,14 +300,13 @@ describe('coreUtils.process', () => {
     `);
 
     expect(actual).toMatchInlineSnapshot(`
-      "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+      "import { default as my_child_process } from 'child_process';
+      import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
       import path from 'path';
       import { constant2 } from 'src/internalLib3';
-      import {default as my_child_process} from 'child_process';
 
       const a = path.join('a1', 'a2')
       const b = externalLib1(a);
-
       const c = methodLib1() + constant1;
       const d = myAliasMethod1(constant2);
       const e = my_child_process();"
