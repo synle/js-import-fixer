@@ -245,7 +245,6 @@ describe('coreUtils.process', () => {
     `);
   });
 
-
   test('sample_5.js simple', async () => {
     global.countSkipped = 0;
     global.countProcessed = 0;
@@ -256,9 +255,27 @@ describe('coreUtils.process', () => {
     expect(global.countSkipped).toBe(0);
     expect(global.countProcessed).toBe(1);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot();
+    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+      Object {
+        "externalLib1": 1,
+        "path": 1,
+        "src/internalLib3": 1,
+      }
+    `);
 
-    expect(actual).toMatchInlineSnapshot();
+    expect(actual).toMatchInlineSnapshot(`
+      "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+      import path from 'path';
+      import { constant2 } from 'src/internalLib3';
+      import {default as my_child_process} from 'child_process';
+
+      const a = path.join('a1', 'a2')
+      const b = externalLib1(a);
+
+      const c = methodLib1() + constant1;
+      const d = myAliasMethod1(constant2);
+      const e = my_child_process();"
+    `);
   });
 
   test('sample_5.js withGroupImport', async () => {
@@ -273,9 +290,26 @@ describe('coreUtils.process', () => {
     expect(global.countSkipped).toBe(0);
     expect(global.countProcessed).toBe(1);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot();
+    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+      Object {
+        "externalLib1": 1,
+        "path": 1,
+        "src/internalLib3": 1,
+      }
+    `);
 
-    expect(actual).toMatchInlineSnapshot();
+    expect(actual).toMatchInlineSnapshot(`
+      "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+      import path from 'path';
+      import { constant2 } from 'src/internalLib3';
+      import {default as my_child_process} from 'child_process';
+
+      const a = path.join('a1', 'a2')
+      const b = externalLib1(a);
+
+      const c = methodLib1() + constant1;
+      const d = myAliasMethod1(constant2);
+      const e = my_child_process();"
+    `);
   });
-
 });
