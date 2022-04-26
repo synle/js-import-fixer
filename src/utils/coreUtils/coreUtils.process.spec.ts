@@ -11,6 +11,7 @@ describe('coreUtils.process', () => {
   const fileSample2 = path.join('__mocks__/', 'sample_2.js');
   const fileSample3 = path.join('__mocks__/', 'sample_3.js');
   const fileSample4 = path.join('__mocks__/nested_dir_a/nested_dir_b', 'sample_4.js');
+  const fileSample5 = path.join('__mocks__/', 'sample_5.js');
 
   test('sample_0.js simple', async () => {
     global.countSkipped = 0;
@@ -242,4 +243,38 @@ describe('coreUtils.process', () => {
       externalLib1();"
     `);
   });
+
+
+  test('sample_5.js simple', async () => {
+    global.countSkipped = 0;
+    global.countProcessed = 0;
+    global.countLibUsedByFile = {};
+
+    const actual = coreUtils.process(fileSample2, mockedExternalPackage, true);
+
+    expect(global.countSkipped).toBe(0);
+    expect(global.countProcessed).toBe(1);
+
+    expect(global.countLibUsedByFile).toMatchInlineSnapshot();
+
+    expect(actual).toMatchInlineSnapshot();
+  });
+
+  test('sample_5.js withGroupImport', async () => {
+    global.countSkipped = 0;
+    global.countProcessed = 0;
+    global.countLibUsedByFile = {};
+
+    configs.groupImport = true;
+
+    const actual = coreUtils.process(fileSample2, mockedExternalPackage, true);
+
+    expect(global.countSkipped).toBe(0);
+    expect(global.countProcessed).toBe(1);
+
+    expect(global.countLibUsedByFile).toMatchInlineSnapshot();
+
+    expect(actual).toMatchInlineSnapshot();
+  });
+
 });
