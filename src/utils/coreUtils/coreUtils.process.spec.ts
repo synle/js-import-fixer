@@ -2,9 +2,10 @@
 import path from 'path';
 import configs from 'src/utils/configs';
 import coreUtils from 'src/utils/coreUtils';
+import fileUtils from 'src/utils/fileUtils';
 
 describe('coreUtils.process', () => {
-  const mockedExternalPackage = ['externalLib1', 'externalLib2'];
+  const mockedExternalPackage = fileUtils.getExternalDependencies(['externalLib1', 'externalLib2']);
 
   const fileSample0 = path.join('__mocks__/', 'sample_0.js');
   const fileSample1 = path.join('__mocks__/', 'sample_1.js');
@@ -250,7 +251,7 @@ describe('coreUtils.process', () => {
     global.countProcessed = 0;
     global.countLibUsedByFile = {};
 
-    const actual = coreUtils.process(fileSample2, mockedExternalPackage, true);
+    const actual = coreUtils.process(fileSample5, mockedExternalPackage, true);
 
     expect(global.countSkipped).toBe(0);
     expect(global.countProcessed).toBe(1);
@@ -267,7 +268,7 @@ describe('coreUtils.process', () => {
 
     configs.groupImport = true;
 
-    const actual = coreUtils.process(fileSample2, mockedExternalPackage, true);
+    const actual = coreUtils.process(fileSample5, mockedExternalPackage, true);
 
     expect(global.countSkipped).toBe(0);
     expect(global.countProcessed).toBe(1);

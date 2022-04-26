@@ -60,6 +60,48 @@ const fileUtils = {
 
     return false;
   },
+  getExternalDependencies: (dependencies: string[]) => {
+    return [
+    ...new Set([
+      ...dependencies,
+
+      // these are known built in modules from node
+      // keep it here for sorting
+      ...`
+        assert
+        buffer
+        child_process
+        cluster
+        crypto
+        dgram
+        dns
+        domain
+        events
+        fs
+        http
+        https
+        net
+        os
+        path
+        punycode
+        querystring
+        readline
+        stream
+        string_decoder
+        timers
+        tls
+        tty
+        url
+        util
+        v8
+        vm
+        zlib
+      `
+        .split('\n')
+        .map((s) => s.trim()),
+    ]),
+  ].sort().filter(s => s);
+  }
 };
 
 export default fileUtils;
