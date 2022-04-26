@@ -15,6 +15,40 @@ let externalPackagesFromJson = [
   ...new Set([
     ...Object.keys(packageJson.devDependencies || {}),
     ...Object.keys(packageJson.dependencies || {}),
+    ...Object.keys(packageJson.peerDependencies  || {}),
+    ...Object.keys(packageJson.optionalDependencies || {}),
+    // these are known built in modules from node
+    // keep it here for sorting
+    ...`
+      assert
+      buffer
+      child_process
+      cluster
+      crypto
+      dgram
+      dns
+      domain
+      events
+      fs
+      http
+      https
+      net
+      os
+      path
+      punycode
+      querystring
+      readline
+      stream
+      string_decoder
+      timers
+      tls
+      tty
+      url
+      util
+      v8
+      vm
+      zlib
+    `.split('\n').map(s => s.trim())
   ]),
 ].sort();
 
