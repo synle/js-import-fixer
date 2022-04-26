@@ -52,7 +52,7 @@ let externalPackagesFromJson = [
       .split('\n')
       .map((s) => s.trim()),
   ]),
-].sort();
+].sort().filter(s => s);
 
 // get all relevant files
 let startPath = process.cwd();
