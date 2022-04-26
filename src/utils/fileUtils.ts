@@ -62,12 +62,12 @@ const fileUtils = {
   },
   getExternalDependencies: (dependencies: string[]) => {
     return [
-    ...new Set([
-      ...dependencies,
+      ...new Set([
+        ...dependencies,
 
-      // these are known built in modules from node
-      // keep it here for sorting
-      ...`
+        // these are known built in modules from node
+        // keep it here for sorting
+        ...`
         assert
         buffer
         child_process
@@ -97,11 +97,13 @@ const fileUtils = {
         vm
         zlib
       `
-        .split('\n')
-        .map((s) => s.trim()),
-    ]),
-  ].sort().filter(s => s);
-  }
+          .split('\n')
+          .map((s) => s.trim()),
+      ]),
+    ]
+      .sort()
+      .filter((s) => s);
+  },
 };
 
 export default fileUtils;

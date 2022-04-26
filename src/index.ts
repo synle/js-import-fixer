@@ -1,8 +1,8 @@
-import libraryJson from 'package.json';
 import configs from 'src/utils/configs';
 import coreUtils from 'src/utils/coreUtils';
 import fileUtils from 'src/utils/fileUtils';
 import packageJson from 'src/utils/packageJson';
+import libraryJson from 'package.json';
 console.log('Inputs / Configs '.padEnd(100, '=').blue());
 console.log('PWD:', process.cwd());
 console.log('Version:', libraryJson.version);
