@@ -30,6 +30,11 @@ type ModuleName = string;
 
 type LibraryImportMap = Record<ModuleName, ImportEntry>;
 
+const REGEX_INCLUDING_RELATIVE_IMPORTS =
+  /^import[ ]+[\*{a-zA-Z0-9_ ,}\n]+['"][.@/a-zA-Z0-9-_]+['"][;]*/gm;
+
+const REGEX_PARTIAL_FROM_LIB = /from[ ]+['"][.@/a-zA-Z0-9-_]+['"][;]*/;
+
 const coreUtils = {
   getFilesToProcess: (startPath: string) => {
     let files = fileUtils.listDirNested(startPath);
@@ -127,13 +132,13 @@ const coreUtils = {
       try {
         //@ts-ignore
         const lib = s
-          .match(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/)[0]
+          .match(REGEX_PARTIAL_FROM_LIB)[0]
           .replace(/from[ ]+['"]/, '')
           .replace(/['"]/, '')
           .replace(/;/, '');
         moduleUsageMap[lib] = moduleUsageMap[lib] || [];
         let parsed = s
-          .replace(/from[ ]+['"][.@/a-zA-Z0-9-]+['"][;]*/, '')
+          .replace(REGEX_PARTIAL_FROM_LIB, '')
           .replace('import ', '')
           .replace(/[ \n]+/g, ' ');
 
@@ -311,9 +316,6 @@ const coreUtils = {
       // set of used modules
       let notUsedModules = new Set<string>();
       let usedModules = new Set<string>();
-
-      const REGEX_INCLUDING_RELATIVE_IMPORTS =
-        /^import[ ]+[\*{a-zA-Z0-9 ,}\n]+['"][.@/a-zA-Z0-9-]+['"][;]*/gm;
 
       let rawContentWithoutImport = content.replace(REGEX_INCLUDING_RELATIVE_IMPORTS, '');
       let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
