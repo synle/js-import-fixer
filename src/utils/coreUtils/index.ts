@@ -59,9 +59,6 @@ const REGEX_IMPORT_ES6_FULL_LINE =
  *                will `match from 'lib'`
  */
 const REGEX_IMPORT_ES6_PARTIAL_LIBRARY_NAME = /from[ ]+['"][.@/a-zA-Z0-9-_]+['"][;]*/;
-
-
-
 /**
  * @type {RegExp} used to extract the full line of import using legacy style
  *                will `const fs = require('fs');`
@@ -72,7 +69,6 @@ const REGEX_IMPORT_LEGACY_FULL_LINE = /TODO/;
  * @type {[type]}
  */
 const REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME = /TODO/;
-
 
 const coreUtils = {
   getFilesToProcess: (startPath: string) => {
