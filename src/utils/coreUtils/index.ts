@@ -47,10 +47,32 @@ type ImportProcessOutput = {
   importedModules: ImportedModules;
 };
 
-const REGEX_INCLUDING_RELATIVE_IMPORTS =
+/**
+ * @type {RegExp} used to extract the full line of import using ES6 style
+ *                will `match import abc from 'lib';`
+ */
+const REGEX_IMPORT_ES6_FULL_LINE =
   /^import[ ]+[\*{a-zA-Z0-9_ ,}\n]+['"][.@/a-zA-Z0-9-_]+['"][;]*/gm;
 
-const REGEX_PARTIAL_FROM_LIB = /from[ ]+['"][.@/a-zA-Z0-9-_]+['"][;]*/;
+/**
+ * @type {RegExp} used to extract the partials for the library name
+ *                will `match from 'lib'`
+ */
+const REGEX_IMPORT_ES6_PARTIAL_LIBRARY_NAME = /from[ ]+['"][.@/a-zA-Z0-9-_]+['"][;]*/;
+
+
+
+/**
+ * @type {RegExp} used to extract the full line of import using legacy style
+ *                will `const fs = require('fs');`
+ */
+const REGEX_IMPORT_LEGACY_FULL_LINE = /TODO/;
+
+/**
+ * @type {[type]}
+ */
+const REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME = /TODO/;
+
 
 const coreUtils = {
   getFilesToProcess: (startPath: string) => {
@@ -138,7 +160,7 @@ const coreUtils = {
    * here we figured out what imports are being imported
     and if it has an alias and if it's a module / default imported
    */
-  parseRawImportLines: (
+  parseEs6ImportLines: (
     file: string,
     importCodeLines: string[],
     moduleUsageMap: ModuleUsageMap = {},
@@ -149,13 +171,13 @@ const coreUtils = {
       try {
         //@ts-ignore
         const lib = s
-          .match(REGEX_PARTIAL_FROM_LIB)[0]
+          .match(REGEX_IMPORT_ES6_PARTIAL_LIBRARY_NAME)[0]
           .replace(/from[ ]+['"]/, '')
           .replace(/['"]/, '')
           .replace(/;/, '');
         moduleUsageMap[lib] = moduleUsageMap[lib] || [];
         let parsed = s
-          .replace(REGEX_PARTIAL_FROM_LIB, '')
+          .replace(REGEX_IMPORT_ES6_PARTIAL_LIBRARY_NAME, '')
           .replace('import ', '')
           .replace(/[ \n]+/g, ' ');
 
@@ -340,11 +362,11 @@ const coreUtils = {
       let notUsedModules = new Set<string>();
       let usedModules = new Set<string>();
 
-      let rawContentWithoutImport = content.replace(REGEX_INCLUDING_RELATIVE_IMPORTS, '');
-      let importCodeLines = content.match(REGEX_INCLUDING_RELATIVE_IMPORTS) || [];
+      let rawContentWithoutImport = content.replace(REGEX_IMPORT_ES6_FULL_LINE, '');
+      let importCodeLines = content.match(REGEX_IMPORT_ES6_FULL_LINE) || [];
 
       // here we parse raw imports
-      coreUtils.parseRawImportLines(
+      coreUtils.parseEs6ImportLines(
         file,
         importCodeLines,
         moduleUsageMap,
