@@ -2,7 +2,7 @@
 import configs from 'src/utils/configs';
 import coreUtils from 'src/utils/coreUtils';
 
-describe('coreUtils.parseRawImportLines', () => {
+describe('coreUtils.parseEs6ImportLines', () => {
   const fileNameSample1 = '/git/sqlui-native/commons/adapters/RedisDataAdapter.ts';
   const importSample1 = [
     "import { createClient, RedisClientType } from 'redis';",
@@ -43,7 +43,7 @@ describe('coreUtils.parseRawImportLines', () => {
   test('importSample1 example with transform relative', async () => {
     configs.transformRelativeImport = '';
 
-    const actual = coreUtils.parseRawImportLines(fileNameSample1, importSample1);
+    const actual = coreUtils.parseEs6ImportLines(fileNameSample1, importSample1);
 
     expect(actual.libraryImportMap).toMatchSnapshot();
     expect(actual.moduleUsageMap).toMatchSnapshot();
@@ -53,7 +53,7 @@ describe('coreUtils.parseRawImportLines', () => {
   test("importSample1 example with transform relative 'src'", async () => {
     configs.transformRelativeImport = 'src/';
 
-    const actual = coreUtils.parseRawImportLines(fileNameSample1, importSample1);
+    const actual = coreUtils.parseEs6ImportLines(fileNameSample1, importSample1);
 
     expect(actual.libraryImportMap).toMatchSnapshot();
     expect(actual.moduleUsageMap).toMatchSnapshot();
@@ -63,7 +63,7 @@ describe('coreUtils.parseRawImportLines', () => {
   test('importSample1 example with no transformation', async () => {
     configs.transformRelativeImport = undefined;
 
-    const actual = coreUtils.parseRawImportLines(fileNameSample1, importSample1);
+    const actual = coreUtils.parseEs6ImportLines(fileNameSample1, importSample1);
 
     expect(actual.libraryImportMap).toMatchSnapshot();
     expect(actual.moduleUsageMap).toMatchSnapshot();
@@ -73,7 +73,7 @@ describe('coreUtils.parseRawImportLines', () => {
   test('importSample2 example with transform relative', async () => {
     configs.transformRelativeImport = '';
 
-    const actual = coreUtils.parseRawImportLines(fileNameSample2, importSample2);
+    const actual = coreUtils.parseEs6ImportLines(fileNameSample2, importSample2);
 
     expect(actual.libraryImportMap).toMatchSnapshot();
     expect(actual.moduleUsageMap).toMatchSnapshot();
@@ -83,7 +83,7 @@ describe('coreUtils.parseRawImportLines', () => {
   test('importSample2 example with no transformation', async () => {
     configs.transformRelativeImport = undefined;
 
-    const actual = coreUtils.parseRawImportLines(fileNameSample2, importSample2);
+    const actual = coreUtils.parseEs6ImportLines(fileNameSample2, importSample2);
 
     expect(actual.libraryImportMap).toMatchSnapshot();
     expect(actual.moduleUsageMap).toMatchSnapshot();

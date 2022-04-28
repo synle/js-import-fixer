@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`coreUtils.parseRawImportLines importSample1 example with no transformation 1`] = `
+exports[`coreUtils.parseEs6ImportLines importSample1 example with no transformation 1`] = `
 Object {
   "BaseDataAdapter": Object {
     "alias": "BaseDataAdapter",
@@ -47,7 +47,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample1 example with no transformation 2`] = `
+exports[`coreUtils.parseEs6ImportLines importSample1 example with no transformation 2`] = `
 Object {
   "../../typings": Array [
     Object {
@@ -104,7 +104,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample1 example with no transformation 3`] = `
+exports[`coreUtils.parseEs6ImportLines importSample1 example with no transformation 3`] = `
 Set {
   "createClient",
   "RedisClientType",
@@ -115,7 +115,7 @@ Set {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 'src' 1`] = `
+exports[`coreUtils.parseEs6ImportLines importSample1 example with transform relative 'src' 1`] = `
 Object {
   "BaseDataAdapter": Object {
     "alias": "BaseDataAdapter",
@@ -162,7 +162,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 'src' 2`] = `
+exports[`coreUtils.parseEs6ImportLines importSample1 example with transform relative 'src' 2`] = `
 Object {
   "../../typings": Array [
     Object {
@@ -219,7 +219,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 'src' 3`] = `
+exports[`coreUtils.parseEs6ImportLines importSample1 example with transform relative 'src' 3`] = `
 Set {
   "createClient",
   "RedisClientType",
@@ -230,7 +230,7 @@ Set {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 1`] = `
+exports[`coreUtils.parseEs6ImportLines importSample1 example with transform relative 1`] = `
 Object {
   "BaseDataAdapter": Object {
     "alias": "BaseDataAdapter",
@@ -277,7 +277,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 2`] = `
+exports[`coreUtils.parseEs6ImportLines importSample1 example with transform relative 2`] = `
 Object {
   "../../typings": Array [
     Object {
@@ -334,7 +334,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample1 example with transform relative 3`] = `
+exports[`coreUtils.parseEs6ImportLines importSample1 example with transform relative 3`] = `
 Set {
   "createClient",
   "RedisClientType",
@@ -345,7 +345,7 @@ Set {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample2 example with no transformation 1`] = `
+exports[`coreUtils.parseEs6ImportLines importSample2 example with no transformation 1`] = `
 Object {
   "ActionDialogs": Object {
     "alias": "ActionDialogs",
@@ -518,7 +518,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample2 example with no transformation 2`] = `
+exports[`coreUtils.parseEs6ImportLines importSample2 example with no transformation 2`] = `
 Object {
   "@mui/material/Alert": Array [
     Object {
@@ -723,7 +723,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample2 example with no transformation 3`] = `
+exports[`coreUtils.parseEs6ImportLines importSample2 example with no transformation 3`] = `
 Set {
   "createTheme",
   "ThemeProvider",
@@ -752,7 +752,7 @@ Set {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample2 example with transform relative 1`] = `
+exports[`coreUtils.parseEs6ImportLines importSample2 example with transform relative 1`] = `
 Object {
   "ActionDialogs": Object {
     "alias": "ActionDialogs",
@@ -925,7 +925,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample2 example with transform relative 2`] = `
+exports[`coreUtils.parseEs6ImportLines importSample2 example with transform relative 2`] = `
 Object {
   "@mui/material/Alert": Array [
     Object {
@@ -1130,7 +1130,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseRawImportLines importSample2 example with transform relative 3`] = `
+exports[`coreUtils.parseEs6ImportLines importSample2 example with transform relative 3`] = `
 Set {
   "createTheme",
   "ThemeProvider",
