@@ -166,6 +166,11 @@ Refer to this table for more information:
 | `--importQuote=single` (Default) | `import { SqluiCore } from 'typings';` |
 | `--importQuote=double`           | `import { SqluiCore } from "typings";` |
 
+
+#### `--parseLegacyImport`
+
+By default, we don't parse legacy import lines (with `require`), ie. `const fs = require('fs')`. To enable this feature you need to pass in `--parseLegacyImport` parameter.
+
 ## Limitations
 
 - The script currently only supports `import` syntax, so if you have `require` syntax in your code base, it will skip those. In the future, I plan to combine the two and give users an option to consolidate the import as `import` or require syntax.
@@ -181,6 +186,7 @@ Refer to this table for more information:
 - [x] Respect the files in `.gitignore` and skip those files when running the script.
 - [x] Added an option to transform relative imports into absolute imports (Using [`--transformRelativeImport`](https://synle.github.io/js-import-fixer/#--transformRelativeImport)).
 - [x] Added an option to control what's the output quote is in the import line. Either single quote or double quote. [`--importQuote`](https://synle.github.io/js-import-fixer/#--importQuote)
+- [x] Added an option to parse legacy import line with `require` (Using [`--parseLegacyImport`](https://synle.github.io/js-import-fixer/#--parseLegacyImport))
 - [ ] Maybe create a VS Code addon or a separate Electron standalone app that visualize the import transformation and allows user to fine tune the translation one by one.
 
 ## Examples Run

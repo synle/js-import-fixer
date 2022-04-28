@@ -443,8 +443,7 @@ const coreUtils = {
       );
 
       // TODO: make this an optional thing
-      const shouldParseLegacyImport = true;
-      if(shouldParseLegacyImport){
+      if(configs.parseLegacyImport){
         rawContentWithoutImport = rawContentWithoutImport.replace(REGEX_IMPORT_LEGACY_FULL_LINE, '');
         let legacyImportCodeLines = content.match(REGEX_IMPORT_LEGACY_FULL_LINE) || [];
 

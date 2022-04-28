@@ -333,12 +333,13 @@ describe('coreUtils.process', () => {
     `);
   });
 
-  test('sample_6.js simple', async () => {
+  test('sample_6.js mixed imports simple', async () => {
     global.countSkipped = 0;
     global.countProcessed = 0;
     global.countLibUsedByFile = {};
 
     // configs.groupImport = false; (implied)
+    configs.parseLegacyImport = true;
 
     const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
 
@@ -379,12 +380,13 @@ describe('coreUtils.process', () => {
     `);
   });
 
-  test('sample_6.js withGroupImport', async () => {
+  test('sample_6.js mixed imports withGroupImport', async () => {
     global.countSkipped = 0;
     global.countProcessed = 0;
     global.countLibUsedByFile = {};
 
     configs.groupImport = true;
+    configs.parseLegacyImport = true;
 
     const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
 
@@ -407,6 +409,51 @@ describe('coreUtils.process', () => {
       import path from 'path';
       import { constant2, methodLib2 } from 'src/internalLib3';
       import { sum, total } from 'stats';
+
+      const a = path.join('a1', 'a2')
+      const b = externalLib1(a);
+      const c = methodLib1() + constant1;
+      const d = myAliasMethod1(constant2);
+      const e = my_child_process();
+
+      const avg = total / sum;
+
+      methodLib2(a,b,c,d,e, avg)"
+    `);
+  });
+
+  test('sample_6.js mixed imports do not parse legacy imports', async () => {
+    global.countSkipped = 0;
+    global.countProcessed = 0;
+    global.countLibUsedByFile = {};
+
+    configs.groupImport = true;
+    // configs.parseLegacyImport = false; (implied)
+
+    const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
+
+    expect(global.countSkipped).toBe(0);
+    expect(global.countProcessed).toBe(1);
+
+    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+      Object {
+        "child_process": 1,
+        "externalLib1": 1,
+        "path": 1,
+      }
+    `);
+
+    expect(actual).toMatchInlineSnapshot(`
+      "import { default as my_child_process } from 'child_process';
+      import { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
+      import path from 'path';
+
+      const externalLib1 = require('externalLib1');
+      var { methodLib2, constant2 } = require( \\"src/internalLib3\\" );
+      var {
+        total,
+        sum
+      } = require('stats')
 
       const a = path.join('a1', 'a2')
       const b = externalLib1(a);
