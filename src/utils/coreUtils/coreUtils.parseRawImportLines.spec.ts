@@ -41,102 +41,52 @@ describe('coreUtils.parseRawImportLines', () => {
   ];
 
   test('importSample1 example with transform relative', async () => {
-    let libToModules = {};
-    let moduleToLibs = {};
-    let allImportedModules = new Set();
-
     configs.transformRelativeImport = '';
 
-    const actual = coreUtils.parseRawImportLines(
-      fileNameSample1,
-      importSample1,
-      libToModules,
-      moduleToLibs,
-      allImportedModules,
-    );
+    const actual = coreUtils.parseRawImportLines(fileNameSample1, importSample1);
 
-    expect(libToModules).toMatchSnapshot();
-    expect(moduleToLibs).toMatchSnapshot();
-    expect(allImportedModules).toMatchSnapshot();
+    expect(actual.libraryImportMap).toMatchSnapshot();
+    expect(actual.moduleUsageMap).toMatchSnapshot();
+    expect(actual.importedModules).toMatchSnapshot();
   });
 
   test("importSample1 example with transform relative 'src'", async () => {
-    let libToModules = {};
-    let moduleToLibs = {};
-    let allImportedModules = new Set();
-
     configs.transformRelativeImport = 'src/';
 
-    const actual = coreUtils.parseRawImportLines(
-      fileNameSample1,
-      importSample1,
-      libToModules,
-      moduleToLibs,
-      allImportedModules,
-    );
+    const actual = coreUtils.parseRawImportLines(fileNameSample1, importSample1);
 
-    expect(libToModules).toMatchSnapshot();
-    expect(moduleToLibs).toMatchSnapshot();
-    expect(allImportedModules).toMatchSnapshot();
+    expect(actual.libraryImportMap).toMatchSnapshot();
+    expect(actual.moduleUsageMap).toMatchSnapshot();
+    expect(actual.importedModules).toMatchSnapshot();
   });
 
   test('importSample1 example with no transformation', async () => {
-    let libToModules = {};
-    let moduleToLibs = {};
-    let allImportedModules = new Set();
-
     configs.transformRelativeImport = undefined;
 
-    const actual = coreUtils.parseRawImportLines(
-      fileNameSample1,
-      importSample1,
-      libToModules,
-      moduleToLibs,
-      allImportedModules,
-    );
+    const actual = coreUtils.parseRawImportLines(fileNameSample1, importSample1);
 
-    expect(libToModules).toMatchSnapshot();
-    expect(moduleToLibs).toMatchSnapshot();
-    expect(allImportedModules).toMatchSnapshot();
+    expect(actual.libraryImportMap).toMatchSnapshot();
+    expect(actual.moduleUsageMap).toMatchSnapshot();
+    expect(actual.importedModules).toMatchSnapshot();
   });
 
   test('importSample2 example with transform relative', async () => {
-    let libToModules = {};
-    let moduleToLibs = {};
-    let allImportedModules = new Set();
-
     configs.transformRelativeImport = '';
 
-    const actual = coreUtils.parseRawImportLines(
-      fileNameSample2,
-      importSample2,
-      libToModules,
-      moduleToLibs,
-      allImportedModules,
-    );
+    const actual = coreUtils.parseRawImportLines(fileNameSample2, importSample2);
 
-    expect(libToModules).toMatchSnapshot();
-    expect(moduleToLibs).toMatchSnapshot();
-    expect(allImportedModules).toMatchSnapshot();
+    expect(actual.libraryImportMap).toMatchSnapshot();
+    expect(actual.moduleUsageMap).toMatchSnapshot();
+    expect(actual.importedModules).toMatchSnapshot();
   });
 
   test('importSample2 example with no transformation', async () => {
-    let libToModules = {};
-    let moduleToLibs = {};
-    let allImportedModules = new Set();
-
     configs.transformRelativeImport = undefined;
 
-    const actual = coreUtils.parseRawImportLines(
-      fileNameSample2,
-      importSample2,
-      libToModules,
-      moduleToLibs,
-      allImportedModules,
-    );
+    const actual = coreUtils.parseRawImportLines(fileNameSample2, importSample2);
 
-    expect(libToModules).toMatchSnapshot();
-    expect(moduleToLibs).toMatchSnapshot();
-    expect(allImportedModules).toMatchSnapshot();
+    expect(actual.libraryImportMap).toMatchSnapshot();
+    expect(actual.moduleUsageMap).toMatchSnapshot();
+    expect(actual.importedModules).toMatchSnapshot();
   });
 });
