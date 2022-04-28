@@ -166,7 +166,6 @@ Refer to this table for more information:
 | `--importQuote=single` (Default) | `import { SqluiCore } from 'typings';` |
 | `--importQuote=double`           | `import { SqluiCore } from "typings";` |
 
-
 #### `--parseLegacyImports`
 
 By default, we don't parse legacy import lines (with `require`), ie. `const fs = require('fs')`. To enable this feature you need to pass in `--parseLegacyImports` parameter.
