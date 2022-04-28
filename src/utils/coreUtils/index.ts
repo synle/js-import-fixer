@@ -431,16 +431,31 @@ const coreUtils = {
       let usedModules = new Set<string>();
 
       let rawContentWithoutImport = content.replace(REGEX_IMPORT_ES6_FULL_LINE, '');
-      let importCodeLines = content.match(REGEX_IMPORT_ES6_FULL_LINE) || [];
+      let es6ImportCodeLines = content.match(REGEX_IMPORT_ES6_FULL_LINE) || [];
 
       // here we parse raw imports
       coreUtils.parseEs6ImportLines(
         file,
-        importCodeLines,
+        es6ImportCodeLines,
         moduleUsageMap,
         libraryImportMap,
         importedModules,
       );
+
+      // TODO: make this an optional thing
+      const shouldParseLegacyImport = true;
+      if(shouldParseLegacyImport){
+        rawContentWithoutImport = rawContentWithoutImport.replace(REGEX_IMPORT_LEGACY_FULL_LINE, '');
+        let legacyImportCodeLines = content.match(REGEX_IMPORT_LEGACY_FULL_LINE) || [];
+
+        coreUtils.parseLegacyImportLines(
+          file,
+          legacyImportCodeLines,
+          moduleUsageMap,
+          libraryImportMap,
+          importedModules,
+        );
+      }
 
       if (!importedModules || importedModules.size === 0) {
         console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
