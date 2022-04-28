@@ -39,7 +39,6 @@ type LibraryImportMap = Record<ModuleName, ImportEntry>;
  */
 type ImportedModules = Set<string>;
 
-
 type LibUsageStatMap = Record<LibraryName, number>;
 
 /**
@@ -51,14 +50,16 @@ type ImportProcessOutput = {
   importedModules: ImportedModules;
 };
 
-type MainProcessOutput = {
-  error: true;
-  message: string;
-} | {
-  error: false;
-  output: string;
-  libUsageStats: LibUsageStatMap;
-}
+type MainProcessOutput =
+  | {
+      error: true;
+      message: string;
+    }
+  | {
+      error: false;
+      output: string;
+      libUsageStats: LibUsageStatMap;
+    };
 
 /**
  * @type {RegExp} used to extract the full line of import using ES6 style
@@ -426,7 +427,12 @@ const coreUtils = {
 
     return newImportedContent;
   },
-  process: (file: string, externalPackagesFromJson: string[], dontWriteToOutputFile = false, libUsageStats : LibUsageStatMap = {}) : MainProcessOutput => {
+  process: (
+    file: string,
+    externalPackagesFromJson: string[],
+    dontWriteToOutputFile = false,
+    libUsageStats: LibUsageStatMap = {},
+  ): MainProcessOutput => {
     try {
       const content = fileUtils.read(file).trim();
 
@@ -434,7 +440,7 @@ const coreUtils = {
         console.log('> Skipped File (Empty Content):'.padStart(17, ' ').yellow(), file);
         return {
           error: true,
-          message: 'File Content is empty'
+          message: 'File Content is empty',
         };
       }
 
@@ -478,7 +484,7 @@ const coreUtils = {
         console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
         return {
           error: true,
-          message: 'No Import of any kind was found'
+          message: 'No Import of any kind was found',
         };
       }
 
@@ -517,7 +523,7 @@ const coreUtils = {
         usedModules,
         moduleUsageMap,
         libraryImportMap,
-        libUsageStats
+        libUsageStats,
       );
 
       newImportedContent = coreUtils.getSortedImports(

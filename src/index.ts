@@ -26,12 +26,12 @@ console.log(''.padEnd(100, '=').blue());
 
 let countSkipped = 0;
 let countProcessed = 0;
-let countLibUsedByFile : Record<string, number>= {};
+let countLibUsedByFile: Record<string, number> = {};
 
 for (const file of files) {
   const output = coreUtils.process(file, externalPackagesFromJson, false, countLibUsedByFile);
 
-  if(output.error){
+  if (output.error) {
     console.log('> Error:'.padStart(17, ' ').yellow(), file, output.message);
     countSkipped++;
   } else {
