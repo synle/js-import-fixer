@@ -218,7 +218,7 @@ const coreUtils = {
     and if it has an alias and if it's a module / default imported
     this method parses ES6 style import
    */
-  parseLegacyImportLines: (
+  parseLegacyImportsLines: (
     file: string,
     importCodeLines: string[],
     moduleUsageMap: ModuleUsageMap = {},
@@ -431,16 +431,32 @@ const coreUtils = {
       let usedModules = new Set<string>();
 
       let rawContentWithoutImport = content.replace(REGEX_IMPORT_ES6_FULL_LINE, '');
-      let importCodeLines = content.match(REGEX_IMPORT_ES6_FULL_LINE) || [];
+      let es6ImportCodeLines = content.match(REGEX_IMPORT_ES6_FULL_LINE) || [];
 
       // here we parse raw imports
       coreUtils.parseEs6ImportLines(
         file,
-        importCodeLines,
+        es6ImportCodeLines,
         moduleUsageMap,
         libraryImportMap,
         importedModules,
       );
+
+      if (configs.parseLegacyImports) {
+        rawContentWithoutImport = rawContentWithoutImport.replace(
+          REGEX_IMPORT_LEGACY_FULL_LINE,
+          '',
+        );
+        let legacyImportCodeLines = content.match(REGEX_IMPORT_LEGACY_FULL_LINE) || [];
+
+        coreUtils.parseLegacyImportsLines(
+          file,
+          legacyImportCodeLines,
+          moduleUsageMap,
+          libraryImportMap,
+          importedModules,
+        );
+      }
 
       if (!importedModules || importedModules.size === 0) {
         console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
