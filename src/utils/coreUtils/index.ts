@@ -442,7 +442,6 @@ const coreUtils = {
         importedModules,
       );
 
-      // TODO: make this an optional thing
       if(configs.parseLegacyImports){
         rawContentWithoutImport = rawContentWithoutImport.replace(REGEX_IMPORT_LEGACY_FULL_LINE, '');
         let legacyImportCodeLines = content.match(REGEX_IMPORT_LEGACY_FULL_LINE) || [];
