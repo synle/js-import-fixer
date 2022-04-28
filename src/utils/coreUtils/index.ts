@@ -358,16 +358,16 @@ const coreUtils = {
 
         if (type === 'module') {
           if (alias !== name) {
-            newImportedContent.push(`import { ${name} as ${alias} } from '${libFullPath}';`);
+            newImportedContent.push(`const ${alias} = require('${libFullPath}').${name};`);
           } else {
-            newImportedContent.push(`import { ${name} } from '${libFullPath}';`);
+            newImportedContent.push(`const { ${name} } = require('${libFullPath}');`);
           }
         } else {
           // default
           if (alias === name) {
-            newImportedContent.push(`import ${name} from '${libFullPath}';`);
+            newImportedContent.push(`const ${name} = require('${libFullPath}').Default;`);
           } else {
-            newImportedContent.push(`import ${name} as ${alias} from '${libFullPath}';`);
+            newImportedContent.push(`const ${alias} = require('${libFullPath}').Default;`);
           }
         }
       }
