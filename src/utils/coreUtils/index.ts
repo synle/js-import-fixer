@@ -63,12 +63,14 @@ const REGEX_IMPORT_ES6_PARTIAL_LIBRARY_NAME = /from[ ]+['"][.@/a-zA-Z0-9-_]+['"]
  * @type {RegExp} used to extract the full line of import using legacy style
  *                will `const fs = require('fs');`
  */
-const REGEX_IMPORT_LEGACY_FULL_LINE = /TODO/;
+const REGEX_IMPORT_LEGACY_FULL_LINE =
+  /^^(var|let|const)[ ][\*{a-zA-Z0-9_ ,}\n]+[ ]*=[ ]*require[ ]*\([ ]*['"][.@/a-zA-Z0-9-_]+['"][ ]*\)[ ]*[;]*/gm;
 
 /**
  * @type {[type]}
  */
-const REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME = /TODO/;
+const REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME =
+  /[ ]*require[ ]*\([ ]*['"][.@/a-zA-Z0-9-_]+['"][ ]*\)[ ]*[;]*/;
 
 const coreUtils = {
   getFilesToProcess: (startPath: string) => {
@@ -164,7 +166,7 @@ const coreUtils = {
     libraryImportMap: LibraryImportMap = {},
     importedModules: ImportedModules = new Set(),
   ): ImportProcessOutput => {
-    importCodeLines.forEach((s) => {
+    for (const s of importCodeLines) {
       try {
         //@ts-ignore
         const lib = s
@@ -173,12 +175,12 @@ const coreUtils = {
           .replace(/['"]/, '')
           .replace(/;/, '');
         moduleUsageMap[lib] = moduleUsageMap[lib] || [];
-        let parsed = s
+        let parsedImprotedModule = s
           .replace(REGEX_IMPORT_ES6_PARTIAL_LIBRARY_NAME, '')
           .replace('import ', '')
           .replace(/[ \n]+/g, ' ');
 
-        const moduleSplits = parsed.split('{');
+        const moduleSplits = parsedImprotedModule.split('{');
 
         let libFullPath = lib;
         if (libFullPath.indexOf('./') === 0 || libFullPath.indexOf('../') === 0) {
@@ -193,59 +195,17 @@ const coreUtils = {
           }
         }
 
-        for (let moduleSplit of moduleSplits) {
-          let importEntry: ImportEntry;
-          if (moduleSplit.includes('}')) {
-            // will be parsed as module
-            moduleSplit = moduleSplit.replace('}', '');
-            const childModuleSplits = moduleSplit
-              .split(',')
-              .map((s) => s.trim())
-              .filter((s) => s);
-            for (let moduleName of childModuleSplits) {
-              // is a child module import
-              const aliasName = coreUtils.getAliasName(moduleName);
-              moduleName = coreUtils.getModuleName(moduleName);
-              importedModules.add(aliasName);
-
-              importEntry = {
-                name: moduleName,
-                alias: aliasName,
-                type: 'module',
-                lib,
-                libFullPath,
-              };
-
-              moduleUsageMap[lib].push(importEntry);
-              libraryImportMap[aliasName] = importEntry;
-            }
-          } else {
-            // will be parsed as default
-            const defaultModuleSplits = moduleSplit
-              .split(',')
-              .map((s) => s.trim())
-              .filter((s) => s);
-            for (let moduleName of defaultModuleSplits) {
-              // is default import
-              const aliasName = coreUtils.getAliasName(moduleName);
-              moduleName = coreUtils.getModuleName(moduleName);
-              importedModules.add(aliasName);
-
-              importEntry = {
-                name: moduleName,
-                alias: aliasName,
-                type: 'default',
-                lib,
-                libFullPath,
-              };
-
-              moduleUsageMap[lib].push(importEntry);
-              libraryImportMap[aliasName] = importEntry;
-            }
-          }
-        }
+        // process each of the module splits
+        coreUtils.processParseSplits(
+          lib,
+          libFullPath,
+          parsedImprotedModule,
+          moduleUsageMap,
+          libraryImportMap,
+          importedModules,
+        );
       } catch (err) {}
-    });
+    }
 
     return {
       moduleUsageMap,
@@ -264,95 +224,105 @@ const coreUtils = {
     moduleUsageMap: ModuleUsageMap = {},
     libraryImportMap: LibraryImportMap = {},
     importedModules: ImportedModules = new Set(),
-  ): ImportProcessOutput => {
-    importCodeLines.forEach((s) => {
+  ): any => {
+    for (const s of importCodeLines) {
       try {
+        let lib = s;
         //@ts-ignore
-        const lib = s
-          .match(REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME)[0]
-          .replace(/from[ ]+['"]/, '')
-          .replace(/['"]/, '')
-          .replace(/;/, '');
+        lib = lib.match(REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME)[0];
+        lib = lib.substr(lib.indexOf('(') + 1);
+        lib = lib.substr(0, lib.lastIndexOf(')'));
+        lib = lib.trim().replace(/['"]/g, '').trim();
+
+        let parsedImprotedModule = s;
+        parsedImprotedModule = parsedImprotedModule.replace(/(var|let|const)/, '');
+        parsedImprotedModule = parsedImprotedModule.substr(0, parsedImprotedModule.indexOf('='));
+        parsedImprotedModule = parsedImprotedModule.trim();
+
         moduleUsageMap[lib] = moduleUsageMap[lib] || [];
-        let parsed = s
-          .replace(REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME, '')
-          .replace('import ', '')
-          .replace(/[ \n]+/g, ' ');
 
-        const moduleSplits = parsed.split('{');
+        // we don't override the import path for legacy import
+        const libFullPath = lib;
 
-        let libFullPath = lib;
-        if (libFullPath.indexOf('./') === 0 || libFullPath.indexOf('../') === 0) {
-          // this is a relative imports, then resolve the path if needed
-          if (configs.transformRelativeImport !== undefined) {
-            libFullPath = path.resolve(path.dirname(file), lib).replace(process.cwd() + '/', '');
-
-            // adding the prefix
-            if (configs.transformRelativeImport) {
-              libFullPath = configs.transformRelativeImport + libFullPath;
-            }
-          }
-        }
-
-        for (let moduleSplit of moduleSplits) {
-          let importEntry: ImportEntry;
-          if (moduleSplit.includes('}')) {
-            // will be parsed as module
-            moduleSplit = moduleSplit.replace('}', '');
-            const childModuleSplits = moduleSplit
-              .split(',')
-              .map((s) => s.trim())
-              .filter((s) => s);
-            for (let moduleName of childModuleSplits) {
-              // is a child module import
-              const aliasName = coreUtils.getAliasName(moduleName);
-              moduleName = coreUtils.getModuleName(moduleName);
-              importedModules.add(aliasName);
-
-              importEntry = {
-                name: moduleName,
-                alias: aliasName,
-                type: 'module',
-                lib,
-                libFullPath,
-              };
-
-              moduleUsageMap[lib].push(importEntry);
-              libraryImportMap[aliasName] = importEntry;
-            }
-          } else {
-            // will be parsed as default
-            const defaultModuleSplits = moduleSplit
-              .split(',')
-              .map((s) => s.trim())
-              .filter((s) => s);
-            for (let moduleName of defaultModuleSplits) {
-              // is default import
-              const aliasName = coreUtils.getAliasName(moduleName);
-              moduleName = coreUtils.getModuleName(moduleName);
-              importedModules.add(aliasName);
-
-              importEntry = {
-                name: moduleName,
-                alias: aliasName,
-                type: 'default',
-                lib,
-                libFullPath,
-              };
-
-              moduleUsageMap[lib].push(importEntry);
-              libraryImportMap[aliasName] = importEntry;
-            }
-          }
-        }
+        // process each of the module splits
+        coreUtils.processParseSplits(
+          lib,
+          libFullPath,
+          parsedImprotedModule,
+          moduleUsageMap,
+          libraryImportMap,
+          importedModules,
+        );
       } catch (err) {}
-    });
+    }
 
     return {
       moduleUsageMap,
       libraryImportMap,
       importedModules,
     };
+  },
+  processParseSplits: (
+    lib: string,
+    libFullPath: string,
+    parsedImprotedModule: string,
+    moduleUsageMap: ModuleUsageMap = {},
+    libraryImportMap: LibraryImportMap = {},
+    importedModules: ImportedModules = new Set(),
+  ) => {
+    const moduleSplits = parsedImprotedModule.split('{');
+
+    for (let moduleSplit of moduleSplits) {
+      let importEntry: ImportEntry;
+      if (moduleSplit.includes('}')) {
+        // will be parsed as module
+        moduleSplit = moduleSplit.replace('}', '');
+        const childModuleSplits = moduleSplit
+          .split(',')
+          .map((s) => s.trim())
+          .filter((s) => s);
+        for (let moduleName of childModuleSplits) {
+          // is a child module import
+          const aliasName = coreUtils.getAliasName(moduleName);
+          moduleName = coreUtils.getModuleName(moduleName);
+          importedModules.add(aliasName);
+
+          importEntry = {
+            name: moduleName,
+            alias: aliasName,
+            type: 'module',
+            lib,
+            libFullPath,
+          };
+
+          moduleUsageMap[lib].push(importEntry);
+          libraryImportMap[aliasName] = importEntry;
+        }
+      } else {
+        // will be parsed as default
+        const defaultModuleSplits = moduleSplit
+          .split(',')
+          .map((s) => s.trim())
+          .filter((s) => s);
+        for (let moduleName of defaultModuleSplits) {
+          // is default import
+          const aliasName = coreUtils.getAliasName(moduleName);
+          moduleName = coreUtils.getModuleName(moduleName);
+          importedModules.add(aliasName);
+
+          importEntry = {
+            name: moduleName,
+            alias: aliasName,
+            type: 'default',
+            lib,
+            libFullPath,
+          };
+
+          moduleUsageMap[lib].push(importEntry);
+          libraryImportMap[aliasName] = importEntry;
+        }
+      }
+    }
   },
   generateImportsOutput: (
     usedModules: Set<string>,

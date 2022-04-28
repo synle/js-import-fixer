@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`coreUtils.parseLegacyImportLines importSample1 example 1`] = `
+Object {
+  "apiClient": Object {
+    "alias": "apiClient",
+    "lib": "./utils/api/apiClient",
+    "libFullPath": "./utils/api/apiClient",
+    "name": "apiClient",
+    "type": "default",
+  },
+  "child_process": Object {
+    "alias": "child_process",
+    "lib": "child_process",
+    "libFullPath": "child_process",
+    "name": "child_process",
+    "type": "default",
+  },
+  "database": Object {
+    "alias": "database",
+    "lib": "database",
+    "libFullPath": "database",
+    "name": "database",
+    "type": "default",
+  },
+  "faker": Object {
+    "alias": "faker",
+    "lib": "faker",
+    "libFullPath": "faker",
+    "name": "faker",
+    "type": "default",
+  },
+  "fs": Object {
+    "alias": "fs",
+    "lib": "fs",
+    "libFullPath": "fs",
+    "name": "fs",
+    "type": "default",
+  },
+  "host": Object {
+    "alias": "host",
+    "lib": "./config",
+    "libFullPath": "./config",
+    "name": "host",
+    "type": "module",
+  },
+  "http": Object {
+    "alias": "http",
+    "lib": "http",
+    "libFullPath": "http",
+    "name": "http",
+    "type": "default",
+  },
+  "moment": Object {
+    "alias": "moment",
+    "lib": "moment",
+    "libFullPath": "moment",
+    "name": "moment",
+    "type": "default",
+  },
+  "network": Object {
+    "alias": "network",
+    "lib": "network",
+    "libFullPath": "network",
+    "name": "network",
+    "type": "default",
+  },
+  "path": Object {
+    "alias": "path",
+    "lib": "path",
+    "libFullPath": "path",
+    "name": "path",
+    "type": "default",
+  },
+  "port": Object {
+    "alias": "port",
+    "lib": "./config",
+    "libFullPath": "./config",
+    "name": "port",
+    "type": "module",
+  },
+}
+`;
+
+exports[`coreUtils.parseLegacyImportLines importSample1 example 2`] = `
+Object {
+  "./config": Array [
+    Object {
+      "alias": "host",
+      "lib": "./config",
+      "libFullPath": "./config",
+      "name": "host",
+      "type": "module",
+    },
+    Object {
+      "alias": "port",
+      "lib": "./config",
+      "libFullPath": "./config",
+      "name": "port",
+      "type": "module",
+    },
+  ],
+  "./utils/api/apiClient": Array [
+    Object {
+      "alias": "apiClient",
+      "lib": "./utils/api/apiClient",
+      "libFullPath": "./utils/api/apiClient",
+      "name": "apiClient",
+      "type": "default",
+    },
+  ],
+  "child_process": Array [
+    Object {
+      "alias": "child_process",
+      "lib": "child_process",
+      "libFullPath": "child_process",
+      "name": "child_process",
+      "type": "default",
+    },
+  ],
+  "database": Array [
+    Object {
+      "alias": "database",
+      "lib": "database",
+      "libFullPath": "database",
+      "name": "database",
+      "type": "default",
+    },
+  ],
+  "faker": Array [
+    Object {
+      "alias": "faker",
+      "lib": "faker",
+      "libFullPath": "faker",
+      "name": "faker",
+      "type": "default",
+    },
+  ],
+  "fs": Array [
+    Object {
+      "alias": "fs",
+      "lib": "fs",
+      "libFullPath": "fs",
+      "name": "fs",
+      "type": "default",
+    },
+  ],
+  "http": Array [
+    Object {
+      "alias": "http",
+      "lib": "http",
+      "libFullPath": "http",
+      "name": "http",
+      "type": "default",
+    },
+  ],
+  "moment": Array [
+    Object {
+      "alias": "moment",
+      "lib": "moment",
+      "libFullPath": "moment",
+      "name": "moment",
+      "type": "default",
+    },
+  ],
+  "network": Array [
+    Object {
+      "alias": "network",
+      "lib": "network",
+      "libFullPath": "network",
+      "name": "network",
+      "type": "default",
+    },
+  ],
+  "path": Array [
+    Object {
+      "alias": "path",
+      "lib": "path",
+      "libFullPath": "path",
+      "name": "path",
+      "type": "default",
+    },
+  ],
+}
+`;
+
+exports[`coreUtils.parseLegacyImportLines importSample1 example 3`] = `
+Set {
+  "http",
+  "fs",
+  "host",
+  "port",
+  "path",
+  "child_process",
+  "apiClient",
+  "database",
+  "network",
+  "moment",
+  "faker",
+}
+`;
