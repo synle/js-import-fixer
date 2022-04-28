@@ -18,8 +18,8 @@ describe('coreUtils.process', () => {
   const fileSample5 = path.join('__mocks__/', 'sample_5.js');
   const fileSample6 = path.join('__mocks__/', 'sample_6.js');
 
-
-  const _process = (file) => coreUtils.process(file, fileUtils.read(file).trim(), mockedExternalPackage, true);
+  const _process = (file) =>
+    coreUtils.process(file, fileUtils.read(file).trim(), mockedExternalPackage, true);
 
   afterEach(() => {
     for (const key of Object.keys(clonedConfigs)) {
@@ -47,6 +47,13 @@ describe('coreUtils.process', () => {
     const actual = _process(fileSample1);
 
     expect(actual.error).toBe(false);
+
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "unusedMethod1",
+        "methodLib2",
+      ]
+    `);
 
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
@@ -79,6 +86,13 @@ describe('coreUtils.process', () => {
 
     expect(actual.error).toBe(false);
 
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "unusedMethod1",
+        "methodLib2",
+      ]
+    `);
+
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
           "externalLib1": 1,
@@ -105,6 +119,13 @@ describe('coreUtils.process', () => {
     const actual = _process(fileSample2);
 
     expect(actual.error).toBe(false);
+
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "unusedMethod1",
+        "methodLib2",
+      ]
+    `);
 
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
@@ -137,6 +158,13 @@ describe('coreUtils.process', () => {
 
     expect(actual.error).toBe(false);
 
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "unusedMethod1",
+        "methodLib2",
+      ]
+    `);
+
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
           "externalLib1": 1,
@@ -163,6 +191,13 @@ describe('coreUtils.process', () => {
     const actual = _process(fileSample3);
 
     expect(actual.error).toBe(false);
+
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "unusedMethod1",
+        "methodLib2",
+      ]
+    `);
 
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
@@ -192,6 +227,15 @@ describe('coreUtils.process', () => {
 
     expect(actual.error).toBe(false);
 
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "diff",
+        "ServerApi",
+        "methodLib2",
+        "constant2",
+      ]
+    `);
+
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
           "../Calculator": 1,
@@ -216,6 +260,15 @@ describe('coreUtils.process', () => {
 
     expect(actual.error).toBe(false);
 
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "diff",
+        "ServerApi",
+        "methodLib2",
+        "constant2",
+      ]
+    `);
+
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
           "../Calculator": 1,
@@ -236,6 +289,14 @@ describe('coreUtils.process', () => {
     const actual = _process(fileSample5);
 
     expect(actual.error).toBe(false);
+
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "methodLib2",
+        "unusedMethod1",
+        "externalLib2",
+      ]
+    `);
 
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
       Object {
@@ -270,6 +331,14 @@ describe('coreUtils.process', () => {
 
     expect(actual.error).toBe(false);
 
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "methodLib2",
+        "unusedMethod1",
+        "externalLib2",
+      ]
+    `);
+
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
       Object {
         "child_process": 1,
@@ -300,6 +369,13 @@ describe('coreUtils.process', () => {
     const actual = _process(fileSample6);
 
     expect(actual.error).toBe(false);
+
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "unusedMethod1",
+        "externalLib2",
+      ]
+    `);
 
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
       Object {
@@ -343,6 +419,13 @@ describe('coreUtils.process', () => {
 
     expect(actual.error).toBe(false);
 
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "unusedMethod1",
+        "externalLib2",
+      ]
+    `);
+
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
       Object {
         "child_process": 1,
@@ -379,6 +462,13 @@ describe('coreUtils.process', () => {
     const actual = _process(fileSample6);
 
     expect(actual.error).toBe(false);
+
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "unusedMethod1",
+        "externalLib2",
+      ]
+    `);
 
     expect(actual.libUsageStats).toMatchInlineSnapshot(`
       Object {

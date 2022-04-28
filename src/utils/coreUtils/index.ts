@@ -59,7 +59,7 @@ type MainProcessOutput =
       error: false;
       output: string;
       libUsageStats: LibUsageStatMap;
-      unusedLibCount: number;
+      unusedLibs: string[];
     };
 
 /**
@@ -448,7 +448,7 @@ const coreUtils = {
       let importedModules: ImportedModules = new Set();
 
       // set of used modules
-      let notUsedModules = new Set<string>();
+      let unusedLibs = new Set<string>();
       let usedModules = new Set<string>();
 
       let rawContentWithoutImport = content.replace(REGEX_IMPORT_ES6_FULL_LINE, '');
@@ -512,7 +512,7 @@ const coreUtils = {
         if (isModuleUsed) {
           usedModules.add(aModule);
         } else {
-          notUsedModules.add(aModule);
+          unusedLibs.add(aModule);
         }
       }
 
@@ -555,7 +555,7 @@ const coreUtils = {
         error: false,
         output: finalContent,
         libUsageStats,
-        unusedLibCount: notUsedModules.size,
+        unusedLibs: [...unusedLibs],
       };
     } catch (err) {
       return {

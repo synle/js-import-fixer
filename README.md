@@ -179,7 +179,7 @@ npm install --save-dev import-fixer
 ```
 
 ```js
-const {fixImport} = require('import-fixer');
+const { fixImport } = require('import-fixer');
 
 const actual = fixImport(
   'abc.js',
@@ -199,13 +199,11 @@ myAliasMethod1();
 
 var a2 = constant2;
 var temp2 = externalLib2();
-  `
+  `,
 );
 
 console.log(actual);
-
 ```
-
 
 ## Limitations
 

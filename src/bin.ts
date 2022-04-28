@@ -3,8 +3,7 @@ import configs from 'src/utils/configs';
 import coreUtils from 'src/utils/coreUtils';
 import fileUtils from 'src/utils/fileUtils';
 import packageJson from 'src/utils/packageJson';
-
-function _runAsBinaryScript(){
+function _runAsBinaryScript() {
   console.log('Inputs / Configs '.padEnd(100, '=').blue());
   console.log('PWD:', process.cwd());
   console.log('Version:', libraryJson.version);
@@ -36,17 +35,17 @@ function _runAsBinaryScript(){
       fileUtils.read(file).trim(),
       externalPackagesFromJson,
       false,
-      countLibUsedByFile
+      countLibUsedByFile,
     );
 
     if (output.error) {
-      console.log('> Error:'.padStart(17, ' ').yellow(), file, output.message);
+      console.log('> Error:'.padEnd(10, ' ').red(), file.yellow(), output.message);
       countSkipped++;
     } else {
       console.log(
-        '> Success:'.padStart(17, ' ').green(),
-        file,
-        output.unusedLibCount + ' Removed',
+        '> Success:'.padEnd(10, ' ').green(),
+        file.yellow(),
+        output.unusedLibs.length + ' Removed',
       );
       countProcessed++;
     }
