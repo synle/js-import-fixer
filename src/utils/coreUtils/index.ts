@@ -38,6 +38,7 @@ type LibraryImportMap = Record<ModuleName, ImportEntry>;
  * @type {Set<string>} a set of imported modules used by a code base
  */
 type ImportedModules = Set<string>;
+
 /**
  * @type {ImportProcessOutput} output generated when we parse all the import lines
  */
@@ -46,7 +47,6 @@ type ImportProcessOutput = {
   libraryImportMap: LibraryImportMap;
   importedModules: ImportedModules;
 };
-
 
 type MainProcessOutput = {
   error: true;
@@ -427,7 +427,6 @@ const coreUtils = {
 
       if (!content) {
         console.log('> Skipped File (Empty Content):'.padStart(17, ' ').yellow(), file);
-        countSkipped++;
         return {
           error: true,
           message: 'File Content is empty'
@@ -472,7 +471,6 @@ const coreUtils = {
 
       if (!importedModules || importedModules.size === 0) {
         console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
-        countSkipped++;
         return {
           error: true,
           message: 'No Import of any kind was found'
@@ -526,7 +524,6 @@ const coreUtils = {
         file,
         notUsedModules.size + ' Removed',
       );
-      countProcessed++;
 
       let finalContent =
         newImportedContent.join('\n').trim() +

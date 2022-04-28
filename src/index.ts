@@ -24,29 +24,22 @@ let files = coreUtils.getFilesToProcess(startPath);
 console.log('Total Files Count:', files.length);
 console.log(''.padEnd(100, '=').blue());
 
-global.countSkipped = 0;
-global.countProcessed = 0;
+let countSkipped = 0;
+let countProcessed = 0;
+
 global.countLibUsedByFile = {};
 
 for (const file of files) {
-  const content = fileUtils.read(file).trim();
+  const output = coreUtils.process(file, externalPackagesFromJson);
 
-  if (!content) {
-    console.log('> Skipped File (Empty Content):'.padStart(17, ' ').yellow(), file);
+  if(output.error){
+    console.log('> Error:'.padStart(17, ' ').yellow(), file, output.message);
     countSkipped++;
-    continue;
+  } else {
+    countProcessed++;
   }
-
-  const importCodeLines = content.match(/import[ ]+[\*{a-zA-Z0-9 ,}\n]+'[@/a-zA-Z0-9-]+'[;]*/g);
-
-  if (!importCodeLines || importCodeLines.length === 0) {
-    console.log('> Skipped File (No Import Found):'.padStart(17, ' ').yellow(), file);
-    countSkipped++;
-    continue;
-  }
-
-  coreUtils.process(file, externalPackagesFromJson);
 }
+
 let countLibUsedByFileList: [string, number][] = [];
 for (const lib of Object.keys(countLibUsedByFile)) {
   countLibUsedByFileList.push([lib, countLibUsedByFile[lib]]);
