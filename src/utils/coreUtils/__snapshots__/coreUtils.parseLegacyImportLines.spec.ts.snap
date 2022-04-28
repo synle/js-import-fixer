@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`coreUtils.parseLegacyImportLines importSample1 example 1`] = `
+exports[`coreUtils.parseLegacyImportsLines importSample1 example 1`] = `
 Object {
   "apiClient": Object {
     "alias": "apiClient",
@@ -82,7 +82,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseLegacyImportLines importSample1 example 2`] = `
+exports[`coreUtils.parseLegacyImportsLines importSample1 example 2`] = `
 Object {
   "./config": Array [
     Object {
@@ -184,7 +184,7 @@ Object {
 }
 `;
 
-exports[`coreUtils.parseLegacyImportLines importSample1 example 3`] = `
+exports[`coreUtils.parseLegacyImportsLines importSample1 example 3`] = `
 Set {
   "http",
   "fs",

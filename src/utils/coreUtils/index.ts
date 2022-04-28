@@ -218,7 +218,7 @@ const coreUtils = {
     and if it has an alias and if it's a module / default imported
     this method parses ES6 style import
    */
-  parseLegacyImportLines: (
+  parseLegacyImportsLines: (
     file: string,
     importCodeLines: string[],
     moduleUsageMap: ModuleUsageMap = {},
@@ -443,11 +443,11 @@ const coreUtils = {
       );
 
       // TODO: make this an optional thing
-      if(configs.parseLegacyImport){
+      if(configs.parseLegacyImports){
         rawContentWithoutImport = rawContentWithoutImport.replace(REGEX_IMPORT_LEGACY_FULL_LINE, '');
         let legacyImportCodeLines = content.match(REGEX_IMPORT_LEGACY_FULL_LINE) || [];
 
-        coreUtils.parseLegacyImportLines(
+        coreUtils.parseLegacyImportsLines(
           file,
           legacyImportCodeLines,
           moduleUsageMap,

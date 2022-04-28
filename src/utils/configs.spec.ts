@@ -24,7 +24,7 @@ describe('configs.getConfigs', () => {
         ],
         "importQuote": "\\"",
         "isTest": true,
-        "parseLegacyImport": false,
+        "parseLegacyImports": false,
         "transformRelativeImport": "",
       }
     `);
@@ -32,7 +32,7 @@ describe('configs.getConfigs', () => {
 
   test('example 2 with custom values', async () => {
     const argvs =
-      `--groupImport --importQuote --filter=aa,bb,cc --ignored=x,y,z --parseLegacyImport`.split(
+      `--groupImport --importQuote --filter=aa,bb,cc --ignored=x,y,z --parseLegacyImports`.split(
         ' ',
       );
     const actual = getConfigs(argvs);
@@ -52,7 +52,7 @@ describe('configs.getConfigs', () => {
         ],
         "importQuote": "'",
         "isTest": true,
-        "parseLegacyImport": true,
+        "parseLegacyImports": true,
         "transformRelativeImport": undefined,
       }
     `);
@@ -69,7 +69,7 @@ describe('configs.getConfigs', () => {
         "ignoredFiles": Array [],
         "importQuote": "'",
         "isTest": true,
-        "parseLegacyImport": false,
+        "parseLegacyImports": false,
         "transformRelativeImport": undefined,
       }
     `);

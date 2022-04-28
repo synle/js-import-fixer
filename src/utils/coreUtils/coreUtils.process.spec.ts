@@ -339,7 +339,7 @@ describe('coreUtils.process', () => {
     global.countLibUsedByFile = {};
 
     // configs.groupImport = false; (implied)
-    configs.parseLegacyImport = true;
+    configs.parseLegacyImports = true;
 
     const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
 
@@ -386,7 +386,7 @@ describe('coreUtils.process', () => {
     global.countLibUsedByFile = {};
 
     configs.groupImport = true;
-    configs.parseLegacyImport = true;
+    configs.parseLegacyImports = true;
 
     const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
 
@@ -428,7 +428,7 @@ describe('coreUtils.process', () => {
     global.countLibUsedByFile = {};
 
     configs.groupImport = true;
-    // configs.parseLegacyImport = false; (implied)
+    // configs.parseLegacyImports = false; (implied)
 
     const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
 

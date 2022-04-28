@@ -6,7 +6,7 @@ type Config = {
   aggressiveCheck: boolean;
   transformRelativeImport?: string;
   importQuote: string;
-  parseLegacyImport: boolean;
+  parseLegacyImports: boolean;
 };
 
 export function getConfigs(argvs: string[]) {
@@ -18,7 +18,7 @@ export function getConfigs(argvs: string[]) {
     aggressiveCheck: false,
     transformRelativeImport: undefined,
     importQuote: `'`,
-    parseLegacyImport: false,
+    parseLegacyImports: false,
   };
 
   for (const argv of argvs) {
@@ -42,8 +42,8 @@ export function getConfigs(argvs: string[]) {
     if (argv.includes(`--importQuote=`)) {
       configs.importQuote = argv.substr(argv.indexOf(`=`) + 1).trim() !== 'single' ? `"` : `'`;
     }
-    if (argv.includes(`--parseLegacyImport`)) {
-      configs.parseLegacyImport = true;
+    if (argv.includes(`--parseLegacyImports`)) {
+      configs.parseLegacyImports = true;
     }
   }
   return configs;
