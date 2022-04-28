@@ -43,10 +43,7 @@ describe('coreUtils.parseRawImportLines', () => {
   test('importSample1 example with transform relative', async () => {
     configs.transformRelativeImport = '';
 
-    const actual = coreUtils.parseRawImportLines(
-      fileNameSample1,
-      importSample1
-    );
+    const actual = coreUtils.parseRawImportLines(fileNameSample1, importSample1);
 
     expect(actual.libraryImportMap).toMatchSnapshot();
     expect(actual.moduleUsageMap).toMatchSnapshot();
@@ -56,10 +53,7 @@ describe('coreUtils.parseRawImportLines', () => {
   test("importSample1 example with transform relative 'src'", async () => {
     configs.transformRelativeImport = 'src/';
 
-    const actual = coreUtils.parseRawImportLines(
-      fileNameSample1,
-      importSample1
-    );
+    const actual = coreUtils.parseRawImportLines(fileNameSample1, importSample1);
 
     expect(actual.libraryImportMap).toMatchSnapshot();
     expect(actual.moduleUsageMap).toMatchSnapshot();
@@ -69,10 +63,7 @@ describe('coreUtils.parseRawImportLines', () => {
   test('importSample1 example with no transformation', async () => {
     configs.transformRelativeImport = undefined;
 
-    const actual = coreUtils.parseRawImportLines(
-      fileNameSample1,
-      importSample1
-    );
+    const actual = coreUtils.parseRawImportLines(fileNameSample1, importSample1);
 
     expect(actual.libraryImportMap).toMatchSnapshot();
     expect(actual.moduleUsageMap).toMatchSnapshot();
@@ -82,10 +73,7 @@ describe('coreUtils.parseRawImportLines', () => {
   test('importSample2 example with transform relative', async () => {
     configs.transformRelativeImport = '';
 
-    const actual = coreUtils.parseRawImportLines(
-      fileNameSample2,
-      importSample2
-    );
+    const actual = coreUtils.parseRawImportLines(fileNameSample2, importSample2);
 
     expect(actual.libraryImportMap).toMatchSnapshot();
     expect(actual.moduleUsageMap).toMatchSnapshot();
@@ -95,10 +83,7 @@ describe('coreUtils.parseRawImportLines', () => {
   test('importSample2 example with no transformation', async () => {
     configs.transformRelativeImport = undefined;
 
-    const actual = coreUtils.parseRawImportLines(
-      fileNameSample2,
-      importSample2
-    );
+    const actual = coreUtils.parseRawImportLines(fileNameSample2, importSample2);
 
     expect(actual.libraryImportMap).toMatchSnapshot();
     expect(actual.moduleUsageMap).toMatchSnapshot();

@@ -38,16 +38,14 @@ type LibraryImportMap = Record<ModuleName, ImportEntry>;
  * @type {Set<string>} a set of imported modules used by a code base
  */
 type ImportedModules = Set<string>;
-
-
 /**
  * @type {ImportProcessOutput} output generated when we parse all the import lines
  */
 type ImportProcessOutput = {
-  moduleUsageMap: ModuleUsageMap,
-  libraryImportMap: LibraryImportMap,
-  importedModules: ImportedModules,
-}
+  moduleUsageMap: ModuleUsageMap;
+  libraryImportMap: LibraryImportMap;
+  importedModules: ImportedModules;
+};
 
 const REGEX_INCLUDING_RELATIVE_IMPORTS =
   /^import[ ]+[\*{a-zA-Z0-9_ ,}\n]+['"][.@/a-zA-Z0-9-_]+['"][;]*/gm;
@@ -146,7 +144,7 @@ const coreUtils = {
     moduleUsageMap: ModuleUsageMap = {},
     libraryImportMap: LibraryImportMap = {},
     importedModules: ImportedModules = new Set(),
-  ) : ImportProcessOutput => {
+  ): ImportProcessOutput => {
     importCodeLines.forEach((s) => {
       try {
         //@ts-ignore
@@ -234,7 +232,7 @@ const coreUtils = {
       moduleUsageMap,
       libraryImportMap,
       importedModules,
-    }
+    };
   },
   generateImportsOutput: (
     usedModules: Set<string>,
@@ -336,7 +334,7 @@ const coreUtils = {
 
       let moduleUsageMap: ModuleUsageMap = {};
       let libraryImportMap: LibraryImportMap = {};
-      let importedModules : ImportedModules = new Set();
+      let importedModules: ImportedModules = new Set();
 
       // set of used modules
       let notUsedModules = new Set<string>();
