@@ -15,20 +15,39 @@ type ImportEntry = {
 };
 
 /**
- * React, Redis, etc... (library name)
- * @type {[type]}
+ * @type {Map} in the shape of LibraryName => ImportEntry[]
+ *             aka "react" => ImportEntry[]
  */
 type LibraryName = string;
 
 type ModuleUsageMap = Record<LibraryName, ImportEntry[]>;
 
 /**
- * useState, useEffect, etc... (module name)
- * @type {[type]}
+ * @type {string} the methods / modules imported inside of a library
+ *                aka useState, useEffect, etc... (module name)
  */
 type ModuleName = string;
 
+/**
+ * @type {Map} in the shape of ModuleName => ImportEntry
+ *             aka "useState" => ImportEntry
+ */
 type LibraryImportMap = Record<ModuleName, ImportEntry>;
+
+/**
+ * @type {Set<string>} a set of imported modules used by a code base
+ */
+type ImportedModules = Set<string>;
+
+
+/**
+ * @type {ImportProcessOutput} output generated when we parse all the import lines
+ */
+type ImportProcessOutput = {
+  moduleUsageMap: ModuleUsageMap,
+  libraryImportMap: LibraryImportMap,
+  importedModules: ImportedModules,
+}
 
 const REGEX_INCLUDING_RELATIVE_IMPORTS =
   /^import[ ]+[\*{a-zA-Z0-9_ ,}\n]+['"][.@/a-zA-Z0-9-_]+['"][;]*/gm;
@@ -124,10 +143,10 @@ const coreUtils = {
   parseRawImportLines: (
     file: string,
     importCodeLines: string[],
-    moduleUsageMap: ModuleUsageMap,
-    libraryImportMap: LibraryImportMap,
-    allImportedModules: Set<string>,
-  ) => {
+    moduleUsageMap: ModuleUsageMap = {},
+    libraryImportMap: LibraryImportMap = {},
+    importedModules: ImportedModules = new Set(),
+  ) : ImportProcessOutput => {
     importCodeLines.forEach((s) => {
       try {
         //@ts-ignore
@@ -170,7 +189,7 @@ const coreUtils = {
               // is a child module import
               const aliasName = coreUtils.getAliasName(moduleName);
               moduleName = coreUtils.getModuleName(moduleName);
-              allImportedModules.add(aliasName);
+              importedModules.add(aliasName);
 
               importEntry = {
                 name: moduleName,
@@ -193,7 +212,7 @@ const coreUtils = {
               // is default import
               const aliasName = coreUtils.getAliasName(moduleName);
               moduleName = coreUtils.getModuleName(moduleName);
-              allImportedModules.add(aliasName);
+              importedModules.add(aliasName);
 
               importEntry = {
                 name: moduleName,
@@ -210,6 +229,12 @@ const coreUtils = {
         }
       } catch (err) {}
     });
+
+    return {
+      moduleUsageMap,
+      libraryImportMap,
+      importedModules,
+    }
   },
   generateImportsOutput: (
     usedModules: Set<string>,
@@ -311,7 +336,7 @@ const coreUtils = {
 
       let moduleUsageMap: ModuleUsageMap = {};
       let libraryImportMap: LibraryImportMap = {};
-      let allImportedModules = new Set<string>();
+      let importedModules : ImportedModules = new Set();
 
       // set of used modules
       let notUsedModules = new Set<string>();
@@ -326,17 +351,17 @@ const coreUtils = {
         importCodeLines,
         moduleUsageMap,
         libraryImportMap,
-        allImportedModules,
+        importedModules,
       );
 
-      if (!allImportedModules || allImportedModules.size === 0) {
+      if (!importedModules || importedModules.size === 0) {
         console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
         countSkipped++;
         return;
       }
 
       // here we figure out if an import is actually used in the code
-      for (const aModule of allImportedModules) {
+      for (const aModule of importedModules) {
         let isModuleUsed = false;
 
         if (configs.aggressiveCheck === true) {
