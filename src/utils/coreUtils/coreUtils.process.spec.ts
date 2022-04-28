@@ -9,6 +9,7 @@ const clonedConfigs = { ...configs };
 describe('coreUtils.process', () => {
   const mockedExternalPackage = fileUtils.getExternalDependencies(['externalLib1', 'externalLib2']);
 
+  const fileSampleEmpty = path.join('__mocks__/', 'sample_empty.js');
   const fileSample0 = path.join('__mocks__/', 'sample_0.js');
   const fileSample1 = path.join('__mocks__/', 'sample_1.js');
   const fileSample2 = path.join('__mocks__/', 'sample_2.js');
@@ -21,6 +22,13 @@ describe('coreUtils.process', () => {
     for (const key of Object.keys(clonedConfigs)) {
       configs[key] = clonedConfigs[key];
     }
+  });
+
+  test('sample_empty.js simple', async () => {
+    const actual = coreUtils.process(fileSampleEmpty, mockedExternalPackage, true);
+
+    expect(actual.error).toBe(true);
+    expect(actual.message).toMatchInlineSnapshot(`"File Content is empty"`);
   });
 
   test('sample_0.js simple', async () => {
