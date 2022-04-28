@@ -47,6 +47,15 @@ type ImportProcessOutput = {
   importedModules: ImportedModules;
 };
 
+
+type MainProcessOutput = {
+  error: true;
+  message: string;
+} | {
+  error: false;
+  output: string;
+}
+
 /**
  * @type {RegExp} used to extract the full line of import using ES6 style
  *                will `match import abc from 'lib';`
@@ -412,14 +421,17 @@ const coreUtils = {
 
     return newImportedContent;
   },
-  process: (file: string, externalPackagesFromJson: string[], dontWriteToOutputFile = false) => {
+  process: (file: string, externalPackagesFromJson: string[], dontWriteToOutputFile = false) : MainProcessOutput => {
     try {
       const content = fileUtils.read(file).trim();
 
       if (!content) {
         console.log('> Skipped File (Empty Content):'.padStart(17, ' ').yellow(), file);
         countSkipped++;
-        return;
+        return {
+          error: true,
+          message: 'File Content is empty'
+        };
       }
 
       let moduleUsageMap: ModuleUsageMap = {};
@@ -461,7 +473,10 @@ const coreUtils = {
       if (!importedModules || importedModules.size === 0) {
         console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
         countSkipped++;
-        return;
+        return {
+          error: true,
+          message: 'No Import of any kind was found'
+        };
       }
 
       // here we figure out if an import is actually used in the code
@@ -535,9 +550,17 @@ const coreUtils = {
         fileUtils.write(file, finalContent);
       }
 
-      return finalContent;
+      return {
+        error: false,
+        output: finalContent,
+      };
     } catch (err) {
       console.log('[Error] process failed for file: '.red(), file, err);
+
+      return {
+        error: true,
+        message: 'Uncaught Error: ' + JSON.stringify(err),
+      };
     }
   },
 };
