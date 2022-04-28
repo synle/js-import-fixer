@@ -38,6 +38,9 @@ type LibraryImportMap = Record<ModuleName, ImportEntry>;
  * @type {Set<string>} a set of imported modules used by a code base
  */
 type ImportedModules = Set<string>;
+
+type LibUsageStatMap = Record<LibraryName, number>;
+
 /**
  * @type {ImportProcessOutput} output generated when we parse all the import lines
  */
@@ -46,6 +49,17 @@ type ImportProcessOutput = {
   libraryImportMap: LibraryImportMap;
   importedModules: ImportedModules;
 };
+
+type MainProcessOutput =
+  | {
+      error: true;
+      message: string;
+    }
+  | {
+      error: false;
+      output: string;
+      libUsageStats: LibUsageStatMap;
+    };
 
 /**
  * @type {RegExp} used to extract the full line of import using ES6 style
@@ -328,6 +342,7 @@ const coreUtils = {
     usedModules: Set<string>,
     moduleUsageMap: ModuleUsageMap,
     libraryImportMap: LibraryImportMap,
+    libUsageStats: LibUsageStatMap,
   ) => {
     // generate the new import
     let newImportedContent: string[] = [];
@@ -406,20 +421,27 @@ const coreUtils = {
     }
 
     for (const lib of librariesUsedByThisFile) {
-      countLibUsedByFile[lib] = countLibUsedByFile[lib] || 0;
-      countLibUsedByFile[lib]++;
+      libUsageStats[lib] = libUsageStats[lib] || 0;
+      libUsageStats[lib]++;
     }
 
     return newImportedContent;
   },
-  process: (file: string, externalPackagesFromJson: string[], dontWriteToOutputFile = false) => {
+  process: (
+    file: string,
+    externalPackagesFromJson: string[],
+    dontWriteToOutputFile = false,
+    libUsageStats: LibUsageStatMap = {},
+  ): MainProcessOutput => {
     try {
       const content = fileUtils.read(file).trim();
 
       if (!content) {
         console.log('> Skipped File (Empty Content):'.padStart(17, ' ').yellow(), file);
-        countSkipped++;
-        return;
+        return {
+          error: true,
+          message: 'File Content is empty',
+        };
       }
 
       let moduleUsageMap: ModuleUsageMap = {};
@@ -460,8 +482,10 @@ const coreUtils = {
 
       if (!importedModules || importedModules.size === 0) {
         console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
-        countSkipped++;
-        return;
+        return {
+          error: true,
+          message: 'No Import of any kind was found',
+        };
       }
 
       // here we figure out if an import is actually used in the code
@@ -499,6 +523,7 @@ const coreUtils = {
         usedModules,
         moduleUsageMap,
         libraryImportMap,
+        libUsageStats,
       );
 
       newImportedContent = coreUtils.getSortedImports(
@@ -511,7 +536,6 @@ const coreUtils = {
         file,
         notUsedModules.size + ' Removed',
       );
-      countProcessed++;
 
       let finalContent =
         newImportedContent.join('\n').trim() +
@@ -535,9 +559,18 @@ const coreUtils = {
         fileUtils.write(file, finalContent);
       }
 
-      return finalContent;
+      return {
+        error: false,
+        output: finalContent,
+        libUsageStats,
+      };
     } catch (err) {
       console.log('[Error] process failed for file: '.red(), file, err);
+
+      return {
+        error: true,
+        message: 'Uncaught Error: ' + JSON.stringify(err),
+      };
     }
   },
 };

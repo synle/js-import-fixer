@@ -9,6 +9,7 @@ const clonedConfigs = { ...configs };
 describe('coreUtils.process', () => {
   const mockedExternalPackage = fileUtils.getExternalDependencies(['externalLib1', 'externalLib2']);
 
+  const fileSampleEmpty = path.join('__mocks__/', 'sample_empty.js');
   const fileSample0 = path.join('__mocks__/', 'sample_0.js');
   const fileSample1 = path.join('__mocks__/', 'sample_1.js');
   const fileSample2 = path.join('__mocks__/', 'sample_2.js');
@@ -23,39 +24,35 @@ describe('coreUtils.process', () => {
     }
   });
 
-  test('sample_0.js simple', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
+  test('sample_empty.js simple', async () => {
+    const actual = coreUtils.process(fileSampleEmpty, mockedExternalPackage, true);
 
+    expect(actual.error).toBe(true);
+    expect(actual.message).toMatchInlineSnapshot(`"File Content is empty"`);
+  });
+
+  test('sample_0.js simple', async () => {
     const actual = coreUtils.process(fileSample0, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(1);
-    expect(global.countProcessed).toBe(0);
-
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`Object {}`);
+    expect(actual.error).toBe(true);
+    expect(actual.message).toMatchInlineSnapshot(`"No Import of any kind was found"`);
   });
 
   test('sample_1.js simple', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     // configs.groupImport = false; (implied)
 
     const actual = coreUtils.process(fileSample1, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
           "externalLib1": 1,
           "externalLib2": 1,
         }
       `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import { aliasMethodLib1 as myAliasMethod1 } from 'externalLib1';
       import { constant1 } from 'externalLib1';
       import { methodLib1 } from 'externalLib1';
@@ -73,25 +70,20 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_1.js withGroupImport', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     configs.groupImport = true;
 
     const actual = coreUtils.process(fileSample1, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
           "externalLib1": 1,
           "externalLib2": 1,
         }
       `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
       import externalLib2, { constant2 } from 'externalLib2';
       var a1 = constant1;
@@ -105,25 +97,20 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_2.js simple', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     // configs.groupImport = false; (implied)
 
     const actual = coreUtils.process(fileSample2, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
           "externalLib1": 1,
           "externalLib2": 1,
         }
       `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import { aliasMethodLib1 as myAliasMethod1 } from 'externalLib1';
       import { constant1 } from 'externalLib1';
       import { methodLib1 } from 'externalLib1';
@@ -141,25 +128,20 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_2.js withGroupImport', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     configs.groupImport = true;
 
     const actual = coreUtils.process(fileSample2, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
           "externalLib1": 1,
           "externalLib2": 1,
         }
       `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
       import externalLib2, { constant2 } from 'externalLib2';
       var a1 = constant1;
@@ -173,25 +155,20 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_3.js withGroupImport', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     configs.groupImport = true;
 
     const actual = coreUtils.process(fileSample3, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
           "externalLib1": 1,
           "externalLib2": 1,
         }
       `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
       import externalLib2, { constant2 } from 'externalLib2';
       var a1 = constant1;
@@ -205,26 +182,21 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_4.js with transformRelativeImport', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     configs.groupImport = true;
     configs.transformRelativeImport = '';
 
     const actual = coreUtils.process(fileSample4, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
           "../Calculator": 1,
           "externalLib1": 1,
         }
       `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import externalLib1 from 'externalLib1';
       import { sum } from '__mocks__/nested_dir_a/Calculator';
 
@@ -234,26 +206,21 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_4.js with transformRelativeImport=somePathPrefix/', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     configs.groupImport = true;
     configs.transformRelativeImport = 'somePathPrefix/';
 
     const actual = coreUtils.process(fileSample4, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
         Object {
           "../Calculator": 1,
           "externalLib1": 1,
         }
       `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import externalLib1 from 'externalLib1';
       import { sum } from 'somePathPrefix/__mocks__/nested_dir_a/Calculator';
 
@@ -263,16 +230,11 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_5.js simple', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     const actual = coreUtils.process(fileSample5, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
       Object {
         "child_process": 1,
         "externalLib1": 1,
@@ -281,7 +243,7 @@ describe('coreUtils.process', () => {
       }
     `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import { default as my_child_process } from 'child_process';
       import { aliasMethodLib1 as myAliasMethod1 } from 'externalLib1';
       import { constant1 } from 'externalLib1';
@@ -299,18 +261,13 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_5.js withGroupImport', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     configs.groupImport = true;
 
     const actual = coreUtils.process(fileSample5, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
       Object {
         "child_process": 1,
         "externalLib1": 1,
@@ -319,7 +276,7 @@ describe('coreUtils.process', () => {
       }
     `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import { default as my_child_process } from 'child_process';
       import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
       import path from 'path';
@@ -334,19 +291,14 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_6.js mixed imports simple', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     // configs.groupImport = false; (implied)
     configs.parseLegacyImports = true;
 
     const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
       Object {
         "child_process": 1,
         "externalLib1": 1,
@@ -356,7 +308,7 @@ describe('coreUtils.process', () => {
       }
     `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import { default as my_child_process } from 'child_process';
       import { aliasMethodLib1 as myAliasMethod1 } from 'externalLib1';
       import { constant1 } from 'externalLib1';
@@ -381,19 +333,14 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_6.js mixed imports withGroupImport', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     configs.groupImport = true;
     configs.parseLegacyImports = true;
 
     const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
       Object {
         "child_process": 1,
         "externalLib1": 1,
@@ -403,7 +350,7 @@ describe('coreUtils.process', () => {
       }
     `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import { default as my_child_process } from 'child_process';
       import externalLib1, { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
       import path from 'path';
@@ -423,19 +370,14 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_6.js mixed imports do not parse legacy imports', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     configs.groupImport = true;
     // configs.parseLegacyImports = false; (implied)
 
     const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
 
-    expect(global.countSkipped).toBe(0);
-    expect(global.countProcessed).toBe(1);
+    expect(actual.error).toBe(false);
 
-    expect(global.countLibUsedByFile).toMatchInlineSnapshot(`
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
       Object {
         "child_process": 1,
         "externalLib1": 1,
@@ -443,7 +385,7 @@ describe('coreUtils.process', () => {
       }
     `);
 
-    expect(actual).toMatchInlineSnapshot(`
+    expect(actual.output).toMatchInlineSnapshot(`
       "import { default as my_child_process } from 'child_process';
       import { aliasMethodLib1 as myAliasMethod1, constant1, methodLib1 } from 'externalLib1';
       import path from 'path';
