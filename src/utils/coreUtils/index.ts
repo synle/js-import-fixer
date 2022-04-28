@@ -159,6 +159,7 @@ const coreUtils = {
   /**
    * here we figured out what imports are being imported
     and if it has an alias and if it's a module / default imported
+    this method parses ES6 style import
    */
   parseEs6ImportLines: (
     file: string,
@@ -178,6 +179,107 @@ const coreUtils = {
         moduleUsageMap[lib] = moduleUsageMap[lib] || [];
         let parsed = s
           .replace(REGEX_IMPORT_ES6_PARTIAL_LIBRARY_NAME, '')
+          .replace('import ', '')
+          .replace(/[ \n]+/g, ' ');
+
+        const moduleSplits = parsed.split('{');
+
+        let libFullPath = lib;
+        if (libFullPath.indexOf('./') === 0 || libFullPath.indexOf('../') === 0) {
+          // this is a relative imports, then resolve the path if needed
+          if (configs.transformRelativeImport !== undefined) {
+            libFullPath = path.resolve(path.dirname(file), lib).replace(process.cwd() + '/', '');
+
+            // adding the prefix
+            if (configs.transformRelativeImport) {
+              libFullPath = configs.transformRelativeImport + libFullPath;
+            }
+          }
+        }
+
+        for (let moduleSplit of moduleSplits) {
+          let importEntry: ImportEntry;
+          if (moduleSplit.includes('}')) {
+            // will be parsed as module
+            moduleSplit = moduleSplit.replace('}', '');
+            const childModuleSplits = moduleSplit
+              .split(',')
+              .map((s) => s.trim())
+              .filter((s) => s);
+            for (let moduleName of childModuleSplits) {
+              // is a child module import
+              const aliasName = coreUtils.getAliasName(moduleName);
+              moduleName = coreUtils.getModuleName(moduleName);
+              importedModules.add(aliasName);
+
+              importEntry = {
+                name: moduleName,
+                alias: aliasName,
+                type: 'module',
+                lib,
+                libFullPath,
+              };
+
+              moduleUsageMap[lib].push(importEntry);
+              libraryImportMap[aliasName] = importEntry;
+            }
+          } else {
+            // will be parsed as default
+            const defaultModuleSplits = moduleSplit
+              .split(',')
+              .map((s) => s.trim())
+              .filter((s) => s);
+            for (let moduleName of defaultModuleSplits) {
+              // is default import
+              const aliasName = coreUtils.getAliasName(moduleName);
+              moduleName = coreUtils.getModuleName(moduleName);
+              importedModules.add(aliasName);
+
+              importEntry = {
+                name: moduleName,
+                alias: aliasName,
+                type: 'default',
+                lib,
+                libFullPath,
+              };
+
+              moduleUsageMap[lib].push(importEntry);
+              libraryImportMap[aliasName] = importEntry;
+            }
+          }
+        }
+      } catch (err) {}
+    });
+
+    return {
+      moduleUsageMap,
+      libraryImportMap,
+      importedModules,
+    };
+  },
+  /**
+   * here we figured out what imports are being imported
+    and if it has an alias and if it's a module / default imported
+    this method parses ES6 style import
+   */
+  parseLegacyImportLines: (
+    file: string,
+    importCodeLines: string[],
+    moduleUsageMap: ModuleUsageMap = {},
+    libraryImportMap: LibraryImportMap = {},
+    importedModules: ImportedModules = new Set(),
+  ): ImportProcessOutput => {
+    importCodeLines.forEach((s) => {
+      try {
+        //@ts-ignore
+        const lib = s
+          .match(REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME)[0]
+          .replace(/from[ ]+['"]/, '')
+          .replace(/['"]/, '')
+          .replace(/;/, '');
+        moduleUsageMap[lib] = moduleUsageMap[lib] || [];
+        let parsed = s
+          .replace(REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME, '')
           .replace('import ', '')
           .replace(/[ \n]+/g, ' ');
 
