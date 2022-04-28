@@ -4,7 +4,7 @@ import coreUtils from 'src/utils/coreUtils';
 import fileUtils from 'src/utils/fileUtils';
 import packageJson from 'src/utils/packageJson';
 
-function _runAsScript(){
+function _runAsBinaryScript(){
   console.log('Inputs / Configs '.padEnd(100, '=').blue());
   console.log('PWD:', process.cwd());
   console.log('Version:', libraryJson.version);
@@ -71,27 +71,4 @@ function _runAsScript(){
   process.exit();
 }
 
-let shouldRunAsScript = false;
-if (require.main === module) {
-  // script is called directly (npx run ...)
-  shouldRunAsScript = true;
-  _runAsScript();
-} else {
-  // script is required as a module
-  shouldRunAsScript = false;
-}
-
-export default (file: string, content: string, externalPackages: string[] = [], libUsageStats = {}) => {
-  if(shouldRunAsScript){
-    throw 'Not supported for running as script (npx)';
-    return;
-  }
-
-  return coreUtils.process(
-    file,
-    content,
-    externalPackages,
-    false,
-    libUsageStats = {}
-  );
-}
+_runAsBinaryScript();

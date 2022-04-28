@@ -170,6 +170,43 @@ Refer to this table for more information:
 
 By default, we don't parse legacy import lines (with `require`), ie. `const fs = require('fs')`. To enable this feature you need to pass in `--parseLegacyImports` parameter.
 
+## How to use this as a library?
+
+The following code shows how to use this library programmatically.
+
+```bash
+npm install --save-dev import-fixer
+```
+
+```js
+const {fixImport} = require('import-fixer');
+
+const actual = fixImport(
+  'abc.js',
+  `
+import externalLib1 from 'externalLib1';
+import {methodLib1} from 'externalLib1';
+import {constant1, aliasMethodLib1 as myAliasMethod1, unUsedAliasMethod1 as unusedMethod1} from 'externalLib1';
+import {aliasMethodLib1 as myAliasMethod1} from 'externalLib1';
+import {unUsedAliasMethod1 as unusedMethod1} from 'externalLib1';
+import externalLib2 from "externalLib2";
+import {methodLib2, constant2} from "externalLib2";
+
+var a1 = constant1;
+methodLib1();
+externalLib1();
+myAliasMethod1();
+
+var a2 = constant2;
+var temp2 = externalLib2();
+  `
+);
+
+console.log(actual);
+
+```
+
+
 ## Limitations
 
 - The script currently only supports `import` syntax, so if you have `require` syntax in your code base, it will skip those. In the future, I plan to combine the two and give users an option to consolidate the import as `import` or require syntax.

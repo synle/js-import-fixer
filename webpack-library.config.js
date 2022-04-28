@@ -4,13 +4,12 @@ const webpack = require('webpack');
 module.exports = {
   mode: 'production',
   target: ['node'],
-  entry: './src/index.ts',
+  entry: './src/library.ts',
   output: {
-    filename: 'main.js',
+    filename: './dist/library.js',
     libraryTarget: 'this',
     path: path.resolve(__dirname, './'),
   },
-  plugins: [new webpack.BannerPlugin({ banner: '#! /usr/bin/env node', raw: true })],
   module: {
     rules: [
       {

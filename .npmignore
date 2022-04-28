@@ -11,5 +11,5 @@ package.json
 publishBetaTags.js
 src
 tsconfig.json
-webpack.config.js
+*.config.js
 CONTRIBUTING.md
