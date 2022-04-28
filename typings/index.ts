@@ -1,6 +1,4 @@
 declare global {
-  var countLibUsedByFile: Record<string, number>;
-
   interface String {
     blue(): string;
     yellow(): string;

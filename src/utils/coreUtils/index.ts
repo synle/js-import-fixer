@@ -39,6 +39,9 @@ type LibraryImportMap = Record<ModuleName, ImportEntry>;
  */
 type ImportedModules = Set<string>;
 
+
+type LibUsageStatMap = Record<LibraryName, number>;
+
 /**
  * @type {ImportProcessOutput} output generated when we parse all the import lines
  */
@@ -54,6 +57,7 @@ type MainProcessOutput = {
 } | {
   error: false;
   output: string;
+  libUsageStats: LibUsageStatMap;
 }
 
 /**
@@ -337,6 +341,7 @@ const coreUtils = {
     usedModules: Set<string>,
     moduleUsageMap: ModuleUsageMap,
     libraryImportMap: LibraryImportMap,
+    libUsageStats: LibUsageStatMap,
   ) => {
     // generate the new import
     let newImportedContent: string[] = [];
@@ -415,13 +420,13 @@ const coreUtils = {
     }
 
     for (const lib of librariesUsedByThisFile) {
-      countLibUsedByFile[lib] = countLibUsedByFile[lib] || 0;
-      countLibUsedByFile[lib]++;
+      libUsageStats[lib] = libUsageStats[lib] || 0;
+      libUsageStats[lib]++;
     }
 
     return newImportedContent;
   },
-  process: (file: string, externalPackagesFromJson: string[], dontWriteToOutputFile = false) : MainProcessOutput => {
+  process: (file: string, externalPackagesFromJson: string[], dontWriteToOutputFile = false, libUsageStats : LibUsageStatMap = {}) : MainProcessOutput => {
     try {
       const content = fileUtils.read(file).trim();
 
@@ -512,6 +517,7 @@ const coreUtils = {
         usedModules,
         moduleUsageMap,
         libraryImportMap,
+        libUsageStats
       );
 
       newImportedContent = coreUtils.getSortedImports(
@@ -550,6 +556,7 @@ const coreUtils = {
       return {
         error: false,
         output: finalContent,
+        libUsageStats,
       };
     } catch (err) {
       console.log('[Error] process failed for file: '.red(), file, err);

@@ -486,13 +486,17 @@ const libraryImportMap = {
 
 describe('coreUtils.generateImportsOutput', () => {
   test('groupImport is ON', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     configs.groupImport = true;
 
-    const actual = coreUtils.generateImportsOutput(usedModules, moduleUsageMap, libraryImportMap);
+    const libUsageStats = {};
+
+    const actual = coreUtils.generateImportsOutput(
+      usedModules,
+      moduleUsageMap,
+      libraryImportMap,
+      libUsageStats,
+    );
+
     expect(actual).toMatchInlineSnapshot(`
       Array [
         "import Alert from '@mui/material/Alert';",
@@ -516,16 +520,44 @@ describe('coreUtils.generateImportsOutput', () => {
         "import NewConnectionPage from 'src/frontend/views/NewConnectionPage';",
       ]
     `);
+
+    expect(libUsageStats).toMatchInlineSnapshot(`
+      Object {
+        "@mui/material/Alert": 1,
+        "@mui/material/Box": 1,
+        "@mui/material/CircularProgress": 1,
+        "@mui/material/styles": 1,
+        "react": 1,
+        "react-router-dom": 1,
+        "src/frontend/components/ActionDialogs": 1,
+        "src/frontend/components/AppHeader": 1,
+        "src/frontend/components/ElectronEventListener": 1,
+        "src/frontend/components/MissionControl": 1,
+        "src/frontend/components/Toasters": 1,
+        "src/frontend/data/api": 1,
+        "src/frontend/data/session": 1,
+        "src/frontend/hooks/useSession": 1,
+        "src/frontend/hooks/useSetting": 1,
+        "src/frontend/hooks/useToaster": 1,
+        "src/frontend/views/EditConnectionPage": 1,
+        "src/frontend/views/MainPage": 1,
+        "src/frontend/views/NewConnectionPage": 1,
+      }
+    `);
   });
 
   test('groupImport is OFF', async () => {
-    global.countSkipped = 0;
-    global.countProcessed = 0;
-    global.countLibUsedByFile = {};
-
     configs.groupImport = false;
 
-    const actual = coreUtils.generateImportsOutput(usedModules, moduleUsageMap, libraryImportMap);
+    const libUsageStats = {};
+
+    const actual = coreUtils.generateImportsOutput(
+      usedModules,
+      moduleUsageMap,
+      libraryImportMap,
+      libUsageStats,
+    );
+
     expect(actual).toMatchInlineSnapshot(`
       Array [
         "import Alert from '@mui/material/Alert';",
@@ -558,6 +590,30 @@ describe('coreUtils.generateImportsOutput', () => {
         "import MainPage from 'src/frontend/views/MainPage';",
         "import NewConnectionPage from 'src/frontend/views/NewConnectionPage';",
       ]
+    `);
+
+    expect(libUsageStats).toMatchInlineSnapshot(`
+      Object {
+        "@mui/material/Alert": 1,
+        "@mui/material/Box": 1,
+        "@mui/material/CircularProgress": 1,
+        "@mui/material/styles": 1,
+        "react": 1,
+        "react-router-dom": 1,
+        "src/frontend/components/ActionDialogs": 1,
+        "src/frontend/components/AppHeader": 1,
+        "src/frontend/components/ElectronEventListener": 1,
+        "src/frontend/components/MissionControl": 1,
+        "src/frontend/components/Toasters": 1,
+        "src/frontend/data/api": 1,
+        "src/frontend/data/session": 1,
+        "src/frontend/hooks/useSession": 1,
+        "src/frontend/hooks/useSetting": 1,
+        "src/frontend/hooks/useToaster": 1,
+        "src/frontend/views/EditConnectionPage": 1,
+        "src/frontend/views/MainPage": 1,
+        "src/frontend/views/NewConnectionPage": 1,
+      }
     `);
   });
 });
