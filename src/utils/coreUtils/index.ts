@@ -59,20 +59,18 @@ const REGEX_IMPORT_ES6_FULL_LINE =
  *                will `match from 'lib'`
  */
 const REGEX_IMPORT_ES6_PARTIAL_LIBRARY_NAME = /from[ ]+['"][.@/a-zA-Z0-9-_]+['"][;]*/;
-
-
-
 /**
  * @type {RegExp} used to extract the full line of import using legacy style
  *                will `const fs = require('fs');`
  */
-const REGEX_IMPORT_LEGACY_FULL_LINE = /^^(var|let|const)[ ][\*{a-zA-Z0-9_ ,}\n]+[ ]*=[ ]*require[ ]*\([ ]*['"][.@/a-zA-Z0-9-_]+['"][ ]*\)[ ]*[;]*/gm;
+const REGEX_IMPORT_LEGACY_FULL_LINE =
+  /^^(var|let|const)[ ][\*{a-zA-Z0-9_ ,}\n]+[ ]*=[ ]*require[ ]*\([ ]*['"][.@/a-zA-Z0-9-_]+['"][ ]*\)[ ]*[;]*/gm;
 
 /**
  * @type {[type]}
  */
-const REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME = /[ ]*require[ ]*\([ ]*['"][.@/a-zA-Z0-9-_]+['"][ ]*\)[ ]*[;]*/;
-
+const REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME =
+  /[ ]*require[ ]*\([ ]*['"][.@/a-zA-Z0-9-_]+['"][ ]*\)[ ]*[;]*/;
 
 const coreUtils = {
   getFilesToProcess: (startPath: string) => {
@@ -168,7 +166,7 @@ const coreUtils = {
     libraryImportMap: LibraryImportMap = {},
     importedModules: ImportedModules = new Set(),
   ): ImportProcessOutput => {
-    for(const s of importCodeLines){
+    for (const s of importCodeLines) {
       try {
         //@ts-ignore
         const lib = s
@@ -205,7 +203,7 @@ const coreUtils = {
           moduleUsageMap,
           libraryImportMap,
           importedModules,
-        )
+        );
       } catch (err) {}
     }
 
@@ -227,19 +225,19 @@ const coreUtils = {
     libraryImportMap: LibraryImportMap = {},
     importedModules: ImportedModules = new Set(),
   ): any => {
-    for(const s of importCodeLines){
+    for (const s of importCodeLines) {
       try {
         let lib = s;
         //@ts-ignore
-        lib = lib.match(REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME)[0]
-        lib = lib.substr(lib.indexOf('(') + 1)
-        lib = lib.substr(0, lib.lastIndexOf(')'))
-        lib = lib.trim().replace(/['"]/g, '').trim()
+        lib = lib.match(REGEX_IMPORT_LEGACY_PARTIAL_LIBRARY_NAME)[0];
+        lib = lib.substr(lib.indexOf('(') + 1);
+        lib = lib.substr(0, lib.lastIndexOf(')'));
+        lib = lib.trim().replace(/['"]/g, '').trim();
 
         let parsedImprotedModule = s;
-        parsedImprotedModule = parsedImprotedModule.replace(/(var|let|const)/,'')
-        parsedImprotedModule = parsedImprotedModule.substr(0, parsedImprotedModule.indexOf('='))
-        parsedImprotedModule = parsedImprotedModule.trim()
+        parsedImprotedModule = parsedImprotedModule.replace(/(var|let|const)/, '');
+        parsedImprotedModule = parsedImprotedModule.substr(0, parsedImprotedModule.indexOf('='));
+        parsedImprotedModule = parsedImprotedModule.trim();
 
         moduleUsageMap[lib] = moduleUsageMap[lib] || [];
 
@@ -254,7 +252,7 @@ const coreUtils = {
           moduleUsageMap,
           libraryImportMap,
           importedModules,
-        )
+        );
       } catch (err) {}
     }
 
@@ -264,7 +262,7 @@ const coreUtils = {
       importedModules,
     };
   },
-  processParseSplits:(
+  processParseSplits: (
     lib: string,
     libFullPath: string,
     parsedImprotedModule: string,
