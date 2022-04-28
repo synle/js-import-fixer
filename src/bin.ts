@@ -43,6 +43,11 @@ function _runAsBinaryScript(){
       console.log('> Error:'.padStart(17, ' ').yellow(), file, output.message);
       countSkipped++;
     } else {
+      console.log(
+        '> Success:'.padStart(17, ' ').green(),
+        file,
+        output.unusedLibCount + ' Removed',
+      );
       countProcessed++;
     }
   }

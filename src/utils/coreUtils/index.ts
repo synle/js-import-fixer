@@ -59,6 +59,7 @@ type MainProcessOutput =
       error: false;
       output: string;
       libUsageStats: LibUsageStatMap;
+      unusedLibCount: number;
     };
 
 /**
@@ -528,12 +529,6 @@ const coreUtils = {
         externalPackagesFromJson,
       );
 
-      console.log(
-        '> Repaired File:'.padStart(17, ' ').green(),
-        file,
-        notUsedModules.size + ' Removed',
-      );
-
       let finalContent =
         newImportedContent.join('\n').trim() +
         '\n' +
@@ -560,6 +555,7 @@ const coreUtils = {
         error: false,
         output: finalContent,
         libUsageStats,
+        unusedLibCount: notUsedModules.size,
       };
     } catch (err) {
       return {

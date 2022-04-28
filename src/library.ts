@@ -14,7 +14,6 @@ const fixImport = (file: string, content: string, externalPackages: string[] = [
   );
 }
 
-
 module.exports = {
   fixImport,
   default: fixImport,
