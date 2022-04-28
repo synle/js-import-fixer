@@ -59,6 +59,7 @@ type MainProcessOutput =
       error: false;
       output: string;
       libUsageStats: LibUsageStatMap;
+      unusedLibs: string[];
     };
 
 /**
@@ -429,15 +430,13 @@ const coreUtils = {
   },
   process: (
     file: string,
+    content: string,
     externalPackagesFromJson: string[],
     dontWriteToOutputFile = false,
     libUsageStats: LibUsageStatMap = {},
   ): MainProcessOutput => {
     try {
-      const content = fileUtils.read(file).trim();
-
       if (!content) {
-        console.log('> Skipped File (Empty Content):'.padStart(17, ' ').yellow(), file);
         return {
           error: true,
           message: 'File Content is empty',
@@ -449,7 +448,7 @@ const coreUtils = {
       let importedModules: ImportedModules = new Set();
 
       // set of used modules
-      let notUsedModules = new Set<string>();
+      let unusedLibs = new Set<string>();
       let usedModules = new Set<string>();
 
       let rawContentWithoutImport = content.replace(REGEX_IMPORT_ES6_FULL_LINE, '');
@@ -481,7 +480,6 @@ const coreUtils = {
       }
 
       if (!importedModules || importedModules.size === 0) {
-        console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
         return {
           error: true,
           message: 'No Import of any kind was found',
@@ -514,7 +512,7 @@ const coreUtils = {
         if (isModuleUsed) {
           usedModules.add(aModule);
         } else {
-          notUsedModules.add(aModule);
+          unusedLibs.add(aModule);
         }
       }
 
@@ -529,12 +527,6 @@ const coreUtils = {
       newImportedContent = coreUtils.getSortedImports(
         newImportedContent.map((importedLine) => importedLine.replace(/'/g, configs.importQuote)),
         externalPackagesFromJson,
-      );
-
-      console.log(
-        '> Repaired File:'.padStart(17, ' ').green(),
-        file,
-        notUsedModules.size + ' Removed',
       );
 
       let finalContent =
@@ -563,13 +555,12 @@ const coreUtils = {
         error: false,
         output: finalContent,
         libUsageStats,
+        unusedLibs: [...unusedLibs],
       };
     } catch (err) {
-      console.log('[Error] process failed for file: '.red(), file, err);
-
       return {
         error: true,
-        message: 'Uncaught Error: ' + JSON.stringify(err),
+        message: 'Uncaught Error: Failed to Process - ' + JSON.stringify(err),
       };
     }
   },

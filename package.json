@@ -1,17 +1,21 @@
 {
   "name": "import-fixer",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "A shell command tool that cleaned up unused imports in a Typescript / Javascript code base.",
-  "main": "main.js",
+  "main": "./dist/library.js",
   "bin": {
-    "import-fixer": "main.js"
+    "import-fixer": "./dist/bin.js"
   },
   "scripts": {
+    "clean": "rm -rf dist coverage",
     "prefix-import": "npm run build",
-    "fix-import": "node main.js  --groupImport --transformRelativeImport --ignored=__mocks__,.github",
+    "fix-import": "node dist/bin.js  --groupImport --transformRelativeImport --ignored=__mocks__,.github",
     "preformat": "npm run fix-import",
     "format": "npx prettier --config ./.prettierrc --write **/*.{ts,js,json,md}",
-    "build": "npx webpack --config webpack.config.js",
+    "prebuild": "npm run clean",
+    "build": "npm run build-binary && npm run build-library",
+    "build-binary": "npx webpack --config webpack-bin.config.js",
+    "build-library": "npx webpack --config webpack-library.config.js",
     "test": "npx jest"
   },
   "repository": {
