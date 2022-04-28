@@ -7,6 +7,7 @@ type Config = {
   transformRelativeImport?: string;
   importQuote: string;
   parseLegacyImports: boolean;
+  outputImportStyle: 'legacy' | 'es6';
 };
 
 export function getConfigs(argvs: string[]) {
@@ -19,6 +20,7 @@ export function getConfigs(argvs: string[]) {
     transformRelativeImport: undefined,
     importQuote: `'`,
     parseLegacyImports: false,
+    outputImportStyle: 'es6',
   };
 
   for (const argv of argvs) {
@@ -40,10 +42,13 @@ export function getConfigs(argvs: string[]) {
       configs.transformRelativeImport = '';
     }
     if (argv.includes(`--importQuote=`)) {
-      configs.importQuote = argv.substr(argv.indexOf(`=`) + 1).trim() !== 'single' ? `"` : `'`;
+      configs.importQuote = argv.substr(argv.indexOf(`=`) + 1).trim().toLowerCase() !== 'single' ? `"` : `'`;
     }
     if (argv.includes(`--parseLegacyImports`)) {
       configs.parseLegacyImports = true;
+    }
+    if (argv.includes(`--outputImportStyle=`)) {
+      configs.outputImportStyle = argv.substr(argv.indexOf(`=`) + 1).trim().toLowerCase() !== 'es6' ? `legacy` : `legacy`;
     }
   }
   return configs;

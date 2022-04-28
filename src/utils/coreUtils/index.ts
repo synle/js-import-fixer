@@ -350,7 +350,28 @@ const coreUtils = {
 
     const librariesUsedByThisFile = new Set<string>(); // note here, we don't count duplicate lib imports in the same file...
 
-    if (configs.groupImport === false) {
+    if(configs.outputImportStyle === 'legacy'){
+      // here we attempts to render the configs as legacy import
+      for (const aModule of usedModules) {
+        const { type, lib, libFullPath, alias, name } = libraryImportMap[aModule];
+        librariesUsedByThisFile.add(lib);
+
+        if (type === 'module') {
+          if (alias !== name) {
+            newImportedContent.push(`import { ${name} as ${alias} } from '${libFullPath}';`);
+          } else {
+            newImportedContent.push(`import { ${name} } from '${libFullPath}';`);
+          }
+        } else {
+          // default
+          if (alias === name) {
+            newImportedContent.push(`import ${name} from '${libFullPath}';`);
+          } else {
+            newImportedContent.push(`import ${name} as ${alias} from '${libFullPath}';`);
+          }
+        }
+      }
+    } else if (configs.groupImport === false) {
       // here we don't group, each import is treated as a separate line
       for (const aModule of usedModules) {
         const { type, lib, libFullPath, alias, name } = libraryImportMap[aModule];
