@@ -71,11 +71,9 @@ function _runAsBinaryScript() {
   console.log('countSkipped:', countSkipped);
   console.log('countProcessed:', countProcessed);
   console.log(''.padEnd(100, '=').blue());
-
-
-  console.log(`Thank you for using the library.`)
-  console.log(`If you enjoy using this library, consider buying me a drink`)
-  console.log(`https://github.com/sponsors/synle`)
+  console.log(`Thank you for using the library.`);
+  console.log(`If you enjoy using this library, consider buying me a drink`);
+  console.log(`https://github.com/sponsors/synle`);
 
   process.exit();
 }
