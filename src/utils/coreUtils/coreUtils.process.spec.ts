@@ -18,6 +18,9 @@ describe('coreUtils.process', () => {
   const fileSample5 = path.join('__mocks__/', 'sample_5.js');
   const fileSample6 = path.join('__mocks__/', 'sample_6.js');
 
+
+  const _process = (file) => coreUtils.process(file, fileUtils.read(file).trim(), mockedExternalPackage, true);
+
   afterEach(() => {
     for (const key of Object.keys(clonedConfigs)) {
       configs[key] = clonedConfigs[key];
@@ -25,14 +28,14 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_empty.js simple', async () => {
-    const actual = coreUtils.process(fileSampleEmpty, mockedExternalPackage, true);
+    const actual = _process(fileSampleEmpty);
 
     expect(actual.error).toBe(true);
     expect(actual.message).toMatchInlineSnapshot(`"File Content is empty"`);
   });
 
   test('sample_0.js simple', async () => {
-    const actual = coreUtils.process(fileSample0, mockedExternalPackage, true);
+    const actual = _process(fileSample0);
 
     expect(actual.error).toBe(true);
     expect(actual.message).toMatchInlineSnapshot(`"No Import of any kind was found"`);
@@ -41,7 +44,7 @@ describe('coreUtils.process', () => {
   test('sample_1.js simple', async () => {
     // configs.groupImport = false; (implied)
 
-    const actual = coreUtils.process(fileSample1, mockedExternalPackage, true);
+    const actual = _process(fileSample1);
 
     expect(actual.error).toBe(false);
 
@@ -72,7 +75,7 @@ describe('coreUtils.process', () => {
   test('sample_1.js withGroupImport', async () => {
     configs.groupImport = true;
 
-    const actual = coreUtils.process(fileSample1, mockedExternalPackage, true);
+    const actual = _process(fileSample1);
 
     expect(actual.error).toBe(false);
 
@@ -99,7 +102,7 @@ describe('coreUtils.process', () => {
   test('sample_2.js simple', async () => {
     // configs.groupImport = false; (implied)
 
-    const actual = coreUtils.process(fileSample2, mockedExternalPackage, true);
+    const actual = _process(fileSample2);
 
     expect(actual.error).toBe(false);
 
@@ -130,7 +133,7 @@ describe('coreUtils.process', () => {
   test('sample_2.js withGroupImport', async () => {
     configs.groupImport = true;
 
-    const actual = coreUtils.process(fileSample2, mockedExternalPackage, true);
+    const actual = _process(fileSample2);
 
     expect(actual.error).toBe(false);
 
@@ -157,7 +160,7 @@ describe('coreUtils.process', () => {
   test('sample_3.js withGroupImport', async () => {
     configs.groupImport = true;
 
-    const actual = coreUtils.process(fileSample3, mockedExternalPackage, true);
+    const actual = _process(fileSample3);
 
     expect(actual.error).toBe(false);
 
@@ -185,7 +188,7 @@ describe('coreUtils.process', () => {
     configs.groupImport = true;
     configs.transformRelativeImport = '';
 
-    const actual = coreUtils.process(fileSample4, mockedExternalPackage, true);
+    const actual = _process(fileSample4);
 
     expect(actual.error).toBe(false);
 
@@ -209,7 +212,7 @@ describe('coreUtils.process', () => {
     configs.groupImport = true;
     configs.transformRelativeImport = 'somePathPrefix/';
 
-    const actual = coreUtils.process(fileSample4, mockedExternalPackage, true);
+    const actual = _process(fileSample4);
 
     expect(actual.error).toBe(false);
 
@@ -230,7 +233,7 @@ describe('coreUtils.process', () => {
   });
 
   test('sample_5.js simple', async () => {
-    const actual = coreUtils.process(fileSample5, mockedExternalPackage, true);
+    const actual = _process(fileSample5);
 
     expect(actual.error).toBe(false);
 
@@ -263,7 +266,7 @@ describe('coreUtils.process', () => {
   test('sample_5.js withGroupImport', async () => {
     configs.groupImport = true;
 
-    const actual = coreUtils.process(fileSample5, mockedExternalPackage, true);
+    const actual = _process(fileSample5);
 
     expect(actual.error).toBe(false);
 
@@ -294,7 +297,7 @@ describe('coreUtils.process', () => {
     // configs.groupImport = false; (implied)
     configs.parseLegacyImports = true;
 
-    const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
+    const actual = _process(fileSample6);
 
     expect(actual.error).toBe(false);
 
@@ -336,7 +339,7 @@ describe('coreUtils.process', () => {
     configs.groupImport = true;
     configs.parseLegacyImports = true;
 
-    const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
+    const actual = _process(fileSample6);
 
     expect(actual.error).toBe(false);
 
@@ -373,7 +376,7 @@ describe('coreUtils.process', () => {
     configs.groupImport = true;
     // configs.parseLegacyImports = false; (implied)
 
-    const actual = coreUtils.process(fileSample6, mockedExternalPackage, true);
+    const actual = _process(fileSample6);
 
     expect(actual.error).toBe(false);
 

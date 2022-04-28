@@ -429,15 +429,13 @@ const coreUtils = {
   },
   process: (
     file: string,
+    content: string,
     externalPackagesFromJson: string[],
     dontWriteToOutputFile = false,
     libUsageStats: LibUsageStatMap = {},
   ): MainProcessOutput => {
     try {
-      const content = fileUtils.read(file).trim();
-
       if (!content) {
-        console.log('> Skipped File (Empty Content):'.padStart(17, ' ').yellow(), file);
         return {
           error: true,
           message: 'File Content is empty',
@@ -481,7 +479,6 @@ const coreUtils = {
       }
 
       if (!importedModules || importedModules.size === 0) {
-        console.log('> Skipped File (No Import):'.padStart(17, ' ').yellow(), file);
         return {
           error: true,
           message: 'No Import of any kind was found',
@@ -565,11 +562,9 @@ const coreUtils = {
         libUsageStats,
       };
     } catch (err) {
-      console.log('[Error] process failed for file: '.red(), file, err);
-
       return {
         error: true,
-        message: 'Uncaught Error: ' + JSON.stringify(err),
+        message: 'Uncaught Error: Failed to Process - ' + JSON.stringify(err),
       };
     }
   },
