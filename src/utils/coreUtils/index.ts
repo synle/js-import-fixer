@@ -5,6 +5,7 @@ import gitiginorePatterns from 'src/utils/gitiginorePatterns';
 import 'src/utils/color';
 
 type ImportType = 'module' | 'default';
+type ImportSyntax = 'legacy' | 'es6';
 
 type ImportEntry = {
   name: string;
@@ -12,6 +13,7 @@ type ImportEntry = {
   lib: string;
   libFullPath: string;
   alias: string;
+  syntax: ImportSyntax;
 };
 
 /**
@@ -218,6 +220,7 @@ const coreUtils = {
           moduleUsageMap,
           libraryImportMap,
           importedModules,
+          'es6'
         );
       } catch (err) {}
     }
@@ -267,6 +270,7 @@ const coreUtils = {
           moduleUsageMap,
           libraryImportMap,
           importedModules,
+          'legacy'
         );
       } catch (err) {}
     }
@@ -284,6 +288,7 @@ const coreUtils = {
     moduleUsageMap: ModuleUsageMap = {},
     libraryImportMap: LibraryImportMap = {},
     importedModules: ImportedModules = new Set(),
+    importSyntax: ImportSyntax
   ) => {
     const moduleSplits = parsedImprotedModule.split('{');
 
@@ -308,6 +313,7 @@ const coreUtils = {
             type: 'module',
             lib,
             libFullPath,
+            syntax: importSyntax,
           };
 
           moduleUsageMap[lib].push(importEntry);
@@ -331,6 +337,7 @@ const coreUtils = {
             type: 'default',
             lib,
             libFullPath,
+            syntax: importSyntax,
           };
 
           moduleUsageMap[lib].push(importEntry);
