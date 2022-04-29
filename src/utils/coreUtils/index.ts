@@ -372,9 +372,9 @@ const coreUtils = {
         } else {
           // default
           if (alias === name) {
-            newImportedContent.push(`const ${name} = require('${libFullPath}').Default;`);
+            newImportedContent.push(`const ${name} = require('${libFullPath}').default;`);
           } else {
-            newImportedContent.push(`const ${alias} = require('${libFullPath}').Default;`);
+            newImportedContent.push(`const ${alias} = require('${libFullPath}').default;`);
           }
         }
       }

@@ -501,4 +501,53 @@ describe('coreUtils.process', () => {
       methodLib2(a,b,c,d,e, avg)"
     `);
   });
+
+  test('sample_6.js with both parse and output legacy imports', async () => {
+    configs.outputImportStyle = 'legacy';
+    configs.parseLegacyImports = true;
+
+    const actual = _process(fileSample6);
+
+    expect(actual.error).toBe(false);
+
+    expect(actual.unusedLibs).toMatchInlineSnapshot(`
+      Array [
+        "unusedMethod1",
+        "externalLib2",
+      ]
+    `);
+
+    expect(actual.libUsageStats).toMatchInlineSnapshot(`
+      Object {
+        "child_process": 1,
+        "externalLib1": 1,
+        "path": 1,
+        "src/internalLib3": 1,
+        "stats": 1,
+      }
+    `);
+
+    expect(actual.output).toMatchInlineSnapshot(`
+      "const externalLib1 = require('externalLib1').default;
+
+      const path = require('path').default;
+      const { constant1 } = require('externalLib1');
+      const { constant2 } = require('src/internalLib3');
+      const { methodLib1 } = require('externalLib1');
+      const { methodLib2 } = require('src/internalLib3');
+      const { sum } = require('stats');
+      const { total } = require('stats');
+      const my_child_process = require('child_process').default;
+      const myAliasMethod1 = require('externalLib1').aliasMethodLib1;
+      const a = path.join('a1', 'a2')
+      const b = externalLib1(a);
+      const c = methodLib1() + constant1;
+      const d = myAliasMethod1(constant2);
+      const e = my_child_process();
+
+      const avg = total / sum;
+
+      methodLib2(a,b,c,d,e, avg)"
+    `);
+  });
 });

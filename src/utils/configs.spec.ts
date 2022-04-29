@@ -24,6 +24,7 @@ describe('configs.getConfigs', () => {
         ],
         "importQuote": "\\"",
         "isTest": true,
+        "outputImportStyle": "es6",
         "parseLegacyImports": false,
         "transformRelativeImport": "",
       }
@@ -52,6 +53,7 @@ describe('configs.getConfigs', () => {
         ],
         "importQuote": "'",
         "isTest": true,
+        "outputImportStyle": "es6",
         "parseLegacyImports": true,
         "transformRelativeImport": undefined,
       }
@@ -69,6 +71,7 @@ describe('configs.getConfigs', () => {
         "ignoredFiles": Array [],
         "importQuote": "'",
         "isTest": true,
+        "outputImportStyle": "es6",
         "parseLegacyImports": false,
         "transformRelativeImport": undefined,
       }
