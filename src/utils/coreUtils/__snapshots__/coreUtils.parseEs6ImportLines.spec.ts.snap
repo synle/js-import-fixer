@@ -7,6 +7,7 @@ Object {
     "lib": "./BaseDataAdapter",
     "libFullPath": "./BaseDataAdapter",
     "name": "BaseDataAdapter",
+    "syntax": "es6",
     "type": "default",
   },
   "Express": Object {
@@ -14,6 +15,7 @@ Object {
     "lib": "express",
     "libFullPath": "express",
     "name": "Express",
+    "syntax": "es6",
     "type": "module",
   },
   "IDataAdapter": Object {
@@ -21,6 +23,7 @@ Object {
     "lib": "./IDataAdapter",
     "libFullPath": "./IDataAdapter",
     "name": "IDataAdapter",
+    "syntax": "es6",
     "type": "default",
   },
   "RedisClientType": Object {
@@ -28,6 +31,7 @@ Object {
     "lib": "redis",
     "libFullPath": "redis",
     "name": "RedisClientType",
+    "syntax": "es6",
     "type": "module",
   },
   "SqluiCore": Object {
@@ -35,6 +39,7 @@ Object {
     "lib": "../../typings",
     "libFullPath": "../../typings",
     "name": "SqluiCore",
+    "syntax": "es6",
     "type": "module",
   },
   "createClient": Object {
@@ -42,6 +47,7 @@ Object {
     "lib": "redis",
     "libFullPath": "redis",
     "name": "createClient",
+    "syntax": "es6",
     "type": "module",
   },
 }
@@ -55,6 +61,7 @@ Object {
       "lib": "../../typings",
       "libFullPath": "../../typings",
       "name": "SqluiCore",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -64,6 +71,7 @@ Object {
       "lib": "./BaseDataAdapter",
       "libFullPath": "./BaseDataAdapter",
       "name": "BaseDataAdapter",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -73,6 +81,7 @@ Object {
       "lib": "./IDataAdapter",
       "libFullPath": "./IDataAdapter",
       "name": "IDataAdapter",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -82,6 +91,7 @@ Object {
       "lib": "express",
       "libFullPath": "express",
       "name": "Express",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -91,6 +101,7 @@ Object {
       "lib": "redis",
       "libFullPath": "redis",
       "name": "createClient",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -98,6 +109,7 @@ Object {
       "lib": "redis",
       "libFullPath": "redis",
       "name": "RedisClientType",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -122,6 +134,7 @@ Object {
     "lib": "./BaseDataAdapter",
     "libFullPath": "src//git/sqlui-native/commons/adapters/BaseDataAdapter",
     "name": "BaseDataAdapter",
+    "syntax": "es6",
     "type": "default",
   },
   "Express": Object {
@@ -129,6 +142,7 @@ Object {
     "lib": "express",
     "libFullPath": "express",
     "name": "Express",
+    "syntax": "es6",
     "type": "module",
   },
   "IDataAdapter": Object {
@@ -136,6 +150,7 @@ Object {
     "lib": "./IDataAdapter",
     "libFullPath": "src//git/sqlui-native/commons/adapters/IDataAdapter",
     "name": "IDataAdapter",
+    "syntax": "es6",
     "type": "default",
   },
   "RedisClientType": Object {
@@ -143,6 +158,7 @@ Object {
     "lib": "redis",
     "libFullPath": "redis",
     "name": "RedisClientType",
+    "syntax": "es6",
     "type": "module",
   },
   "SqluiCore": Object {
@@ -150,6 +166,7 @@ Object {
     "lib": "../../typings",
     "libFullPath": "src//git/sqlui-native/typings",
     "name": "SqluiCore",
+    "syntax": "es6",
     "type": "module",
   },
   "createClient": Object {
@@ -157,6 +174,7 @@ Object {
     "lib": "redis",
     "libFullPath": "redis",
     "name": "createClient",
+    "syntax": "es6",
     "type": "module",
   },
 }
@@ -170,6 +188,7 @@ Object {
       "lib": "../../typings",
       "libFullPath": "src//git/sqlui-native/typings",
       "name": "SqluiCore",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -179,6 +198,7 @@ Object {
       "lib": "./BaseDataAdapter",
       "libFullPath": "src//git/sqlui-native/commons/adapters/BaseDataAdapter",
       "name": "BaseDataAdapter",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -188,6 +208,7 @@ Object {
       "lib": "./IDataAdapter",
       "libFullPath": "src//git/sqlui-native/commons/adapters/IDataAdapter",
       "name": "IDataAdapter",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -197,6 +218,7 @@ Object {
       "lib": "express",
       "libFullPath": "express",
       "name": "Express",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -206,6 +228,7 @@ Object {
       "lib": "redis",
       "libFullPath": "redis",
       "name": "createClient",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -213,6 +236,7 @@ Object {
       "lib": "redis",
       "libFullPath": "redis",
       "name": "RedisClientType",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -237,6 +261,7 @@ Object {
     "lib": "./BaseDataAdapter",
     "libFullPath": "/git/sqlui-native/commons/adapters/BaseDataAdapter",
     "name": "BaseDataAdapter",
+    "syntax": "es6",
     "type": "default",
   },
   "Express": Object {
@@ -244,6 +269,7 @@ Object {
     "lib": "express",
     "libFullPath": "express",
     "name": "Express",
+    "syntax": "es6",
     "type": "module",
   },
   "IDataAdapter": Object {
@@ -251,6 +277,7 @@ Object {
     "lib": "./IDataAdapter",
     "libFullPath": "/git/sqlui-native/commons/adapters/IDataAdapter",
     "name": "IDataAdapter",
+    "syntax": "es6",
     "type": "default",
   },
   "RedisClientType": Object {
@@ -258,6 +285,7 @@ Object {
     "lib": "redis",
     "libFullPath": "redis",
     "name": "RedisClientType",
+    "syntax": "es6",
     "type": "module",
   },
   "SqluiCore": Object {
@@ -265,6 +293,7 @@ Object {
     "lib": "../../typings",
     "libFullPath": "/git/sqlui-native/typings",
     "name": "SqluiCore",
+    "syntax": "es6",
     "type": "module",
   },
   "createClient": Object {
@@ -272,6 +301,7 @@ Object {
     "lib": "redis",
     "libFullPath": "redis",
     "name": "createClient",
+    "syntax": "es6",
     "type": "module",
   },
 }
@@ -285,6 +315,7 @@ Object {
       "lib": "../../typings",
       "libFullPath": "/git/sqlui-native/typings",
       "name": "SqluiCore",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -294,6 +325,7 @@ Object {
       "lib": "./BaseDataAdapter",
       "libFullPath": "/git/sqlui-native/commons/adapters/BaseDataAdapter",
       "name": "BaseDataAdapter",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -303,6 +335,7 @@ Object {
       "lib": "./IDataAdapter",
       "libFullPath": "/git/sqlui-native/commons/adapters/IDataAdapter",
       "name": "IDataAdapter",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -312,6 +345,7 @@ Object {
       "lib": "express",
       "libFullPath": "express",
       "name": "Express",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -321,6 +355,7 @@ Object {
       "lib": "redis",
       "libFullPath": "redis",
       "name": "createClient",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -328,6 +363,7 @@ Object {
       "lib": "redis",
       "libFullPath": "redis",
       "name": "RedisClientType",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -352,6 +388,7 @@ Object {
     "lib": "src/components/ActionDialogs",
     "libFullPath": "src/components/ActionDialogs",
     "name": "ActionDialogs",
+    "syntax": "es6",
     "type": "default",
   },
   "Alert": Object {
@@ -359,6 +396,7 @@ Object {
     "lib": "@mui/material/Alert",
     "libFullPath": "@mui/material/Alert",
     "name": "Alert",
+    "syntax": "es6",
     "type": "default",
   },
   "AppHeader": Object {
@@ -366,6 +404,7 @@ Object {
     "lib": "src/components/AppHeader",
     "libFullPath": "src/components/AppHeader",
     "name": "AppHeader",
+    "syntax": "es6",
     "type": "default",
   },
   "Box": Object {
@@ -373,6 +412,7 @@ Object {
     "lib": "@mui/material/Box",
     "libFullPath": "@mui/material/Box",
     "name": "Box",
+    "syntax": "es6",
     "type": "default",
   },
   "CircularProgress": Object {
@@ -380,6 +420,7 @@ Object {
     "lib": "@mui/material/CircularProgress",
     "libFullPath": "@mui/material/CircularProgress",
     "name": "CircularProgress",
+    "syntax": "es6",
     "type": "default",
   },
   "EditConnectionPage": Object {
@@ -387,6 +428,7 @@ Object {
     "lib": "src/views/EditConnectionPage",
     "libFullPath": "src/views/EditConnectionPage",
     "name": "EditConnectionPage",
+    "syntax": "es6",
     "type": "default",
   },
   "ElectronEventListener": Object {
@@ -394,6 +436,7 @@ Object {
     "lib": "src/components/ElectronEventListener",
     "libFullPath": "src/components/ElectronEventListener",
     "name": "ElectronEventListener",
+    "syntax": "es6",
     "type": "default",
   },
   "HashRouter": Object {
@@ -401,6 +444,7 @@ Object {
     "lib": "react-router-dom",
     "libFullPath": "react-router-dom",
     "name": "HashRouter",
+    "syntax": "es6",
     "type": "module",
   },
   "MainPage": Object {
@@ -408,6 +452,7 @@ Object {
     "lib": "src/views/MainPage",
     "libFullPath": "src/views/MainPage",
     "name": "MainPage",
+    "syntax": "es6",
     "type": "default",
   },
   "MissionControl": Object {
@@ -415,6 +460,7 @@ Object {
     "lib": "src/components/MissionControl",
     "libFullPath": "src/components/MissionControl",
     "name": "MissionControl",
+    "syntax": "es6",
     "type": "default",
   },
   "NewConnectionPage": Object {
@@ -422,6 +468,7 @@ Object {
     "lib": "src/views/NewConnectionPage",
     "libFullPath": "src/views/NewConnectionPage",
     "name": "NewConnectionPage",
+    "syntax": "es6",
     "type": "default",
   },
   "Route": Object {
@@ -429,6 +476,7 @@ Object {
     "lib": "react-router-dom",
     "libFullPath": "react-router-dom",
     "name": "Route",
+    "syntax": "es6",
     "type": "module",
   },
   "Routes": Object {
@@ -436,6 +484,7 @@ Object {
     "lib": "react-router-dom",
     "libFullPath": "react-router-dom",
     "name": "Routes",
+    "syntax": "es6",
     "type": "module",
   },
   "ThemeProvider": Object {
@@ -443,6 +492,7 @@ Object {
     "lib": "@mui/material/styles",
     "libFullPath": "@mui/material/styles",
     "name": "ThemeProvider",
+    "syntax": "es6",
     "type": "module",
   },
   "Toasters": Object {
@@ -450,6 +500,7 @@ Object {
     "lib": "src/components/Toasters",
     "libFullPath": "src/components/Toasters",
     "name": "Toasters",
+    "syntax": "es6",
     "type": "default",
   },
   "createTheme": Object {
@@ -457,6 +508,7 @@ Object {
     "lib": "@mui/material/styles",
     "libFullPath": "@mui/material/styles",
     "name": "createTheme",
+    "syntax": "es6",
     "type": "module",
   },
   "getDefaultSessionId": Object {
@@ -464,6 +516,7 @@ Object {
     "lib": "src/data/session",
     "libFullPath": "src/data/session",
     "name": "getDefaultSessionId",
+    "syntax": "es6",
     "type": "module",
   },
   "setCurrentSessionId": Object {
@@ -471,6 +524,7 @@ Object {
     "lib": "src/data/session",
     "libFullPath": "src/data/session",
     "name": "setCurrentSessionId",
+    "syntax": "es6",
     "type": "module",
   },
   "useDarkModeSetting": Object {
@@ -478,6 +532,7 @@ Object {
     "lib": "src/hooks",
     "libFullPath": "src/hooks",
     "name": "useDarkModeSetting",
+    "syntax": "es6",
     "type": "module",
   },
   "useEffect": Object {
@@ -485,6 +540,7 @@ Object {
     "lib": "react",
     "libFullPath": "react",
     "name": "useEffect",
+    "syntax": "es6",
     "type": "module",
   },
   "useGetCurrentSession": Object {
@@ -492,6 +548,7 @@ Object {
     "lib": "src/hooks",
     "libFullPath": "src/hooks",
     "name": "useGetCurrentSession",
+    "syntax": "es6",
     "type": "module",
   },
   "useGetSessions": Object {
@@ -499,6 +556,7 @@ Object {
     "lib": "src/hooks",
     "libFullPath": "src/hooks",
     "name": "useGetSessions",
+    "syntax": "es6",
     "type": "module",
   },
   "useState": Object {
@@ -506,6 +564,7 @@ Object {
     "lib": "react",
     "libFullPath": "react",
     "name": "useState",
+    "syntax": "es6",
     "type": "module",
   },
   "useUpsertSession": Object {
@@ -513,6 +572,7 @@ Object {
     "lib": "src/hooks",
     "libFullPath": "src/hooks",
     "name": "useUpsertSession",
+    "syntax": "es6",
     "type": "module",
   },
 }
@@ -526,6 +586,7 @@ Object {
       "lib": "@mui/material/Alert",
       "libFullPath": "@mui/material/Alert",
       "name": "Alert",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -535,6 +596,7 @@ Object {
       "lib": "@mui/material/Box",
       "libFullPath": "@mui/material/Box",
       "name": "Box",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -544,6 +606,7 @@ Object {
       "lib": "@mui/material/CircularProgress",
       "libFullPath": "@mui/material/CircularProgress",
       "name": "CircularProgress",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -553,6 +616,7 @@ Object {
       "lib": "@mui/material/styles",
       "libFullPath": "@mui/material/styles",
       "name": "createTheme",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -560,6 +624,7 @@ Object {
       "lib": "@mui/material/styles",
       "libFullPath": "@mui/material/styles",
       "name": "ThemeProvider",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -569,6 +634,7 @@ Object {
       "lib": "react",
       "libFullPath": "react",
       "name": "useEffect",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -576,6 +642,7 @@ Object {
       "lib": "react",
       "libFullPath": "react",
       "name": "useState",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -585,6 +652,7 @@ Object {
       "lib": "react-router-dom",
       "libFullPath": "react-router-dom",
       "name": "HashRouter",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -592,6 +660,7 @@ Object {
       "lib": "react-router-dom",
       "libFullPath": "react-router-dom",
       "name": "Route",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -599,6 +668,7 @@ Object {
       "lib": "react-router-dom",
       "libFullPath": "react-router-dom",
       "name": "Routes",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -608,6 +678,7 @@ Object {
       "lib": "src/components/ActionDialogs",
       "libFullPath": "src/components/ActionDialogs",
       "name": "ActionDialogs",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -617,6 +688,7 @@ Object {
       "lib": "src/components/AppHeader",
       "libFullPath": "src/components/AppHeader",
       "name": "AppHeader",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -626,6 +698,7 @@ Object {
       "lib": "src/components/ElectronEventListener",
       "libFullPath": "src/components/ElectronEventListener",
       "name": "ElectronEventListener",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -635,6 +708,7 @@ Object {
       "lib": "src/components/MissionControl",
       "libFullPath": "src/components/MissionControl",
       "name": "MissionControl",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -644,6 +718,7 @@ Object {
       "lib": "src/components/Toasters",
       "libFullPath": "src/components/Toasters",
       "name": "Toasters",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -653,6 +728,7 @@ Object {
       "lib": "src/data/session",
       "libFullPath": "src/data/session",
       "name": "getDefaultSessionId",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -660,6 +736,7 @@ Object {
       "lib": "src/data/session",
       "libFullPath": "src/data/session",
       "name": "setCurrentSessionId",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -669,6 +746,7 @@ Object {
       "lib": "src/hooks",
       "libFullPath": "src/hooks",
       "name": "useDarkModeSetting",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -676,6 +754,7 @@ Object {
       "lib": "src/hooks",
       "libFullPath": "src/hooks",
       "name": "useGetCurrentSession",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -683,6 +762,7 @@ Object {
       "lib": "src/hooks",
       "libFullPath": "src/hooks",
       "name": "useGetSessions",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -690,6 +770,7 @@ Object {
       "lib": "src/hooks",
       "libFullPath": "src/hooks",
       "name": "useUpsertSession",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -699,6 +780,7 @@ Object {
       "lib": "src/views/EditConnectionPage",
       "libFullPath": "src/views/EditConnectionPage",
       "name": "EditConnectionPage",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -708,6 +790,7 @@ Object {
       "lib": "src/views/MainPage",
       "libFullPath": "src/views/MainPage",
       "name": "MainPage",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -717,6 +800,7 @@ Object {
       "lib": "src/views/NewConnectionPage",
       "libFullPath": "src/views/NewConnectionPage",
       "name": "NewConnectionPage",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -759,6 +843,7 @@ Object {
     "lib": "src/components/ActionDialogs",
     "libFullPath": "src/components/ActionDialogs",
     "name": "ActionDialogs",
+    "syntax": "es6",
     "type": "default",
   },
   "Alert": Object {
@@ -766,6 +851,7 @@ Object {
     "lib": "@mui/material/Alert",
     "libFullPath": "@mui/material/Alert",
     "name": "Alert",
+    "syntax": "es6",
     "type": "default",
   },
   "AppHeader": Object {
@@ -773,6 +859,7 @@ Object {
     "lib": "src/components/AppHeader",
     "libFullPath": "src/components/AppHeader",
     "name": "AppHeader",
+    "syntax": "es6",
     "type": "default",
   },
   "Box": Object {
@@ -780,6 +867,7 @@ Object {
     "lib": "@mui/material/Box",
     "libFullPath": "@mui/material/Box",
     "name": "Box",
+    "syntax": "es6",
     "type": "default",
   },
   "CircularProgress": Object {
@@ -787,6 +875,7 @@ Object {
     "lib": "@mui/material/CircularProgress",
     "libFullPath": "@mui/material/CircularProgress",
     "name": "CircularProgress",
+    "syntax": "es6",
     "type": "default",
   },
   "EditConnectionPage": Object {
@@ -794,6 +883,7 @@ Object {
     "lib": "src/views/EditConnectionPage",
     "libFullPath": "src/views/EditConnectionPage",
     "name": "EditConnectionPage",
+    "syntax": "es6",
     "type": "default",
   },
   "ElectronEventListener": Object {
@@ -801,6 +891,7 @@ Object {
     "lib": "src/components/ElectronEventListener",
     "libFullPath": "src/components/ElectronEventListener",
     "name": "ElectronEventListener",
+    "syntax": "es6",
     "type": "default",
   },
   "HashRouter": Object {
@@ -808,6 +899,7 @@ Object {
     "lib": "react-router-dom",
     "libFullPath": "react-router-dom",
     "name": "HashRouter",
+    "syntax": "es6",
     "type": "module",
   },
   "MainPage": Object {
@@ -815,6 +907,7 @@ Object {
     "lib": "src/views/MainPage",
     "libFullPath": "src/views/MainPage",
     "name": "MainPage",
+    "syntax": "es6",
     "type": "default",
   },
   "MissionControl": Object {
@@ -822,6 +915,7 @@ Object {
     "lib": "src/components/MissionControl",
     "libFullPath": "src/components/MissionControl",
     "name": "MissionControl",
+    "syntax": "es6",
     "type": "default",
   },
   "NewConnectionPage": Object {
@@ -829,6 +923,7 @@ Object {
     "lib": "src/views/NewConnectionPage",
     "libFullPath": "src/views/NewConnectionPage",
     "name": "NewConnectionPage",
+    "syntax": "es6",
     "type": "default",
   },
   "Route": Object {
@@ -836,6 +931,7 @@ Object {
     "lib": "react-router-dom",
     "libFullPath": "react-router-dom",
     "name": "Route",
+    "syntax": "es6",
     "type": "module",
   },
   "Routes": Object {
@@ -843,6 +939,7 @@ Object {
     "lib": "react-router-dom",
     "libFullPath": "react-router-dom",
     "name": "Routes",
+    "syntax": "es6",
     "type": "module",
   },
   "ThemeProvider": Object {
@@ -850,6 +947,7 @@ Object {
     "lib": "@mui/material/styles",
     "libFullPath": "@mui/material/styles",
     "name": "ThemeProvider",
+    "syntax": "es6",
     "type": "module",
   },
   "Toasters": Object {
@@ -857,6 +955,7 @@ Object {
     "lib": "src/components/Toasters",
     "libFullPath": "src/components/Toasters",
     "name": "Toasters",
+    "syntax": "es6",
     "type": "default",
   },
   "createTheme": Object {
@@ -864,6 +963,7 @@ Object {
     "lib": "@mui/material/styles",
     "libFullPath": "@mui/material/styles",
     "name": "createTheme",
+    "syntax": "es6",
     "type": "module",
   },
   "getDefaultSessionId": Object {
@@ -871,6 +971,7 @@ Object {
     "lib": "src/data/session",
     "libFullPath": "src/data/session",
     "name": "getDefaultSessionId",
+    "syntax": "es6",
     "type": "module",
   },
   "setCurrentSessionId": Object {
@@ -878,6 +979,7 @@ Object {
     "lib": "src/data/session",
     "libFullPath": "src/data/session",
     "name": "setCurrentSessionId",
+    "syntax": "es6",
     "type": "module",
   },
   "useDarkModeSetting": Object {
@@ -885,6 +987,7 @@ Object {
     "lib": "src/hooks",
     "libFullPath": "src/hooks",
     "name": "useDarkModeSetting",
+    "syntax": "es6",
     "type": "module",
   },
   "useEffect": Object {
@@ -892,6 +995,7 @@ Object {
     "lib": "react",
     "libFullPath": "react",
     "name": "useEffect",
+    "syntax": "es6",
     "type": "module",
   },
   "useGetCurrentSession": Object {
@@ -899,6 +1003,7 @@ Object {
     "lib": "src/hooks",
     "libFullPath": "src/hooks",
     "name": "useGetCurrentSession",
+    "syntax": "es6",
     "type": "module",
   },
   "useGetSessions": Object {
@@ -906,6 +1011,7 @@ Object {
     "lib": "src/hooks",
     "libFullPath": "src/hooks",
     "name": "useGetSessions",
+    "syntax": "es6",
     "type": "module",
   },
   "useState": Object {
@@ -913,6 +1019,7 @@ Object {
     "lib": "react",
     "libFullPath": "react",
     "name": "useState",
+    "syntax": "es6",
     "type": "module",
   },
   "useUpsertSession": Object {
@@ -920,6 +1027,7 @@ Object {
     "lib": "src/hooks",
     "libFullPath": "src/hooks",
     "name": "useUpsertSession",
+    "syntax": "es6",
     "type": "module",
   },
 }
@@ -933,6 +1041,7 @@ Object {
       "lib": "@mui/material/Alert",
       "libFullPath": "@mui/material/Alert",
       "name": "Alert",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -942,6 +1051,7 @@ Object {
       "lib": "@mui/material/Box",
       "libFullPath": "@mui/material/Box",
       "name": "Box",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -951,6 +1061,7 @@ Object {
       "lib": "@mui/material/CircularProgress",
       "libFullPath": "@mui/material/CircularProgress",
       "name": "CircularProgress",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -960,6 +1071,7 @@ Object {
       "lib": "@mui/material/styles",
       "libFullPath": "@mui/material/styles",
       "name": "createTheme",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -967,6 +1079,7 @@ Object {
       "lib": "@mui/material/styles",
       "libFullPath": "@mui/material/styles",
       "name": "ThemeProvider",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -976,6 +1089,7 @@ Object {
       "lib": "react",
       "libFullPath": "react",
       "name": "useEffect",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -983,6 +1097,7 @@ Object {
       "lib": "react",
       "libFullPath": "react",
       "name": "useState",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -992,6 +1107,7 @@ Object {
       "lib": "react-router-dom",
       "libFullPath": "react-router-dom",
       "name": "HashRouter",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -999,6 +1115,7 @@ Object {
       "lib": "react-router-dom",
       "libFullPath": "react-router-dom",
       "name": "Route",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -1006,6 +1123,7 @@ Object {
       "lib": "react-router-dom",
       "libFullPath": "react-router-dom",
       "name": "Routes",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -1015,6 +1133,7 @@ Object {
       "lib": "src/components/ActionDialogs",
       "libFullPath": "src/components/ActionDialogs",
       "name": "ActionDialogs",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -1024,6 +1143,7 @@ Object {
       "lib": "src/components/AppHeader",
       "libFullPath": "src/components/AppHeader",
       "name": "AppHeader",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -1033,6 +1153,7 @@ Object {
       "lib": "src/components/ElectronEventListener",
       "libFullPath": "src/components/ElectronEventListener",
       "name": "ElectronEventListener",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -1042,6 +1163,7 @@ Object {
       "lib": "src/components/MissionControl",
       "libFullPath": "src/components/MissionControl",
       "name": "MissionControl",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -1051,6 +1173,7 @@ Object {
       "lib": "src/components/Toasters",
       "libFullPath": "src/components/Toasters",
       "name": "Toasters",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -1060,6 +1183,7 @@ Object {
       "lib": "src/data/session",
       "libFullPath": "src/data/session",
       "name": "getDefaultSessionId",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -1067,6 +1191,7 @@ Object {
       "lib": "src/data/session",
       "libFullPath": "src/data/session",
       "name": "setCurrentSessionId",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -1076,6 +1201,7 @@ Object {
       "lib": "src/hooks",
       "libFullPath": "src/hooks",
       "name": "useDarkModeSetting",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -1083,6 +1209,7 @@ Object {
       "lib": "src/hooks",
       "libFullPath": "src/hooks",
       "name": "useGetCurrentSession",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -1090,6 +1217,7 @@ Object {
       "lib": "src/hooks",
       "libFullPath": "src/hooks",
       "name": "useGetSessions",
+      "syntax": "es6",
       "type": "module",
     },
     Object {
@@ -1097,6 +1225,7 @@ Object {
       "lib": "src/hooks",
       "libFullPath": "src/hooks",
       "name": "useUpsertSession",
+      "syntax": "es6",
       "type": "module",
     },
   ],
@@ -1106,6 +1235,7 @@ Object {
       "lib": "src/views/EditConnectionPage",
       "libFullPath": "src/views/EditConnectionPage",
       "name": "EditConnectionPage",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -1115,6 +1245,7 @@ Object {
       "lib": "src/views/MainPage",
       "libFullPath": "src/views/MainPage",
       "name": "MainPage",
+      "syntax": "es6",
       "type": "default",
     },
   ],
@@ -1124,6 +1255,7 @@ Object {
       "lib": "src/views/NewConnectionPage",
       "libFullPath": "src/views/NewConnectionPage",
       "name": "NewConnectionPage",
+      "syntax": "es6",
       "type": "default",
     },
   ],
