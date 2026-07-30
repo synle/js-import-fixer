@@ -220,7 +220,7 @@ const coreUtils = {
           moduleUsageMap,
           libraryImportMap,
           importedModules,
-          'es6'
+          'es6',
         );
       } catch (err) {}
     }
@@ -270,7 +270,7 @@ const coreUtils = {
           moduleUsageMap,
           libraryImportMap,
           importedModules,
-          'legacy'
+          'legacy',
         );
       } catch (err) {}
     }
@@ -288,7 +288,7 @@ const coreUtils = {
     moduleUsageMap: ModuleUsageMap = {},
     libraryImportMap: LibraryImportMap = {},
     importedModules: ImportedModules = new Set(),
-    importSyntax: ImportSyntax
+    importSyntax: ImportSyntax,
   ) => {
     const moduleSplits = parsedImprotedModule.split('{');
 

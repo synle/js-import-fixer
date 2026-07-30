@@ -7,7 +7,13 @@ const fixImport = (
   dontWriteToOutputFile = false,
   libUsageStats = {},
 ) => {
-  return coreUtils.process(file, content, externalPackages, dontWriteToOutputFile, (libUsageStats = {}));
+  return coreUtils.process(
+    file,
+    content,
+    externalPackages,
+    dontWriteToOutputFile,
+    (libUsageStats = {}),
+  );
 };
 
 module.exports = {

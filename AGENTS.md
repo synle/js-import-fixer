@@ -13,7 +13,6 @@ Do NOT use:
 - `https://github.com/{owner}/{repo}/blob/HEAD/{path}?raw=1` (no CORS headers, breaks browser fetch)
 - `https://api.github.com/repos/{owner}/{repo}/contents/{path}` (returns JSON, not raw content)
 
-
 ## Git / PR Merge Policy
 
 - Always use **squash and merge** when merging PRs. Never use merge commits or rebase merges. This keeps the git history clean with one commit per PR.
